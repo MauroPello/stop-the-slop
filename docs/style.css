@@ -3,21 +3,21 @@
    ========================================================================== */
 
 :root {
-  /* Color Palette - Dark (Default) */
-  --bg-base: #0a0c10;
-  --bg-surface: #11141c;
-  --bg-surface-elevated: #181d28;
-  --bg-surface-glass: rgba(17, 20, 28, 0.75);
-  --bg-card: rgba(24, 29, 40, 0.6);
-  --bg-card-hover: rgba(32, 38, 52, 0.8);
+  /* Color Palette - Light Theme (Fixed) */
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f1f5f9;
+  --bg-surface-glass: rgba(255, 255, 255, 0.85);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: #ffffff;
   
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(255, 255, 255, 0.2);
-  --border-glow: rgba(99, 102, 241, 0.4);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-focus: rgba(0, 0, 0, 0.18);
+  --border-glow: rgba(99, 102, 241, 0.3);
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
   
   /* Brand Accents */
   --accent-primary: #6366f1;       /* Indigo */
@@ -28,14 +28,14 @@
   --accent-amber: #f59e0b;
   --accent-rose: #f43f5e;
   
-  --grad-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
   --grad-yt: linear-gradient(135deg, #ff0033 0%, #ff4b4b 100%);
-  --grad-glow: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  --grad-glow: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
   
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 30px -5px rgba(99, 102, 241, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.1), 0 6px 16px -4px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 30px -5px rgba(99, 102, 241, 0.2);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -47,28 +47,6 @@
   --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
   --container-max: 1200px;
-}
-
-[data-theme="light"] {
-  --bg-base: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #f1f5f9;
-  --bg-surface-glass: rgba(255, 255, 255, 0.85);
-  --bg-card: rgba(255, 255, 255, 0.8);
-  --bg-card-hover: #ffffff;
-  
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-focus: rgba(0, 0, 0, 0.2);
-  --border-glow: rgba(99, 102, 241, 0.3);
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 30px -5px rgba(99, 102, 241, 0.2);
 }
 
 /* Base Reset & Globals */
@@ -83,7 +61,7 @@ html {
   font-size: 16px;
   line-height: 1.6;
   scroll-behavior: smooth;
-  color-scheme: dark light;
+  color-scheme: light;
 }
 
 body {
@@ -93,8 +71,8 @@ body {
   min-height: 100vh;
   transition: background-color var(--transition-normal), color var(--transition-normal);
   background-image: 
-    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(244, 63, 94, 0.08) 0px, transparent 50%);
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(244, 63, 94, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
 }
 
@@ -460,11 +438,7 @@ img, svg {
 }
 
 .gauge-bg-track {
-  stroke: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="light"] .gauge-bg-track {
-  stroke: rgba(0, 0, 0, 0.1);
+  stroke: rgba(0, 0, 0, 0.08);
 }
 
 .gauge-needle {
@@ -512,19 +486,19 @@ img, svg {
 }
 
 .verdict-ai {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
 }
 
 .verdict-human {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .sim-transcript-box {
-  background: var(--bg-base);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1rem;
@@ -536,16 +510,11 @@ img, svg {
 }
 
 .highlight-ai {
-  background: rgba(239, 68, 68, 0.22);
-  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+  color: #991b1b;
   padding: 0.1rem 0.25rem;
   border-radius: 4px;
   border-bottom: 1.5px solid #ef4444;
-}
-
-[data-theme="light"] .highlight-ai {
-  background: rgba(239, 68, 68, 0.18);
-  color: #991b1b;
 }
 
 /* ==========================================================================
@@ -721,13 +690,13 @@ img, svg {
 }
 
 .code-block {
-  background: var(--bg-base);
-  border: 1px solid var(--border-subtle);
+  background: #0f172a;
+  border: 1px solid #1e293b;
   border-radius: var(--radius-md);
   padding: 1.25rem;
   font-family: 'JetBrains Mono', monospace, monospace;
   font-size: 0.88rem;
-  color: #e2e8f0;
+  color: #f1f5f9;
   position: relative;
   margin-block: 1rem;
 }
@@ -739,15 +708,15 @@ img, svg {
   padding: 0.35rem 0.65rem;
   font-size: 0.75rem;
   border-radius: var(--radius-sm);
-  background: var(--bg-surface-elevated);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
   transition: all var(--transition-fast);
 }
 
 .copy-btn:hover {
-  color: var(--text-primary);
-  border-color: var(--border-focus);
+  color: #f8fafc;
+  border-color: #64748b;
 }
 
 /* ==========================================================================
@@ -940,7 +909,13 @@ img, svg {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .brand-badge {
+    display: none;
+  }
+  #nav-btn-install {
+    display: none;
+  }
   .nav-links {
     display: none;
   }

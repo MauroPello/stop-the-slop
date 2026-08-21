@@ -3,55 +3,11 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
   initSimulator();
   initTabs();
   initCopyButtons();
   initMobileNav();
 });
-
-/* --------------------------------------------------------------------------
-   Theme Management (System, Light, Dark)
-   -------------------------------------------------------------------------- */
-function initTheme() {
-  const themeBtn = document.getElementById('theme-toggle-btn');
-  const storedTheme = localStorage.getItem('sts-theme');
-  
-  if (storedTheme) {
-    document.documentElement.setAttribute('data-theme', storedTheme);
-    updateThemeIcon(storedTheme);
-  } else {
-    // Default to dark or match system
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = prefersDark ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', initialTheme);
-    updateThemeIcon(initialTheme);
-  }
-
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('sts-theme', next);
-      updateThemeIcon(next);
-    });
-  }
-}
-
-function updateThemeIcon(theme) {
-  const sunIcon = document.getElementById('theme-icon-sun');
-  const moonIcon = document.getElementById('theme-icon-moon');
-  if (!sunIcon || !moonIcon) return;
-
-  if (theme === 'light') {
-    sunIcon.style.display = 'none';
-    moonIcon.style.display = 'block';
-  } else {
-    sunIcon.style.display = 'block';
-    moonIcon.style.display = 'none';
-  }
-}
 
 /* --------------------------------------------------------------------------
    Interactive Live Simulator
