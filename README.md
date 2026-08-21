@@ -15,9 +15,10 @@
 ---
 
 ## ✨ Features
-- **In-Player Detection Badge:** Renders an instant AI probability score directly under the YouTube video title.
+- **Video Thumbnail AI Badges:** Displays instant AI probability ratings directly on YouTube video thumbnails across Home feeds, Subscriptions, Search, and Recommendations before you even click!
+- **In-Player Detection & Toolbar Badge:** Real-time AI probability score in the popup and toolbar action icon.
 - **Sentence-Level Heatmap:** Pinpoints exactly which sentences triggered robotic AI markers.
-- **Global Edge Caching:** Sub-100ms response times for previously analyzed videos via Cloudflare Workers + D1.
+- **High-Speed Edge & Local Cache:** Sub-50ms batch lookups for video thumbnails via Cloudflare Workers + D1 and local storage with zero redundant requests.
 - **Privacy-First:** Zero personal data tracking, no analytics cookies, no user accounts required.
 - **Adaptive Dark / Light Theme:** Seamlessly integrates with YouTube's interface.
 

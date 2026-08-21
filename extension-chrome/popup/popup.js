@@ -392,6 +392,17 @@ function displayResult(result) {
   const score = result.score;
   const pct = Math.round(score * 100);
 
+  // Persist to local storage so content script thumbnail badges & service worker update immediately
+  if (currentVideoId && typeof score === 'number') {
+    chrome.storage.local.set({
+      [`result_${currentVideoId}`]: result,
+      [`sts_cache_${currentVideoId}`]: {
+        score,
+        analyzedAt: result.analyzedAt || new Date().toISOString(),
+      },
+    }).catch(() => {});
+  }
+
   // Score display
   els.scoreValue.textContent = `${pct}%`;
 

@@ -39,6 +39,19 @@ export default {
         return json(result, corsHeaders);
       }
 
+      if (url.pathname === '/api/check-batch') {
+        let videoIds = [];
+        if (request.method === 'POST') {
+          const body = await request.json().catch(() => ({}));
+          videoIds = Array.isArray(body.videoIds) ? body.videoIds : [];
+        } else if (request.method === 'GET') {
+          const idsParam = url.searchParams.get('ids') || url.searchParams.get('videoIds') || '';
+          videoIds = idsParam.split(',').map((s) => s.trim()).filter(Boolean);
+        }
+        const result = await checkCacheBatch(videoIds, env);
+        return json(result, corsHeaders);
+      }
+
       if (url.pathname === '/api/analyze' && request.method === 'POST') {
         const body = await request.json();
         const { videoId, transcript } = body;
@@ -90,6 +103,44 @@ async function checkCache(videoId, env) {
   }
 
   return { found: false, videoId };
+}
+
+/**
+ * Batch check cached results for multiple video IDs (up to 50 at once).
+ */
+async function checkCacheBatch(videoIds, env) {
+  if (!videoIds || !Array.isArray(videoIds) || videoIds.length === 0) {
+    return { cached: {} };
+  }
+
+  // Deduplicate and filter valid 11-character YouTube video IDs, limit to 50
+  const validIds = [...new Set(videoIds.filter((id) => typeof id === 'string' && /^[a-zA-Z0-9_-]{11}$/.test(id)))].slice(0, 50);
+
+  if (validIds.length === 0) {
+    return { cached: {} };
+  }
+
+  const placeholders = validIds.map(() => '?').join(',');
+  const query = `SELECT video_id, overall_score, analyzed_at FROM video_analyses WHERE video_id IN (${placeholders})`;
+
+  const { results } = await env.DB.prepare(query)
+    .bind(...validIds)
+    .all();
+
+  const cachedMap = {};
+  if (results && Array.isArray(results)) {
+    for (const row of results) {
+      cachedMap[row.video_id] = {
+        videoId: row.video_id,
+        score: row.overall_score,
+        analyzedAt: row.analyzed_at,
+        cached: true,
+        found: true,
+      };
+    }
+  }
+
+  return { cached: cachedMap };
 }
 
 /**

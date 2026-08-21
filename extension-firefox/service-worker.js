@@ -13,6 +13,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return false; // No async response needed
 });
 
+const API_BASE = 'https://stop-the-slop-api.maurobum43.workers.dev';
+
 /**
  * When the user navigates to a new video, update badge state.
  */
@@ -22,17 +24,41 @@ async function handleVideoChange(videoId, tabId) {
   // Store the current video ID for the popup
   await chrome.storage.local.set({ currentVideoId: videoId });
 
-  // Check if we already have a cached result
+  // 1. Check local storage first
   const storageKey = `result_${videoId}`;
   const stored = await chrome.storage.local.get(storageKey);
 
-  if (stored[storageKey]) {
+  if (stored[storageKey] && typeof stored[storageKey].score === 'number') {
     const score = stored[storageKey].score;
     await updateBadge(tabId, score);
-  } else {
-    // Clear badge for unanalyzed videos
-    await chrome.action.setBadgeText({ text: '', tabId });
+    return;
   }
+
+  // 2. Check Cloudflare Worker edge cache
+  try {
+    const resp = await fetch(
+      `${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`
+    );
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.found && typeof data.score === 'number') {
+        await chrome.storage.local.set({
+          [storageKey]: data,
+          [`sts_cache_${videoId}`]: {
+            score: data.score,
+            analyzedAt: data.analyzedAt || new Date().toISOString(),
+          },
+        });
+        await updateBadge(tabId, data.score);
+        return;
+      }
+    }
+  } catch (e) {
+    // Ignore network error in background
+  }
+
+  // Clear badge for unanalyzed videos
+  await chrome.action.setBadgeText({ text: '', tabId });
 }
 
 /**

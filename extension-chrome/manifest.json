@@ -14,7 +14,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://www.youtube.com/*"
+    "https://www.youtube.com/*",
+    "https://stop-the-slop-api.maurobum43.workers.dev/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
