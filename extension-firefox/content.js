@@ -31,14 +31,14 @@
     styleEl.id = 'sts-thumbnail-styles';
     styleEl.textContent = `
       .sts-thumb-badge-container {
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        z-index: 25;
-        pointer-events: auto;
-        font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-        line-height: 1;
-        user-select: none;
+        position: absolute !important;
+        top: 6px !important;
+        left: 6px !important;
+        z-index: 99 !important;
+        pointer-events: none !important;
+        font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+        line-line: 1 !important;
+        user-select: none !important;
         animation: sts-badge-pop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
 
@@ -54,57 +54,53 @@
       }
 
       .sts-thumb-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 3px 6px;
-        border-radius: 6px;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.2px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
-        cursor: default;
-      }
-
-      .sts-thumb-badge:hover {
-        transform: scale(1.06);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        padding: 3px 7px !important;
+        border-radius: 6px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.2px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease !important;
+        cursor: default !important;
       }
 
       /* AI Tier: High Risk (>= 65%) */
       .sts-thumb-badge--ai {
-        background: rgba(220, 38, 38, 0.88);
-        color: #ffffff;
-        border: 1px solid rgba(254, 202, 202, 0.35);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        background: rgba(220, 38, 38, 0.90) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(254, 202, 202, 0.4) !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
       }
 
       /* AI Tier: Mixed (35% - 64%) */
       .sts-thumb-badge--mixed {
-        background: rgba(217, 119, 6, 0.90);
-        color: #ffffff;
-        border: 1px solid rgba(254, 240, 138, 0.35);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        background: rgba(217, 119, 6, 0.92) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(254, 240, 138, 0.4) !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
       }
 
       /* AI Tier: Human (< 35%) */
       .sts-thumb-badge--human {
-        background: rgba(16, 185, 129, 0.88);
-        color: #ffffff;
-        border: 1px solid rgba(167, 243, 208, 0.35);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        background: rgba(16, 185, 129, 0.90) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(167, 243, 208, 0.4) !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
       }
 
       .sts-thumb-badge .sts-badge-icon {
-        font-size: 11px;
-        line-height: 1;
+        font-size: 11px !important;
+        line-height: 1 !important;
       }
 
       .sts-thumb-badge .sts-badge-text {
-        font-weight: 700;
+        font-weight: 700 !important;
+        font-size: 11px !important;
       }
     `;
 
@@ -235,10 +231,29 @@
     return container;
   }
 
+  function findThumbnailTarget(anchorEl) {
+    // 1. Check overlays container inside anchor
+    const overlays = anchorEl.querySelector('#overlays, .ytd-thumbnail-overlay, div[class*="overlay"]');
+    if (overlays) return overlays;
+
+    // 2. Check parent thumbnail element
+    const thumbWrapper = anchorEl.closest('ytd-thumbnail, [class*="thumbnail"], yt-lockup-view-model');
+    if (thumbWrapper) {
+      const wrapperOverlays = thumbWrapper.querySelector('#overlays');
+      if (wrapperOverlays) return wrapperOverlays;
+      return thumbWrapper;
+    }
+
+    return anchorEl;
+  }
+
   function renderBadgeOnAnchor(anchorEl, videoId, score) {
     if (!anchorEl || !videoId || typeof score !== 'number') return;
 
-    const existingContainer = anchorEl.querySelector('.sts-thumb-badge-container');
+    const target = findThumbnailTarget(anchorEl);
+    if (!target) return;
+
+    const existingContainer = target.querySelector('.sts-thumb-badge-container');
     if (existingContainer) {
       if (
         existingContainer.dataset.stsVid === videoId &&
@@ -251,15 +266,13 @@
 
     const badgeEl = createBadgeElement(videoId, score);
 
-    // If anchor is not positioned, give it relative positioning
-    const computed = window.getComputedStyle(anchorEl);
+    // Ensure target has relative positioning
+    const computed = window.getComputedStyle(target);
     if (computed.position === 'static') {
-      anchorEl.style.position = 'relative';
+      target.style.position = 'relative';
     }
 
-    // Attach to overlays container if present, otherwise directly to anchor
-    const overlays = anchorEl.querySelector('#overlays') || anchorEl;
-    overlays.appendChild(badgeEl);
+    target.appendChild(badgeEl);
   }
 
   // --- BATCH QUERY ENGINE ---
@@ -291,7 +304,7 @@
         if (item && typeof item.score === 'number') {
           videoCache.set(videoId, {
             found: true,
-            score: item.score,
+            score,
             analyzedAt: item.analyzedAt,
           });
           storageToSave[`sts_cache_${videoId}`] = {
@@ -341,18 +354,20 @@
     isScanning = true;
 
     try {
-      // Broad selectors targeting YouTube thumbnail anchor elements
+      // Broad selectors targeting YouTube thumbnail anchor elements and cards
       const candidateAnchors = document.querySelectorAll(
         'a#thumbnail, ' +
         'ytd-thumbnail a, ' +
         'a.ytd-thumbnail, ' +
-        'ytd-rich-item-renderer a[href*="/watch?v="], ' +
+        'ytd-rich-item-renderer a[href*="watch?v="], ' +
         'ytd-rich-item-renderer a[href*="/shorts/"], ' +
-        'ytd-video-renderer a[href*="/watch?v="], ' +
-        'ytd-compact-video-renderer a[href*="/watch?v="], ' +
-        'ytd-grid-video-renderer a[href*="/watch?v="], ' +
-        'ytd-playlist-video-renderer a[href*="/watch?v="], ' +
-        'ytd-reel-item-renderer a[href*="/shorts/"]'
+        'ytd-video-renderer a[href*="watch?v="], ' +
+        'ytd-compact-video-renderer a[href*="watch?v="], ' +
+        'ytd-grid-video-renderer a[href*="watch?v="], ' +
+        'ytd-playlist-video-renderer a[href*="watch?v="], ' +
+        'ytd-reel-item-renderer a[href*="/shorts/"], ' +
+        'yt-lockup-view-model a[href*="watch?v="], ' +
+        'a[class*="thumbnail"][href*="watch?v="]'
       );
 
       for (const anchor of candidateAnchors) {
@@ -368,7 +383,8 @@
             renderBadgeOnAnchor(anchor, videoId, entry.score);
           } else {
             // Unanalyzed: remove badge if DOM node was recycled
-            const existing = anchor.querySelector('.sts-thumb-badge-container');
+            const target = findThumbnailTarget(anchor);
+            const existing = target?.querySelector('.sts-thumb-badge-container');
             if (existing && existing.dataset.stsVid !== videoId) {
               existing.remove();
             }
