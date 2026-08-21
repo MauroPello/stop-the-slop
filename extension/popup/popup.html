@@ -3,16 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <title>Stop the Slop</title>
+  <script>
+    // Instant theme application before render to prevent flash
+    try {
+      const theme = localStorage.getItem('sts_theme') || 'system';
+      if (theme === 'light' || theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', theme);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="container" id="popup-container">
     <!-- Header -->
     <header class="header">
-      <div class="logo-row">
-        <img src="../icons/icon-48.png" alt="Stop the Slop" class="logo-img">
-        <h1 class="logo-text">Stop the Slop</h1>
+      <div class="header-top">
+        <div class="logo-row">
+          <img src="../icons/icon-48.png" alt="Stop the Slop" class="logo-img">
+          <h1 class="logo-text">Stop the Slop</h1>
+        </div>
+        <!-- Tiny Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme mode" title="Theme: System (Auto)">
+          <span class="theme-icon theme-icon-system" id="theme-icon-system" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </span>
+          <span class="theme-icon theme-icon-dark hidden" id="theme-icon-dark" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="theme-icon theme-icon-light hidden" id="theme-icon-light" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+        </button>
       </div>
       <p class="subtitle">AI Script Detector for YouTube</p>
     </header>
@@ -56,7 +98,7 @@
             <path
               d="M 20 100 A 80 80 0 0 1 180 100"
               fill="none"
-              stroke="rgba(255,255,255,0.08)"
+              class="gauge-bg-arc"
               stroke-width="12"
               stroke-linecap="round"
             />
@@ -74,14 +116,14 @@
             <!-- Needle -->
             <line
               id="gauge-needle"
+              class="gauge-needle-line"
               x1="100" y1="100"
               x2="100" y2="30"
-              stroke="white"
               stroke-width="2.5"
               stroke-linecap="round"
               transform="rotate(-90, 100, 100)"
             />
-            <circle cx="100" cy="100" r="5" fill="white"/>
+            <circle class="gauge-needle-dot" cx="100" cy="100" r="5"/>
           </svg>
         </div>
         <div class="score-display">

@@ -2,11 +2,12 @@
  * Stop the Slop — Popup Script
  *
  * Flow:
- *   1. Check if current tab is YouTube video
- *   2. Check worker cache (GET /api/check)
- *   3. If not cached, ask content script to fetch transcript
- *   4. Send transcript to worker (POST /api/analyze)
- *   5. Display results
+ *   1. Initialize theme (system default, dark, light)
+ *   2. Check if current tab is YouTube video
+ *   3. Check worker cache (GET /api/check)
+ *   4. If not cached, ask content script to fetch transcript
+ *   5. Send transcript to worker (POST /api/analyze)
+ *   6. Display results
  */
 
 const API_BASE = 'https://stop-the-slop-api.maurobum43.workers.dev';
@@ -34,15 +35,22 @@ const els = {
   resultSource: document.getElementById('result-source'),
   sentencesSection: document.getElementById('sentences-section'),
   sentencesList: document.getElementById('sentences-list'),
+  themeToggle: document.getElementById('theme-toggle'),
+  themeIconSystem: document.getElementById('theme-icon-system'),
+  themeIconDark: document.getElementById('theme-icon-dark'),
+  themeIconLight: document.getElementById('theme-icon-light'),
 };
 
 let currentVideoId = null;
 let currentTabId = null;
+let currentTheme = 'system';
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
+  await initTheme();
+
   els.btnRetry.addEventListener('click', () => {
     if (currentVideoId) analyzeVideo(currentVideoId);
   });
@@ -69,6 +77,70 @@ async function init() {
 
   currentVideoId = videoId;
   analyzeVideo(videoId);
+}
+
+// --- Theme Management ---
+
+async function initTheme() {
+  try {
+    const stored = await chrome.storage.local.get('theme_preference');
+    currentTheme = stored.theme_preference || localStorage.getItem('sts_theme') || 'system';
+  } catch (e) {
+    currentTheme = localStorage.getItem('sts_theme') || 'system';
+  }
+
+  applyTheme(currentTheme, false);
+
+  if (els.themeToggle) {
+    els.themeToggle.addEventListener('click', cycleTheme);
+  }
+
+  // Listen for OS scheme changes to seamlessly adapt if in system mode
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  mediaQuery.addEventListener('change', () => {
+    if (currentTheme === 'system') {
+      applyTheme('system', false);
+    }
+  });
+}
+
+function cycleTheme() {
+  // Cycle order: system -> dark -> light -> system
+  const order = ['system', 'dark', 'light'];
+  const nextIdx = (order.indexOf(currentTheme) + 1) % order.length;
+  currentTheme = order[nextIdx];
+  applyTheme(currentTheme, true);
+}
+
+function applyTheme(theme, save = true) {
+  currentTheme = theme;
+
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    if (els.themeToggle) els.themeToggle.setAttribute('title', 'Theme: Light (click for System)');
+  } else if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    if (els.themeToggle) els.themeToggle.setAttribute('title', 'Theme: Dark (click for Light)');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    if (els.themeToggle) els.themeToggle.setAttribute('title', 'Theme: System / Auto (click for Dark)');
+  }
+
+  // Update theme icons
+  if (els.themeIconSystem && els.themeIconDark && els.themeIconLight) {
+    els.themeIconSystem.classList.toggle('hidden', theme !== 'system');
+    els.themeIconDark.classList.toggle('hidden', theme !== 'dark');
+    els.themeIconLight.classList.toggle('hidden', theme !== 'light');
+  }
+
+  if (save) {
+    try {
+      localStorage.setItem('sts_theme', theme);
+      chrome.storage.local.set({ theme_preference: theme });
+    } catch (e) {
+      console.warn('[Stop the Slop] Failed to save theme preference', e);
+    }
+  }
 }
 
 /**
@@ -147,31 +219,63 @@ async function analyzeVideo(videoId, forceRefresh = false) {
 }
 
 /**
- * Send a message to the content script to fetch the transcript.
+ * Send a message to the content script to fetch the transcript,
+ * with automatic fallback injection if the tab was loaded before the extension.
  */
-function fetchTranscriptFromTab(tabId, videoId) {
-  return new Promise((resolve) => {
-    chrome.tabs.sendMessage(
-      tabId,
-      { type: 'FETCH_TRANSCRIPT', videoId },
-      (response) => {
-        if (chrome.runtime.lastError) {
-          console.error(
-            'Content script communication error:',
-            chrome.runtime.lastError.message
-          );
-          resolve(null);
-          return;
+async function fetchTranscriptFromTab(tabId, videoId) {
+  const trySend = () => {
+    return new Promise((resolve) => {
+      chrome.tabs.sendMessage(
+        tabId,
+        { type: 'FETCH_TRANSCRIPT', videoId },
+        (response) => {
+          if (chrome.runtime.lastError) {
+            resolve({ error: chrome.runtime.lastError.message, result: null });
+            return;
+          }
+          if (response?.error) {
+            resolve({ error: response.error, result: null });
+            return;
+          }
+          resolve({ error: null, result: response?.transcript || null });
         }
-        if (response?.error) {
-          console.error('Transcript fetch error:', response.error);
-          resolve(null);
-          return;
-        }
-        resolve(response?.transcript || null);
-      }
-    );
-  });
+      );
+    });
+  };
+
+  // Attempt 1: direct message
+  let resp = await trySend();
+
+  // If receiving end does not exist, auto-inject scripts and retry
+  if (resp.error && resp.error.includes('Receiving end does not exist')) {
+    try {
+      console.log('[Stop the Slop] Auto-injecting content scripts into tab', tabId);
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        files: ['content-main.js'],
+        world: 'MAIN',
+      });
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        files: ['content.js'],
+        world: 'ISOLATED',
+      });
+
+      // Brief delay for initialization
+      await new Promise((r) => setTimeout(r, 200));
+
+      // Attempt 2: retry message after injection
+      resp = await trySend();
+    } catch (injErr) {
+      console.error('[Stop the Slop] Script injection failed:', injErr);
+    }
+  }
+
+  if (resp.error && !resp.result) {
+    console.error('[Stop the Slop] Transcript fetch error:', resp.error);
+  }
+
+  return resp.result;
 }
 
 /**
