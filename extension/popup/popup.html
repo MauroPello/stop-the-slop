@@ -5,17 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <title>Stop the Slop</title>
-  <script>
-    // Instant theme application before render to prevent flash
-    try {
-      const theme = localStorage.getItem('sts_theme') || 'system';
-      if (theme === 'light' || theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', theme);
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
-    } catch (e) {}
-  </script>
+  <script src="theme-init.js"></script>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
