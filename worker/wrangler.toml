@@ -1,0 +1,11 @@
+name = "stop-the-slop-api"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+[vars]
+# Sapling AI API key — set via `wrangler secret put SAPLING_API_KEY`
+
+[[d1_databases]]
+binding = "DB"
+database_name = "stop-the-slop-cache"
+database_id = "c5a325fd-722c-4b22-b09b-c5f079b2a961"
