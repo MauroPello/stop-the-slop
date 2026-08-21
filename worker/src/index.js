@@ -100,11 +100,11 @@ async function analyzeTranscript(videoId, transcript, env) {
   const cached = await checkCache(videoId, env);
   if (cached.found) return cached;
 
-  // Truncate to 50K chars to stay within Sapling limits and save quota
-  const textToAnalyze = transcript.slice(0, 50000);
+  // Take up to 15,000 characters (~3,000 words) for high accuracy without blowing rate limits
+  const textToAnalyze = transcript.slice(0, 15000);
 
-  // Call Sapling AI Detection API
-  const detection = await detectAI(textToAnalyze, env.SAPLING_API_KEY);
+  // Call Sapling AI Detection API with automatic retry
+  const detection = await detectAIWithRetry(textToAnalyze, env.SAPLING_API_KEY);
 
   // Prepare sentence scores (sorted by score descending)
   const sentenceScores = (detection.sentence_scores || [])
@@ -139,28 +139,45 @@ async function analyzeTranscript(videoId, transcript, env) {
 }
 
 /**
- * Call Sapling AI Detection API.
+ * Call Sapling AI Detection API with automatic backoff retry on 429
  */
-async function detectAI(text, apiKey) {
-  const response = await fetch('https://api.sapling.ai/api/v1/aidetect', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      key: apiKey,
-      text,
-      sent_scores: true,
-    }),
-  });
+async function detectAIWithRetry(text, apiKey, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch('https://api.sapling.ai/api/v1/aidetect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          key: apiKey,
+          text,
+          sent_scores: true,
+        }),
+      });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Sapling API error:', response.status, errorText);
-    const err = new Error(`AI detection failed: ${response.status}`);
-    err.status = 502;
-    throw err;
+      if (response.status === 429) {
+        if (attempt < retries) {
+          console.log(`Sapling 429 rate limit. Retrying in ${(attempt + 1) * 1200}ms...`);
+          await new Promise((r) => setTimeout(r, (attempt + 1) * 1200));
+          continue;
+        }
+        const err = new Error('AI detector is currently rate-limited. Please wait 10-15 seconds and try again.');
+        err.status = 429;
+        throw err;
+      }
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Sapling API error:', response.status, errorText);
+        const err = new Error(`AI detection service error (${response.status})`);
+        err.status = response.status >= 500 ? 502 : response.status;
+        throw err;
+      }
+
+      return await response.json();
+    } catch (e) {
+      if (attempt >= retries) throw e;
+    }
   }
-
-  return await response.json();
 }
 
 /**

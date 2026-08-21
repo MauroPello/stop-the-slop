@@ -23,7 +23,6 @@ const states = {
 const els = {
   errorMessage: document.getElementById('error-message'),
   btnRetry: document.getElementById('btn-retry'),
-  btnReanalyze: document.getElementById('btn-reanalyze'),
   scoreValue: document.getElementById('score-value'),
   scoreLabel: document.getElementById('score-label'),
   gaugeFill: document.getElementById('gauge-fill'),
@@ -32,7 +31,6 @@ const els = {
   verdictEmoji: document.getElementById('verdict-emoji'),
   verdictText: document.getElementById('verdict-text'),
   transcriptLength: document.getElementById('transcript-length'),
-  resultSource: document.getElementById('result-source'),
   sentencesSection: document.getElementById('sentences-section'),
   sentencesList: document.getElementById('sentences-list'),
   themeToggle: document.getElementById('theme-toggle'),
@@ -53,10 +51,6 @@ async function init() {
 
   els.btnRetry.addEventListener('click', () => {
     if (currentVideoId) analyzeVideo(currentVideoId);
-  });
-
-  els.btnReanalyze.addEventListener('click', () => {
-    if (currentVideoId) analyzeVideo(currentVideoId, true);
   });
 
   // Get the current tab
@@ -219,63 +213,174 @@ async function analyzeVideo(videoId, forceRefresh = false) {
 }
 
 /**
- * Send a message to the content script to fetch the transcript,
- * with automatic fallback injection if the tab was loaded before the extension.
+ * Extract the transcript directly from the YouTube tab in MAIN world context.
+ * This directly accesses YouTube's DOM and player objects without message-passing hops.
  */
 async function fetchTranscriptFromTab(tabId, videoId) {
-  const trySend = () => {
-    return new Promise((resolve) => {
-      chrome.tabs.sendMessage(
-        tabId,
-        { type: 'FETCH_TRANSCRIPT', videoId },
-        (response) => {
-          if (chrome.runtime.lastError) {
-            resolve({ error: chrome.runtime.lastError.message, result: null });
-            return;
-          }
-          if (response?.error) {
-            resolve({ error: response.error, result: null });
-            return;
-          }
-          resolve({ error: null, result: response?.transcript || null });
+  try {
+    const results = await chrome.scripting.executeScript({
+      target: { tabId },
+      world: 'MAIN',
+      func: async (vid) => {
+        // Helper: decode HTML / XML entities
+        function decodeEntities(str) {
+          if (!str) return '';
+          const txt = document.createElement('textarea');
+          txt.innerHTML = str;
+          return txt.value
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&apos;/g, "'")
+            .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+            .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));
         }
-      );
+
+        // 1. Check if segments are already rendered in DOM
+        function getSegmentsFromDom() {
+          const segments = document.querySelectorAll(
+            'ytd-transcript-segment-renderer .segment-text, ' +
+            'ytd-transcript-segment-renderer #segment-text, ' +
+            'ytd-transcript-segment-renderer yt-formatted-string, ' +
+            'ytd-transcript-segment-renderer .segment-text-fragment, ' +
+            'ytd-transcript-search-panel-renderer .segment-text, ' +
+            'ytd-transcript-segment-list-renderer .segment-text'
+          );
+          if (segments && segments.length > 0) {
+            const texts = Array.from(segments)
+              .map((el) => el.textContent.trim())
+              .filter(Boolean);
+            if (texts.length > 0) return texts.join(' ');
+          }
+          return null;
+        }
+
+        let domText = getSegmentsFromDom();
+        if (domText && domText.length >= 20) return domText;
+
+        // 2. Try timedtext URL fetch from playerResponse captionTracks
+        try {
+          let pr = null;
+          const player = document.getElementById('movie_player');
+          if (player && typeof player.getPlayerResponse === 'function') {
+            pr = player.getPlayerResponse();
+          }
+          if (!pr && typeof window.ytInitialPlayerResponse !== 'undefined') {
+            pr = window.ytInitialPlayerResponse;
+          }
+          const tracks = pr?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+          if (tracks && tracks.length > 0) {
+            const enTrack =
+              tracks.find(
+                (t) =>
+                  t.languageCode === 'en' ||
+                  (t.languageCode && t.languageCode.startsWith('en'))
+              ) || tracks[0];
+
+            if (enTrack?.baseUrl) {
+              // Try json3
+              try {
+                const u = new URL(enTrack.baseUrl);
+                u.searchParams.set('fmt', 'json3');
+                const r = await fetch(u.toString(), { credentials: 'include' });
+                if (r.ok) {
+                  const d = await r.json();
+                  if (d.events) {
+                    const segs = d.events
+                      .filter((e) => e.segs)
+                      .map((e) =>
+                        e.segs
+                          .map((s) => s.utf8 || '')
+                          .join('')
+                          .replace(/\n/g, ' ')
+                          .trim()
+                      )
+                      .filter(Boolean);
+                    if (segs.length > 0) return segs.join(' ');
+                  }
+                }
+              } catch (e) {}
+
+              // Try xml
+              try {
+                const r = await fetch(enTrack.baseUrl, { credentials: 'include' });
+                if (r.ok) {
+                  const xml = await r.text();
+                  if (xml && xml.length > 20) {
+                    const segs = [];
+                    const rx = /<text[^>]*>([\s\S]*?)<\/text>/gi;
+                    let m;
+                    while ((m = rx.exec(xml)) !== null) {
+                      const clean = decodeEntities(m[1]).replace(/\n/g, ' ').trim();
+                      if (clean) segs.push(clean);
+                    }
+                    if (segs.length > 0) return segs.join(' ');
+                  }
+                }
+              } catch (e) {}
+            }
+          }
+        } catch (e) {}
+
+        // 3. Automated DOM expansion: expand description and trigger transcript panel
+        try {
+          // Expand description section
+          const expandDesc = document.querySelector(
+            '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand, #description-inline-expander'
+          );
+          if (expandDesc) {
+            try { expandDesc.click(); } catch (e) {}
+          }
+
+          // Expand engagement panel directly if available
+          const panel = document.querySelector(
+            'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
+          );
+          if (panel) {
+            panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
+          }
+
+          // Find & click "Show transcript" button
+          const candidates = [
+            ...document.querySelectorAll('ytd-video-description-transcript-section-renderer button'),
+            ...document.querySelectorAll('button[aria-label*="transcript" i], button[aria-label*="trascriz" i]'),
+            ...Array.from(
+              document.querySelectorAll(
+                'ytd-button-renderer button, button.yt-spec-button-shape-next'
+              )
+            ).filter((b) => {
+              const t = (b.textContent || '').toLowerCase();
+              return t.includes('transcript') || t.includes('trascriz');
+            }),
+          ];
+          for (const btn of candidates) {
+            try {
+              btn.click();
+              break;
+            } catch (e) {}
+          }
+
+          // Poll up to 4 seconds for segments to load in DOM
+          const start = Date.now();
+          while (Date.now() - start < 4000) {
+            await new Promise((r) => setTimeout(r, 200));
+            domText = getSegmentsFromDom();
+            if (domText && domText.length >= 20) return domText;
+          }
+        } catch (e) {}
+
+        return null;
+      },
+      args: [videoId],
     });
-  };
 
-  // Attempt 1: direct message
-  let resp = await trySend();
-
-  // If receiving end does not exist, auto-inject scripts and retry
-  if (resp.error && resp.error.includes('Receiving end does not exist')) {
-    try {
-      console.log('[Stop the Slop] Auto-injecting content scripts into tab', tabId);
-      await chrome.scripting.executeScript({
-        target: { tabId },
-        files: ['content-main.js'],
-        world: 'MAIN',
-      });
-      await chrome.scripting.executeScript({
-        target: { tabId },
-        files: ['content.js'],
-        world: 'ISOLATED',
-      });
-
-      // Brief delay for initialization
-      await new Promise((r) => setTimeout(r, 200));
-
-      // Attempt 2: retry message after injection
-      resp = await trySend();
-    } catch (injErr) {
-      console.error('[Stop the Slop] Script injection failed:', injErr);
-    }
+    return results?.[0]?.result || null;
+  } catch (err) {
+    console.error('[Stop the Slop] executeScript error:', err);
+    return null;
   }
-
-  if (resp.error && !resp.result) {
-    console.error('[Stop the Slop] Transcript fetch error:', resp.error);
-  }
-
-  return resp.result;
 }
 
 /**
@@ -341,8 +446,6 @@ function displayResult(result) {
     const words = Math.round(len / 5);
     els.transcriptLength.textContent = `~${words.toLocaleString()} words`;
   }
-
-  els.resultSource.textContent = result.cached ? 'Cached result' : 'Fresh analysis';
 
   // Sentence scores
   const sentences = result.sentenceScores || [];

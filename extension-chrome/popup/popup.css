@@ -523,19 +523,6 @@ body {
   box-shadow: 0 4px 12px rgba(167, 139, 250, 0.35);
 }
 
-.btn-reanalyze {
-  width: 100%;
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.btn-reanalyze:hover {
-  background: var(--bg-card-hover);
-  color: var(--text-primary);
-}
-
 /* --- Footer --- */
 .footer {
   text-align: center;
