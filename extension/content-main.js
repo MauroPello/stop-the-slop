@@ -2,17 +2,13 @@
  * Stop the Slop — Main World Content Script
  *
  * Runs in the webpage's MAIN JavaScript context (world: "MAIN").
- * This allows direct access to YouTube's JavaScript objects:
- *   - window.ytInitialPlayerResponse
- *   - document.getElementById('movie_player')
- *   - window.ytplayer
- *
- * Without violating page CSP (since it is injected directly by Chrome).
+ * Safely accesses YouTube DOM and internal objects to extract transcripts.
  */
 
 (() => {
   if (window.__STOP_THE_SLOP_MAIN_INIT__) return;
   window.__STOP_THE_SLOP_MAIN_INIT__ = true;
+
   // Helper: decode HTML / XML entities
   function decodeEntities(str) {
     if (!str) return '';
@@ -31,25 +27,20 @@
 
   // Get player response object
   function getPlayerResponse() {
-    // 1. Try movie_player element
     try {
       const player = document.getElementById('movie_player');
       if (player && typeof player.getPlayerResponse === 'function') {
         const pr = player.getPlayerResponse();
         if (pr) return pr;
       }
-    } catch (e) {
-      console.warn('[Stop the Slop] movie_player.getPlayerResponse failed', e);
-    }
+    } catch (e) {}
 
-    // 2. Try window.ytInitialPlayerResponse
     try {
       if (typeof window.ytInitialPlayerResponse !== 'undefined' && window.ytInitialPlayerResponse) {
         return window.ytInitialPlayerResponse;
       }
     } catch (e) {}
 
-    // 3. Try ytplayer config
     try {
       if (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args) {
         const raw = window.ytplayer.config.args.raw_player_response;
@@ -57,51 +48,20 @@
       }
     } catch (e) {}
 
-    // 4. Try scanning script tags in DOM for ytInitialPlayerResponse
-    try {
-      const scripts = document.querySelectorAll('script');
-      for (const s of scripts) {
-        const t = s.textContent || '';
-        if (t.includes('ytInitialPlayerResponse')) {
-          const startIdx = t.indexOf('ytInitialPlayerResponse');
-          const jsonStart = t.indexOf('{', startIdx);
-          if (jsonStart !== -1) {
-            let depth = 0, inStr = false, esc = false;
-            for (let i = jsonStart; i < t.length; i++) {
-              const c = t[i];
-              if (esc) { esc = false; continue; }
-              if (c === '\\') { esc = true; continue; }
-              if (c === '"') { inStr = !inStr; continue; }
-              if (inStr) continue;
-              if (c === '{') depth++;
-              else if (c === '}') {
-                depth--;
-                if (depth === 0) {
-                  return JSON.parse(t.substring(jsonStart, i + 1));
-                }
-              }
-            }
-          }
-        }
-      }
-    } catch (e) {}
-
     return null;
   }
 
-  // Extract caption tracks
+  // Extract caption tracks from player response
   function getCaptionTracks(playerResponse) {
     if (!playerResponse) return null;
-    const captions = playerResponse.captions;
-    const tracklist = captions?.playerCaptionsTracklistRenderer;
-    return tracklist?.captionTracks || null;
+    return playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks || null;
   }
 
-  // Fetch and parse captions from timedtext URL
+  // Attempt timedtext URL fetch (may return 200 empty on newer security signatures)
   async function fetchCaptions(track) {
     if (!track || !track.baseUrl) return null;
 
-    // Try json3 first
+    // Try json3
     try {
       const url = new URL(track.baseUrl);
       url.searchParams.set('fmt', 'json3');
@@ -109,7 +69,7 @@
       const res = await fetch(url.toString(), { credentials: 'include' });
       if (res.ok) {
         const text = await res.text();
-        if (text && text.trim().length > 0) {
+        if (text && text.trim().length > 10) {
           try {
             const data = JSON.parse(text);
             if (data.events && Array.isArray(data.events)) {
@@ -119,25 +79,19 @@
                 .map(s => s.replace(/\n/g, ' ').trim())
                 .filter(Boolean);
 
-              if (segments.length > 0) {
-                return segments.join(' ');
-              }
+              if (segments.length > 0) return segments.join(' ');
             }
-          } catch (e) {
-            // Not valid JSON, fallback to XML
-          }
+          } catch (e) {}
         }
       }
-    } catch (e) {
-      console.warn('[Stop the Slop] json3 fetch error', e);
-    }
+    } catch (e) {}
 
-    // Try default / XML format
+    // Try raw XML
     try {
       const res = await fetch(track.baseUrl, { credentials: 'include' });
       if (res.ok) {
         const xml = await res.text();
-        if (xml && xml.trim().length > 0) {
+        if (xml && xml.trim().length > 10) {
           const segments = [];
           const regex = /<text[^>]*>([\s\S]*?)<\/text>/gi;
           let match;
@@ -145,23 +99,25 @@
             const clean = decodeEntities(match[1]).replace(/\n/g, ' ').trim();
             if (clean) segments.push(clean);
           }
-          if (segments.length > 0) {
-            return segments.join(' ');
-          }
+          if (segments.length > 0) return segments.join(' ');
         }
       }
-    } catch (e) {
-      console.warn('[Stop the Slop] xml fetch error', e);
-    }
+    } catch (e) {}
 
     return null;
   }
 
-  // Fallback: Read transcript directly from DOM if transcript panel is open
+  // Read transcript segments currently rendered in YouTube's DOM
   function getTranscriptFromDom() {
     const segments = document.querySelectorAll(
-      'ytd-transcript-segment-renderer .segment-text, ytd-transcript-segment-renderer #segment-text, ytd-transcript-search-panel-renderer .segment-text'
+      'ytd-transcript-segment-renderer .segment-text, ' +
+      'ytd-transcript-segment-renderer #segment-text, ' +
+      'ytd-transcript-segment-renderer yt-formatted-string.segment-text, ' +
+      'ytd-transcript-segment-renderer .segment-text-fragment, ' +
+      'ytd-transcript-search-panel-renderer .segment-text, ' +
+      'ytd-transcript-segment-list-renderer .segment-text'
     );
+
     if (segments && segments.length > 0) {
       const texts = Array.from(segments)
         .map(el => el.textContent.trim())
@@ -171,41 +127,100 @@
     return null;
   }
 
-  // Main extraction function
-  async function extractTranscript(videoId) {
-    // 1. Try player response
-    const playerResp = getPlayerResponse();
-    const tracks = getCaptionTracks(playerResp);
+  // Open YouTube's transcript panel via DOM interaction and read rendered segments
+  async function triggerAndExtractFromDom() {
+    // Check if already open
+    let domText = getTranscriptFromDom();
+    if (domText && domText.length >= 20) return domText;
 
-    if (tracks && tracks.length > 0) {
-      // Prefer English track (standard or ASR)
-      const englishTrack = tracks.find(
-        t => t.languageCode === 'en' || (t.languageCode && t.languageCode.startsWith('en'))
-      );
-      const chosenTrack = englishTrack || tracks[0];
-      const result = await fetchCaptions(chosenTrack);
-      if (result && result.length >= 20) {
-        return result;
-      }
+    // 1. Expand the video description section to reveal the "Show transcript" button
+    const expandDescBtn = document.querySelector(
+      '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand'
+    );
+    if (expandDescBtn && expandDescBtn.offsetParent !== null) {
+      try { expandDescBtn.click(); } catch (e) {}
+    }
 
-      // Try any other tracks if the first one failed
-      for (const t of tracks) {
-        if (t === chosenTrack) continue;
-        const res = await fetchCaptions(t);
-        if (res && res.length >= 20) return res;
+    // 2. Try expanding the transcript engagement panel directly
+    const engagementPanel = document.querySelector(
+      'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
+    );
+    if (engagementPanel) {
+      engagementPanel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
+    }
+
+    // 3. Find and click "Show transcript" button in the description or actions
+    const candidateButtons = [
+      ...document.querySelectorAll('ytd-video-description-transcript-section-renderer button'),
+      ...document.querySelectorAll('button[aria-label*="transcript" i], button[aria-label*="trascriz" i]'),
+      ...Array.from(document.querySelectorAll('ytd-button-renderer button, button.yt-spec-button-shape-next')).filter(b => {
+        const t = (b.textContent || '').toLowerCase();
+        return t.includes('transcript') || t.includes('trascriz');
+      })
+    ];
+
+    for (const btn of candidateButtons) {
+      if (btn) {
+        try {
+          btn.click();
+          break;
+        } catch (e) {}
       }
     }
 
-    // 2. Try DOM fallback if panel is open
-    const domTranscript = getTranscriptFromDom();
-    if (domTranscript && domTranscript.length >= 20) {
-      return domTranscript;
+    // 4. Poll for up to 3.5 seconds for transcript segments to load
+    const startTime = Date.now();
+    while (Date.now() - startTime < 3500) {
+      await new Promise(r => setTimeout(r, 200));
+      domText = getTranscriptFromDom();
+      if (domText && domText.length >= 20) {
+        return domText;
+      }
     }
 
     return null;
   }
 
-  // Message listener from isolated world (content.js)
+  // Master transcript extraction pipeline
+  async function extractTranscript(videoId) {
+    console.log('[Stop the Slop] Extracting transcript for', videoId);
+
+    // Method 1: Timedtext API fetch if player response is available
+    try {
+      const playerResp = getPlayerResponse();
+      const tracks = getCaptionTracks(playerResp);
+
+      if (tracks && tracks.length > 0) {
+        const englishTrack = tracks.find(
+          t => t.languageCode === 'en' || (t.languageCode && t.languageCode.startsWith('en'))
+        );
+        const chosen = englishTrack || tracks[0];
+        const res = await fetchCaptions(chosen);
+        if (res && res.length >= 20) {
+          console.log('[Stop the Slop] Transcript extracted via timedtext fetch');
+          return res;
+        }
+      }
+    } catch (e) {
+      console.warn('[Stop the Slop] Timedtext fetch method error:', e);
+    }
+
+    // Method 2: YouTube DOM transcript panel (handles all videos with captions)
+    try {
+      console.log('[Stop the Slop] Attempting DOM transcript extraction...');
+      const domResult = await triggerAndExtractFromDom();
+      if (domResult && domResult.length >= 20) {
+        console.log('[Stop the Slop] Transcript extracted via DOM transcript panel');
+        return domResult;
+      }
+    } catch (e) {
+      console.warn('[Stop the Slop] DOM transcript extraction error:', e);
+    }
+
+    return null;
+  }
+
+  // Listener for requests from isolated world (content.js)
   window.addEventListener('message', async (event) => {
     if (event.source !== window) return;
     if (event.data?.type === 'STOP_THE_SLOP_REQ_TRANSCRIPT') {

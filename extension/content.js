@@ -28,7 +28,7 @@
       const timer = setTimeout(() => {
         window.removeEventListener('message', handleResponse);
         resolve({ transcript: null, error: 'Timed out waiting for transcript' });
-      }, 5000);
+      }, 9000);
 
       function handleResponse(event) {
         if (event.source !== window) return;
