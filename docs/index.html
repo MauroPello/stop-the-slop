@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stop the Slop — AI Script Detector for YouTube</title>
-  <meta name="description" content="A lightweight, privacy-friendly browser extension that analyzes YouTube transcripts to detect AI-generated scripts in real time.">
-  <meta name="keywords" content="stop the slop, youtube ai detector, ai script detector, detect chatgpt youtube, ai transcript analyzer, chrome extension">
-  
+  <meta name="description"
+    content="A lightweight, privacy-friendly browser extension that analyzes YouTube transcripts to detect AI-generated scripts in real time.">
+  <meta name="keywords"
+    content="stop the slop, youtube ai detector, ai script detector, detect chatgpt youtube, ai transcript analyzer, chrome extension">
+
+  <!-- Canonical & Search Verification -->
+  <link rel="canonical" href="https://mauropello.github.io/stop-the-slop/">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="zHqQKL-v6g031fFwthKYjTo76juY2HFWBK62ERd6s50" />
+
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Stop the Slop — AI Script Detector for YouTube">
-  <meta property="og:description" content="Spot AI-generated YouTube scripts instantly. Sentence-by-sentence linguistic scoring right inside your browser.">
+  <meta property="og:description"
+    content="Spot AI-generated YouTube scripts instantly. Sentence-by-sentence linguistic scoring right inside your browser.">
   <meta property="og:url" content="https://mauropello.github.io/stop-the-slop/">
   <meta property="og:image" content="https://mauropello.github.io/stop-the-slop/icons/icon-128.png">
 
@@ -21,10 +30,13 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- ========================================================================
@@ -51,7 +63,8 @@
 
       <div class="nav-actions">
         <button class="theme-btn" id="theme-toggle-btn" aria-label="Toggle dark/light theme" title="Toggle Theme">
-          <svg id="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -62,13 +75,15 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <svg id="theme-icon-moon" style="display: none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="theme-icon-moon" style="display: none;" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
 
         <a href="#install" class="btn btn-primary" id="nav-btn-install">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -76,8 +91,10 @@
           <span>Get Extension</span>
         </a>
 
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu"
+          aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -104,21 +121,24 @@
           </h1>
 
           <p class="hero-description">
-            A free, open-source browser extension that analyzes YouTube video transcripts, revealing AI probability gauges and sentence-by-sentence linguistic heatmaps right on the page.
+            A free, open-source browser extension that analyzes YouTube video transcripts, revealing AI probability
+            gauges and sentence-by-sentence linguistic heatmaps right on the page.
           </p>
 
           <div class="hero-actions">
             <a href="#install" class="btn btn-primary" id="hero-btn-chrome">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <circle cx="12" cy="12" r="4" fill="currentColor" />
               </svg>
               <span>Add to Chrome / Brave</span>
             </a>
-            
-            <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="hero-btn-github">
+
+            <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer"
+              class="btn btn-secondary" id="hero-btn-github">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
               <span>View Source</span>
             </a>
@@ -126,11 +146,15 @@
 
           <div class="hero-trust">
             <div class="trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
               <span>100% Free & Open Source</span>
             </div>
             <div class="trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
               <span>Zero Tracking & Ad-Free</span>
             </div>
           </div>
@@ -164,40 +188,21 @@
                 <svg viewBox="0 0 200 120" class="gauge-svg">
                   <defs>
                     <linearGradient id="demoGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#10b981"/>
-                      <stop offset="50%" stop-color="#f59e0b"/>
-                      <stop offset="100%" stop-color="#ef4444"/>
+                      <stop offset="0%" stop-color="#10b981" />
+                      <stop offset="50%" stop-color="#f59e0b" />
+                      <stop offset="100%" stop-color="#ef4444" />
                     </linearGradient>
                   </defs>
                   <!-- Background arc -->
-                  <path
-                    d="M 20 100 A 80 80 0 0 1 180 100"
-                    fill="none"
-                    class="gauge-bg-track"
-                    stroke-width="14"
-                    stroke-linecap="round"
-                  />
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" class="gauge-bg-track" stroke-width="14"
+                    stroke-linecap="round" />
                   <!-- Colored arc -->
-                  <path
-                    d="M 20 100 A 80 80 0 0 1 180 100"
-                    fill="none"
-                    stroke="url(#demoGaugeGrad)"
-                    stroke-width="14"
-                    stroke-linecap="round"
-                    stroke-dasharray="251.33"
-                    stroke-dashoffset="0"
-                  />
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#demoGaugeGrad)" stroke-width="14"
+                    stroke-linecap="round" stroke-dasharray="251.33" stroke-dashoffset="0" />
                   <!-- Animated Needle -->
-                  <line
-                    id="sim-needle"
-                    class="gauge-needle"
-                    x1="100" y1="100"
-                    x2="100" y2="30"
-                    stroke-width="3"
-                    stroke-linecap="round"
-                    style="transform: rotate(68.4deg);"
-                  />
-                  <circle class="gauge-needle-center" cx="100" cy="100" r="6"/>
+                  <line id="sim-needle" class="gauge-needle" x1="100" y1="100" x2="100" y2="30" stroke-width="3"
+                    stroke-linecap="round" style="transform: rotate(68.4deg);" />
+                  <circle class="gauge-needle-center" cx="100" cy="100" r="6" />
                 </svg>
 
                 <div class="gauge-score-display">
@@ -213,10 +218,13 @@
 
               <!-- Transcript / Sentences snippet -->
               <div class="sim-transcript-box" id="sim-transcript">
-                <p><span class="highlight-ai">In today's fast-paced digital era, the landscape of technology is evolving at an unprecedented pace.</span></p>
+                <p><span class="highlight-ai">In today's fast-paced digital era, the landscape of technology is evolving
+                    at an unprecedented pace.</span></p>
                 <p>Many individuals often wonder how these modern innovations can transform our daily routines.</p>
-                <p><span class="highlight-ai">Furthermore, it is important to remember that efficiency and productivity remain key pillars of modern success.</span></p>
-                <p><span class="highlight-ai">In conclusion, by harnessing the full potential of these tools, one can effortlessly maximize their overall output.</span></p>
+                <p><span class="highlight-ai">Furthermore, it is important to remember that efficiency and productivity
+                    remain key pillars of modern success.</span></p>
+                <p><span class="highlight-ai">In conclusion, by harnessing the full potential of these tools, one can
+                    effortlessly maximize their overall output.</span></p>
               </div>
             </div>
           </div>
@@ -240,19 +248,22 @@
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
             </div>
             <h3 class="feature-title">Thumbnail & Feed AI Badges</h3>
             <p class="feature-desc">
-              Get instant AI probability badges right on video thumbnails in your Home feed, Search, and Recommendations before you even click.
+              Get instant AI probability badges right on video thumbnails in your Home feed, Search, and Recommendations
+              before you even click.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14 2 14 8 20 8"></polyline>
                 <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -262,25 +273,29 @@
             </div>
             <h3 class="feature-title">Sentence-Level AI Heatmap</h3>
             <p class="feature-desc">
-              Inspect the breakdown to see the exact robotic sentences and repetitive formulas that triggered the AI detector.
+              Inspect the breakdown to see the exact robotic sentences and repetitive formulas that triggered the AI
+              detector.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
             <h3 class="feature-title">100% Privacy Focused</h3>
             <p class="feature-desc">
-              No browsing history tracked. No login required. No tracking cookies. Video transcripts are processed purely for script analysis.
+              No browsing history tracked. No login required. No tracking cookies. Video transcripts are processed
+              purely for script analysis.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M8 12h8"></path>
                 <path d="M12 8v8"></path>
@@ -288,25 +303,29 @@
             </div>
             <h3 class="feature-title">Cloudflare Edge Caching</h3>
             <p class="feature-desc">
-              Analyzed videos are cached on global Cloudflare D1 edge storage, delivering sub-100ms instant verdicts for trending videos.
+              Analyzed videos are cached on global Cloudflare D1 edge storage, delivering sub-100ms instant verdicts for
+              trending videos.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </div>
             <h3 class="feature-title">Dark & Light Adaptive</h3>
             <p class="feature-desc">
-              Seamlessly matches YouTube's dark and light aesthetic, with automatic OS system preference detection and smooth transitions.
+              Seamlessly matches YouTube's dark and light aesthetic, with automatic OS system preference detection and
+              smooth transitions.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
                 <line x1="16" y1="8" x2="2" y2="22"></line>
                 <line x1="17.5" y1="15" x2="9" y2="15"></line>
@@ -314,7 +333,8 @@
             </div>
             <h3 class="feature-title">Multi-Browser Ready</h3>
             <p class="feature-desc">
-              Built on modern Manifest V3 standards with full compatibility for Google Chrome, Brave, Microsoft Edge, Opera, and Mozilla Firefox.
+              Built on modern Manifest V3 standards with full compatibility for Google Chrome, Brave, Microsoft Edge,
+              Opera, and Mozilla Firefox.
             </p>
           </div>
         </div>
@@ -339,7 +359,8 @@
             <div class="step-number">01</div>
             <h3 class="step-title">Extract Transcript</h3>
             <p class="step-desc">
-              When you load a YouTube video, the extension non-intrusively extracts official or auto-generated subtitle tracks directly from the page.
+              When you load a YouTube video, the extension non-intrusively extracts official or auto-generated subtitle
+              tracks directly from the page.
             </p>
           </div>
 
@@ -347,7 +368,8 @@
             <div class="step-number">02</div>
             <h3 class="step-title">Edge AI Evaluation</h3>
             <p class="step-desc">
-              The transcript is analyzed via our fast Cloudflare Worker API to detect typical LLM stylistic markers, sentence perplexity, and repetitive filler formulas.
+              The transcript is analyzed via our fast Cloudflare Worker API to detect typical LLM stylistic markers,
+              sentence perplexity, and repetitive filler formulas.
             </p>
           </div>
 
@@ -355,7 +377,8 @@
             <div class="step-number">03</div>
             <h3 class="step-title">Instant In-Page Score</h3>
             <p class="step-desc">
-              You receive an intuitive probability gauge and an itemized breakdown of flagged sentences in the extension popup and on-screen badge.
+              You receive an intuitive probability gauge and an itemized breakdown of flagged sentences in the extension
+              popup and on-screen badge.
             </p>
           </div>
         </div>
@@ -383,13 +406,14 @@
           <!-- Chrome Tab -->
           <div class="tab-pane active" id="tab-chrome">
             <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
-              Install directly with one click from the official Chrome Web Store for Google Chrome, Brave, and Microsoft Edge:
+              Install directly with one click from the official Chrome Web Store for Google Chrome, Brave, and Microsoft
+              Edge:
             </p>
             <div style="text-align: center;">
               <a href="#" class="btn btn-primary" id="btn-chrome-store" style="padding: 1rem 2rem; font-size: 1.05rem;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                  <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                  <circle cx="12" cy="12" r="4" fill="currentColor" />
                 </svg>
                 <span>Add to Chrome (Free)</span>
               </a>
@@ -405,10 +429,11 @@
               Get Stop the Slop for Mozilla Firefox from the Firefox Add-ons repository:
             </p>
             <div style="text-align: center;">
-              <a href="#" class="btn btn-secondary" id="btn-firefox-store" style="padding: 1rem 2rem; font-size: 1.05rem;">
+              <a href="#" class="btn btn-secondary" id="btn-firefox-store"
+                style="padding: 1rem 2rem; font-size: 1.05rem;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
                 </svg>
                 <span>Get Firefox Add-on</span>
               </a>
@@ -420,7 +445,7 @@
             <p style="color: var(--text-secondary); font-size: 0.95rem;">
               Load directly into your browser in developer mode:
             </p>
-            
+
             <div class="code-block" id="code-clone">
               <button class="copy-btn" data-clipboard-target="#code-clone-text">Copy</button>
               <pre><code id="code-clone-text">git clone https://github.com/MauroPello/stop-the-slop.git</code></pre>
@@ -464,7 +489,9 @@
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              Detection is powered by advanced AI linguistic analysis via Sapling AI and heuristic pattern detectors. While it provides strong indicative probabilities of LLM-generated phrasing, results are advisory rather than 100% conclusive.
+              Detection is powered by advanced AI linguistic analysis via Sapling AI and heuristic pattern detectors.
+              While it provides strong indicative probabilities of LLM-generated phrasing, results are advisory rather
+              than 100% conclusive.
             </div>
           </details>
 
@@ -474,7 +501,9 @@
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              Zero personal data is collected. The extension only reads the video ID and transcript on the YouTube watch page you are currently viewing to perform the analysis. See our <a href="privacy.html" style="color: var(--accent-primary); text-decoration: underline;">Privacy Policy</a> for full details.
+              Zero personal data is collected. The extension only reads the video ID and transcript on the YouTube watch
+              page you are currently viewing to perform the analysis. See our <a href="privacy.html"
+                style="color: var(--accent-primary); text-decoration: underline;">Privacy Policy</a> for full details.
             </div>
           </details>
 
@@ -484,7 +513,8 @@
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              The extension requires a transcript to analyze. It works seamlessly with both manual creator subtitles and YouTube's auto-generated captions. If a video has all captions disabled, analysis cannot be performed.
+              The extension requires a transcript to analyze. It works seamlessly with both manual creator subtitles and
+              YouTube's auto-generated captions. If a video has all captions disabled, analysis cannot be performed.
             </div>
           </details>
         </div>
@@ -521,8 +551,10 @@
         <div>
           <h4 class="footer-title">Resources</h4>
           <ul class="footer-links">
-            <li><a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a></li>
-            <li><a href="https://github.com/MauroPello/stop-the-slop/issues" target="_blank" rel="noopener noreferrer" class="footer-link">Report an Issue</a></li>
+            <li><a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer"
+                class="footer-link">GitHub Repository</a></li>
+            <li><a href="https://github.com/MauroPello/stop-the-slop/issues" target="_blank" rel="noopener noreferrer"
+                class="footer-link">Report an Issue</a></li>
             <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
           </ul>
         </div>
@@ -530,7 +562,8 @@
         <div>
           <h4 class="footer-title">Legal & Community</h4>
           <ul class="footer-links">
-            <li><a href="https://github.com/MauroPello/stop-the-slop/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">MIT License</a></li>
+            <li><a href="https://github.com/MauroPello/stop-the-slop/blob/main/LICENSE" target="_blank"
+                rel="noopener noreferrer" class="footer-link">MIT License</a></li>
             <li><a href="privacy.html" class="footer-link">Privacy Statement</a></li>
           </ul>
         </div>
@@ -545,4 +578,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>
