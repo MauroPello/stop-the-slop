@@ -29,6 +29,8 @@ package-lock.json
 .env
 .env.local
 .env.*.local
+.dev.vars
+.dev.vars.*
 *.pem
 
 # IDE & Editor settings
