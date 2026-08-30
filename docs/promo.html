@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop the Slop — Promotion Hub & Launch Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --bg-surface: #12161f;
+      --bg-card: #181e2b;
+      --bg-card-hover: #1f2738;
+      --accent-primary: #6366f1;
+      --accent-primary-hover: #4f46e5;
+      --accent-secondary: #06b6d4;
+      --accent-success: #10b981;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.4);
+      --radius: 12px;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .brand-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-title span {
+      background: linear-gradient(135deg, #818cf8 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .badge-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-free { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-high { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-social { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-dev { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); }
+
+    /* Progress Widget */
+    .progress-widget {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar-bg {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #06b6d4, #10b981);
+      width: 0%;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Filters */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+    }
+
+    .search-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      width: 260px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .promo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .promo-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .promo-card.completed {
+      opacity: 0.65;
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(24, 30, 43, 0.7);
+    }
+
+    .promo-card.completed .card-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--accent-success);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .card-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .field-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+    }
+
+    .field-label {
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .field-value-preview {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 180px;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: var(--accent-success);
+      border-color: var(--accent-success);
+      color: #fff;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    .btn-submit {
+      background: var(--accent-primary);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-primary-hover);
+      transform: scale(1.02);
+    }
+
+    .btn-details {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .btn-details:hover {
+      color: var(--text-main);
+    }
+
+    /* Modal / Drawer for full content preview */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 750px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .code-snippet-box {
+      background: #000;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent-success);
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <div class="brand-title">
+          <span>Stop the Slop</span> 🚀 Promotion Hub
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
+          One-click launch dashboard: direct submission links, character-counted copy, and live progress tracking.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; align-items: center;">
+        <button id="btn-reset-progress" class="filter-btn" style="color: var(--accent-danger);">Reset Progress</button>
+        <a href="https://mauropello.github.io/stop-the-slop/" target="_blank" class="btn-submit" style="background: rgba(255,255,255,0.08);">Website ↗</a>
+      </div>
+    </header>
+
+    <!-- Live Progress Bar -->
+    <div class="progress-widget">
+      <div class="progress-meta">
+        <span>Submission Progress</span>
+        <span id="progress-text">0 of 0 Completed (0%)</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Filters & Search -->
+    <div class="controls-row">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-btn active" data-cat="all">All Channels</button>
+        <button class="filter-btn" data-cat="extensions">Extension Dirs</button>
+        <button class="filter-btn" data-cat="launches">Product Launches</button>
+        <button class="filter-btn" data-cat="reddit">Reddit</button>
+        <button class="filter-btn" data-cat="ai">AI Dirs</button>
+        <button class="filter-btn" data-cat="foss">Open Source</button>
+        <button class="filter-btn" data-cat="social">Social & Outreach</button>
+      </div>
+
+      <input type="text" id="search-input" class="search-input" placeholder="Search platforms, tags...">
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid" id="cards-grid">
+      <!-- Injected by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Modal for Full Preview -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" style="font-size: 1.2rem;">Platform Details</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    const PROMO_DATA = [
+      // 1. EXTENSION DIRECTORIES
+      {
+        id: "extpose",
+        category: "extensions",
+        title: "ExtPose",
+        badge: "Free",
+        badgeClass: "badge-free",
+        url: "https://extpose.com",
+        desc: "Analytics & discovery directory for Chrome extensions. Auto-indexes store listings.",
+        fields: {
+          "Name": "Stop the Slop — AI Script Detector",
+          "Tags": "YouTube, AI Detection, Productivity, Browser Extension",
+          "Website": "https://mauropello.github.io/stop-the-slop/"
+        }
+      },
+      {
+        id: "chromestats",
+        category: "extensions",
+        title: "Chrome-Stats",
+        badge: "Analytics",
+        badgeClass: "badge-dev",
+        url: "https://chrome-stats.com",
+        desc: "Extension ranking & discovery database. Claim developer profile to verify ownership.",
+        fields: {
+          "Name": "Stop the Slop — AI Script Detector",
+          "License": "MIT Open Source",
+          "Tags": "YouTube tools, AI script detection, Privacy"
+        }
+      },
+      {
+        id: "alternativeto",
+        category: "extensions",
+        title: "AlternativeTo",
+        badge: "High Impact",
+        badgeClass: "badge-high",
+        url: "https://alternativeto.net/software/create/",
+        desc: "Top software comparison platform. Ranks well in Google search for alternative queries.",
+        fields: {
+          "Name": "Stop the Slop",
+          "Tagline": "Free, open-source browser extension to detect AI-generated YouTube scripts.",
+          "Tags": "AI Detection, YouTube Tools, Browser Extensions, Open Source",
+          "Alternatives": "GPTZero, ZeroGPT, SponsorBlock, Return YouTube Dislike"
+        }
+      },
+      {
+        id: "slant",
+        category: "extensions",
+        title: "Slant.co",
+        badge: "Community",
+        badgeClass: "badge-social",
+        url: "https://www.slant.co/topics/new",
+        desc: "Community 'best X for Y' recommendation engine. Add to 'Best YouTube extensions'.",
+        fields: {
+          "Pros": "100% free, MIT open-source, thumbnail badges, sentence heatmap, zero tracking",
+          "Cons": "Requires public caption tracks to perform detection"
+        }
+      },
+
+      // 2. OPEN SOURCE DIRECTORIES
+      {
+        id: "openalternative",
+        category: "foss",
+        title: "OpenAlternative",
+        badge: "Open Source",
+        badgeClass: "badge-free",
+        url: "https://openalternative.co/submit",
+        desc: "Curated open-source showcase. Perfect fit for MIT-licensed tools.",
+        fields: {
+          "Name": "Stop the Slop",
+          "GitHub": "https://github.com/MauroPello/stop-the-slop",
+          "Tagline": "Open-source AI script detector for YouTube videos.",
+          "License": "MIT"
+        }
+      },
+      {
+        id: "sourceforge",
+        category: "foss",
+        title: "SourceForge",
+        badge: "SEO",
+        badgeClass: "badge-dev",
+        url: "https://sourceforge.net/p/add_project/",
+        desc: "Long-standing open source directory with high domain authority.",
+        fields: {
+          "Name": "Stop the Slop — AI Script Detector",
+          "Category": "Internet > Browsers > Extensions",
+          "Summary": "AI script detection browser extension for YouTube with sentence heatmaps."
+        }
+      },
+
+      // 3. AI TOOL DIRECTORIES
+      {
+        id: "taaft",
+        category: "ai",
+        title: "There's An AI For That",
+        badge: "Massive Reach",
+        badgeClass: "badge-high",
+        url: "https://theresanaiforthat.com/submit/",
+        desc: "The largest directory of AI tools with hundreds of thousands of monthly visitors.",
+        fields: {
+          "Name": "Stop the Slop",
+          "Tagline": "Detect AI-generated scripts & narration on YouTube before wasting time.",
+          "Pricing": "Free / Open Source"
+        }
+      },
+      {
+        id: "futurepedia",
+        category: "ai",
+        title: "Futurepedia",
+        badge: "AI Directory",
+        badgeClass: "badge-free",
+        url: "https://www.futurepedia.io/submit-tool",
+        desc: "Leading directory for AI solutions and productivity apps.",
+        fields: {
+          "Tool Name": "Stop the Slop",
+          "Category": "AI Detection / Productivity",
+          "Tagline": "Instant AI script detection and thumbnail ratings for YouTube."
+        }
+      },
+      {
+        id: "futuretools",
+        category: "ai",
+        title: "FutureTools",
+        badge: "Matt Wolfe",
+        badgeClass: "badge-social",
+        url: "https://www.futuretools.io/submit-a-tool",
+        desc: "Curated by popular AI YouTuber Matt Wolfe.",
+        fields: {
+          "Name": "Stop the Slop",
+          "URL": "https://mauropello.github.io/stop-the-slop/",
+          "Category": "Generative Video / AI Detection"
+        }
+      },
+
+      // 4. PRODUCT LAUNCH PLATFORMS
+      {
+        id: "showhn",
+        category: "launches",
+        title: "Show HN (Hacker News)",
+        badge: "Highest Tech ROI",
+        badgeClass: "badge-high",
+        url: "https://news.ycombinator.com/showhn.html",
+        desc: "Technical developer audience. Focus on edge architecture & open source.",
+        fields: {
+          "Title": "Show HN: Stop the Slop – Detect AI-generated YouTube scripts and content farms",
+          "URL": "https://github.com/MauroPello/stop-the-slop",
+          "First Comment": "Hi HN! I built Stop the Slop, an open-source (MIT) browser extension for Chrome & Firefox..."
+        }
+      },
+      {
+        id: "producthunt",
+        category: "launches",
+        title: "Product Hunt",
+        badge: "Maker Launch",
+        badgeClass: "badge-high",
+        url: "https://www.producthunt.com/posts/new",
+        desc: "Premier tech launch board. Include demo screenshot & maker comment.",
+        fields: {
+          "Tagline": "Detect AI-generated scripts & content farms on YouTube.",
+          "Topics": "Artificial Intelligence, Chrome Extensions, YouTube, Open Source",
+          "Pricing": "Free"
+        }
+      },
+      {
+        id: "indiehackers",
+        category: "launches",
+        title: "Indie Hackers",
+        badge: "Story Post",
+        badgeClass: "badge-social",
+        url: "https://www.indiehackers.com/products",
+        desc: "Post as a build story: 'I built an open-source tool to detect AI slop on YouTube'.",
+        fields: {
+          "Title": "I built an open-source tool to detect AI slop on YouTube — here's how it works",
+          "Angle": "Manifest V3 + Cloudflare Worker edge caching learnings"
+        }
+      },
+      {
+        id: "uneed",
+        category: "launches",
+        title: "Uneed Best",
+        badge: "Daily Launch",
+        badgeClass: "badge-free",
+        url: "https://www.uneed.best/submit-a-tool",
+        desc: "Indie-friendly curated tool directory with capped daily launches.",
+        fields: {
+          "Pitch": "Detect AI-generated scripts on YouTube in real time.",
+          "Category": "Developer Tools / AI / Productivity"
+        }
+      },
+      {
+        id: "microlaunch",
+        category: "launches",
+        title: "MicroLaunch",
+        badge: "30-Day Listing",
+        badgeClass: "badge-dev",
+        url: "https://microlaunch.net/submit",
+        desc: "Free launch platform where products stay featured for a full month.",
+        fields: {
+          "Tagline": "Spot AI content farms and automated video scripts directly on YouTube."
+        }
+      },
+      {
+        id: "devhunt",
+        category: "launches",
+        title: "DevHunt",
+        badge: "Dev Tools",
+        badgeClass: "badge-dev",
+        url: "https://devhunt.org/tool/submit",
+        desc: "Weekly launch board built specifically for developers and open-source makers.",
+        fields: {
+          "Tagline": "Open-source AI script detector & thumbnail rater for YouTube"
+        }
+      },
+      {
+        id: "peerlist",
+        category: "launches",
+        title: "Peerlist Launch",
+        badge: "Network",
+        badgeClass: "badge-social",
+        url: "https://peerlist.io/launch",
+        desc: "Tech professional network with active weekly product launches.",
+        fields: {
+          "Tagline": "An open-source browser extension to unmask AI-generated video scripts."
+        }
+      },
+
+      // 5. REDDIT COMMUNITIES
+      {
+        id: "reddit_chrome",
+        category: "reddit",
+        title: "r/chrome_extensions",
+        badge: "Direct Fit",
+        badgeClass: "badge-high",
+        url: "https://www.reddit.com/r/chrome_extensions/submit",
+        desc: "Share your extension with fellow Chrome extension enthusiasts.",
+        fields: {
+          "Title": "I built an open-source extension that detects AI-generated YouTube scripts and shows badges on thumbnails",
+          "Flair": "Showcase"
+        }
+      },
+      {
+        id: "reddit_opensource",
+        category: "reddit",
+        title: "r/opensource",
+        badge: "FOSS Community",
+        badgeClass: "badge-free",
+        url: "https://www.reddit.com/r/opensource/submit",
+        desc: "Highlight the MIT license, zero tracking, and transparency.",
+        fields: {
+          "Title": "Stop the Slop: An open-source (MIT) browser extension to detect AI-generated YouTube scripts with zero tracking",
+          "Flair": "Project"
+        }
+      },
+      {
+        id: "reddit_sideproject",
+        category: "reddit",
+        title: "r/SideProject",
+        badge: "Maker Community",
+        badgeClass: "badge-social",
+        url: "https://www.reddit.com/r/SideProject/submit",
+        desc: "Share the origin story and solve for low-effort video churn.",
+        fields: {
+          "Title": "I built a tool to spot AI slop on YouTube before you waste your time watching it",
+          "Flair": "Launched"
+        }
+      },
+      {
+        id: "reddit_firefox",
+        category: "reddit",
+        title: "r/firefox",
+        badge: "Firefox AMO",
+        badgeClass: "badge-dev",
+        url: "https://www.reddit.com/r/firefox/submit",
+        desc: "Announce official Mozilla Add-on approval and zero data collection policy.",
+        fields: {
+          "Title": "Stop the Slop is now live on Firefox Add-ons (AMO): An open-source tool to detect AI-generated YouTube scripts",
+          "Flair": "Add-on"
+        }
+      },
+      {
+        id: "reddit_webdev",
+        category: "reddit",
+        title: "r/webdev",
+        badge: "Technical",
+        badgeClass: "badge-dev",
+        url: "https://www.reddit.com/r/webdev/submit",
+        desc: "Technical breakdown of MAIN vs ISOLATED scripts and Cloudflare Workers.",
+        fields: {
+          "Title": "How I built a fast, sub-50ms YouTube AI script detector using Manifest V3 and Cloudflare Workers",
+          "Flair": "Showoff Saturday"
+        }
+      },
+      {
+        id: "reddit_privacy",
+        category: "reddit",
+        title: "r/privacy",
+        badge: "Zero Telemetry",
+        badgeClass: "badge-free",
+        url: "https://www.reddit.com/r/privacy/submit",
+        desc: "Emphasize zero cookies, no accounts, and MIT open-source code.",
+        fields: {
+          "Title": "Stop the Slop: A zero-telemetry, open-source browser extension to detect AI scripts on YouTube",
+          "Flair": "Tool"
+        }
+      },
+      {
+        id: "reddit_youtubers",
+        category: "reddit",
+        title: "r/youtubers & r/NewTubers",
+        badge: "Creators",
+        badgeClass: "badge-social",
+        url: "https://www.reddit.com/r/youtubers/submit",
+        desc: "Help creators protect authentic research from mass-produced content farms.",
+        fields: {
+          "Title": "I made a free tool to help viewers distinguish human-written YouTube scripts from mass-produced AI content farms"
+        }
+      },
+
+      // 6. SOCIAL & OUTREACH
+      {
+        id: "twitter_thread",
+        category: "social",
+        title: "X (Twitter) Thread",
+        badge: "Viral Hook",
+        badgeClass: "badge-social",
+        url: "https://x.com/compose/post",
+        desc: "5-tweet launch thread with visual demo screenshot and store links.",
+        fields: {
+          "Tweet 1 (Hook)": "Tired of clicking on YouTube videos only to realize 30s in that it's a low-effort AI content farm reading a ChatGPT script? 🤖🚫 I built Stop the Slop...",
+          "Hashtags": "#OpenSource #ChromeExtension #YouTube #AI"
+        }
+      },
+      {
+        id: "linkedin_post",
+        category: "social",
+        title: "LinkedIn Post",
+        badge: "Professional",
+        badgeClass: "badge-dev",
+        url: "https://www.linkedin.com/feed/",
+        desc: "Thought-leadership announcement post on generative AI content churn.",
+        fields: {
+          "Headline": "Spotting AI Slop on YouTube with Open Source Browser Tools",
+          "Tags": "#OpenSource #SoftwareEngineering #AI #ChromeExtension"
+        }
+      },
+      {
+        id: "devto_article",
+        category: "social",
+        title: "Dev.to Technical Post",
+        badge: "Full Article Ready",
+        badgeClass: "badge-dev",
+        url: "https://dev.to/new",
+        desc: "Publish the prepared complete article: 'How I Built an Open-Source Browser Extension...'",
+        fields: {
+          "File": "marketing/articles/devto_how_i_built_stop_the_slop.md",
+          "Tags": "javascript, webdev, opensource, ai"
+        }
+      }
+    ];
+
+    // State management
+    const STORAGE_KEY = "stop_the_slop_promo_state_v1";
+    let completedSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+
+    const cardsGrid = document.getElementById("cards-grid");
+    const progressFill = document.getElementById("progress-fill");
+    const progressText = document.getElementById("progress-text");
+    const searchInput = document.getElementById("search-input");
+    const filterTabs = document.getElementById("filter-tabs");
+    const toast = document.getElementById("toast");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const modalTitle = document.getElementById("modal-title");
+    const modalBody = document.getElementById("modal-body");
+    const modalClose = document.getElementById("modal-close");
+
+    let currentFilter = "all";
+    let searchQuery = "";
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(completedSet)));
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = PROMO_DATA.length;
+      const completed = completedSet.size;
+      const pct = Math.round((completed / total) * 100);
+      progressFill.style.width = pct + "%";
+      progressText.textContent = `${completed} of ${total} Completed (${pct}%)`;
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function copyToClipboard(text, btnElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Copied to clipboard! 📋");
+        if (btnElement) {
+          const orig = btnElement.innerHTML;
+          btnElement.innerHTML = "✓ Copied";
+          btnElement.classList.add("copied");
+          setTimeout(() => {
+            btnElement.innerHTML = orig;
+            btnElement.classList.remove("copied");
+          }, 1800);
+        }
+      });
+    }
+
+    function renderCards() {
+      cardsGrid.innerHTML = "";
+
+      const filtered = PROMO_DATA.filter(item => {
+        const matchesCat = currentFilter === "all" || item.category === currentFilter;
+        const matchesQuery = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             (item.badge && item.badge.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        cardsGrid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+            No matching channels found. Try changing filters or search terms.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const isDone = completedSet.has(item.id);
+        const card = document.createElement("div");
+        card.className = `promo-card ${isDone ? 'completed' : ''}`;
+        card.dataset.id = item.id;
+
+        // Render key fields
+        let fieldsHtml = "";
+        if (item.fields) {
+          for (const [key, val] of Object.entries(item.fields)) {
+            fieldsHtml += `
+              <div class="field-row">
+                <span class="field-label">${key}:</span>
+                <span class="field-value-preview" title="${val}">${val}</span>
+                <button class="copy-btn" onclick="copyToClipboard('${val.replace(/'/g, "\\'")}', this)">
+                  Copy
+                </button>
+              </div>
+            `;
+          }
+        }
+
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="card-title-group">
+              <input type="checkbox" class="custom-checkbox" ${isDone ? 'checked' : ''} onchange="toggleDone('${item.id}', this)">
+              <span class="card-title">${item.title}</span>
+            </div>
+            <span class="badge-pill ${item.badgeClass}">${item.badge}</span>
+          </div>
+
+          <p class="card-desc">${item.desc}</p>
+
+          <div class="card-fields">
+            ${fieldsHtml}
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-details" onclick="openDetailsModal('${item.id}')">View Details</button>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn-submit">
+              Open Form ↗
+            </a>
+          </div>
+        `;
+
+        cardsGrid.appendChild(card);
+      });
+
+      updateProgress();
+    }
+
+    function toggleDone(id, checkbox) {
+      if (checkbox.checked) {
+        completedSet.add(id);
+      } else {
+        completedSet.delete(id);
+      }
+      saveState();
+      const card = document.querySelector(`.promo-card[data-id="${id}"]`);
+      if (card) {
+        card.classList.toggle("completed", checkbox.checked);
+      }
+    }
+
+    function openDetailsModal(id) {
+      const item = PROMO_DATA.find(i => i.id === id);
+      if (!item) return;
+
+      modalTitle.textContent = `${item.title} — Submission Kit`;
+      
+      let html = `
+        <p style="color: var(--text-muted);">${item.desc}</p>
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <a href="${item.url}" target="_blank" class="btn-submit">Open Submission URL ↗</a>
+        </div>
+        <hr style="border: 0; border-top: 1px solid var(--border-color);">
+      `;
+
+      if (item.fields) {
+        for (const [k, v] of Object.entries(item.fields)) {
+          html += `
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <strong style="color: var(--accent-secondary); font-size: 0.9rem;">${k}</strong>
+                <button class="copy-btn" onclick="copyToClipboard('${v.replace(/'/g, "\\'")}', this)">Copy Content</button>
+              </div>
+              <div class="code-snippet-box">${v}</div>
+            </div>
+          `;
+        }
+      }
+
+      modalBody.innerHTML = html;
+      modalOverlay.classList.add("active");
+    }
+
+    modalClose.onclick = () => modalOverlay.classList.remove("active");
+    modalOverlay.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove("active"); };
+
+    // Filter clicks
+    filterTabs.addEventListener("click", (e) => {
+      if (e.target.classList.contains("filter-btn")) {
+        filterTabs.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        e.target.classList.add("active");
+        currentFilter = e.target.dataset.cat;
+        renderCards();
+      }
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      renderCards();
+    });
+
+    document.getElementById("btn-reset-progress").onclick = () => {
+      if (confirm("Reset all checkboxes and progress tracking?")) {
+        completedSet.clear();
+        saveState();
+        renderCards();
+      }
+    };
+
+    // Initial render
+    renderCards();
+  </script>
+</body>
+</html>
