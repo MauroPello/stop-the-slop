@@ -12,6 +12,11 @@
   <link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
   <link rel="icon" type="image/png" sizes="128x128" href="icons/icon-128.png">
 
+  <!-- Canonical & SEO Meta -->
+  <link rel="canonical" href="https://mauropello.github.io/stop-the-slop/">
+  <meta name="keywords" content="YouTube AI detector, AI script detector, stop AI slop, YouTube browser extension, AI video detection, content farm detector, chrome extension, firefox addon, sapling ai, open source">
+  <meta name="author" content="Mauro Pellonara">
+
   <!-- Open Graph / Meta -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mauropello.github.io/stop-the-slop/">
@@ -35,6 +40,58 @@
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
+  <!-- Structured Data (JSON-LD) for Search Engine Authority & Entity Linking -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://mauropello.github.io/stop-the-slop/#software",
+        "name": "Stop the Slop — AI Script Detector for YouTube",
+        "alternateName": "Stop the Slop",
+        "applicationCategory": "BrowserExtension",
+        "operatingSystem": "Chrome, Brave, Microsoft Edge, Mozilla Firefox, Opera",
+        "description": "Free, privacy-first browser extension that analyzes YouTube video transcripts in real-time to detect AI-generated slop, robotic narration, and recycled content.",
+        "url": "https://mauropello.github.io/stop-the-slop/",
+        "image": "https://mauropello.github.io/stop-the-slop/icons/icon-128.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Mauro Pellonara",
+          "url": "https://github.com/MauroPello"
+        },
+        "downloadUrl": "https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg",
+        "sameAs": [
+          "https://github.com/MauroPello/stop-the-slop",
+          "https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg",
+          "https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/",
+          "https://www.producthunt.com/products/stop-the-slop-2",
+          "https://alternativeto.net/software/stop-the-slop/about/",
+          "https://sourceforge.net/projects/stop-the-slop/",
+          "https://peerlist.io/mpellonara/project/stop-the-slop",
+          "https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://mauropello.github.io/stop-the-slop/#website",
+        "url": "https://mauropello.github.io/stop-the-slop/",
+        "name": "Stop the Slop",
+        "description": "Free, open-source AI script detector for YouTube videos.",
+        "publisher": {
+          "@type": "Person",
+          "name": "Mauro Pellonara"
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -54,6 +111,7 @@
         <ul class="nav-links" id="nav-links">
           <li><a href="#features" class="nav-link" id="nav-link-features">Features</a></li>
           <li><a href="#how-it-works" class="nav-link" id="nav-link-how">How it Works</a></li>
+          <li><a href="#ecosystem" class="nav-link" id="nav-link-ecosystem">Ecosystem</a></li>
           <li><a href="#install" class="nav-link" id="nav-link-install">Install</a></li>
           <li><a href="#faq" class="nav-link" id="nav-link-faq">FAQ</a></li>
           <li><a href="privacy.html" class="nav-link" id="nav-link-privacy">Privacy</a></li>
@@ -360,6 +418,133 @@
     </section>
 
     <!-- ========================================================================
+         Featured On & Community Ecosystem Section
+         ======================================================================== -->
+    <section class="section" id="ecosystem">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-pill">Ecosystem & Directory Listings</span>
+          <h2 class="section-title">Featured Across the Web</h2>
+          <p class="section-subtitle">
+            Explore community discussions, software directory listings, open-source mirrors, and engineering writeups.
+          </p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <!-- Product Hunt -->
+          <a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-producthunt" style="--card-accent: #da552f;">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper" style="color: #da552f; background: rgba(218, 85, 47, 0.1);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13.6 8.4h-3.4v3.6h3.4c1 0 1.8-.8 1.8-1.8s-.8-1.8-1.8-1.8zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.6 14.4h-3.4V18H7.8V6h5.8c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge" style="color: #da552f; border-color: rgba(218, 85, 47, 0.3); background: rgba(218, 85, 47, 0.1);">Product Launch</span>
+              </div>
+              <h3 class="ecosystem-title">Product Hunt</h3>
+              <p class="ecosystem-desc">
+                Featured on Product Hunt. Join the community launch discussion, upvote the tool, and share your feedback.
+              </p>
+            </div>
+            <div class="ecosystem-link-text" style="color: #da552f;">
+              <span>View Product on Product Hunt</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
+          <!-- AlternativeTo -->
+          <a href="https://alternativeto.net/software/stop-the-slop/about/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-alternativeto" style="--card-accent: #0088cc;">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper" style="color: #0088cc; background: rgba(0, 136, 204, 0.1);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L1 21h22L12 2zm0 4.5l7.5 13H4.5L12 6.5zm-1.5 5.5v4h3v-4h-3z"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge" style="color: #0088cc; border-color: rgba(0, 136, 204, 0.3); background: rgba(0, 136, 204, 0.1);">Directory & Reviews</span>
+              </div>
+              <h3 class="ecosystem-title">AlternativeTo</h3>
+              <p class="ecosystem-desc">
+                Listed on AlternativeTo. Discover crowdsourced ratings, find open-source alternatives, and post your review.
+              </p>
+            </div>
+            <div class="ecosystem-link-text" style="color: #0088cc;">
+              <span>View on AlternativeTo</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
+          <!-- SourceForge -->
+          <a href="https://sourceforge.net/projects/stop-the-slop/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-sourceforge" style="--card-accent: #ee5922;">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper" style="color: #ee5922; background: rgba(238, 89, 34, 0.1);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.04 0C5.4 0 .02 5.38.02 12.02c0 6.64 5.38 12.02 12.02 12.02 6.64 0 12.02-5.38 12.02-12.02C24.06 5.38 18.68 0 12.04 0zm0 3.7c4.6 0 8.32 3.72 8.32 8.32 0 4.6-3.72 8.32-8.32 8.32-4.6 0-8.32-3.72-8.32-8.32 0-4.6 3.72-8.32 8.32-8.32zm-2.4 4.5v7.6l6.2-3.8-6.2-3.8z"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge" style="color: #ee5922; border-color: rgba(238, 89, 34, 0.3); background: rgba(238, 89, 34, 0.1);">Open Source Hub</span>
+              </div>
+              <h3 class="ecosystem-title">SourceForge</h3>
+              <p class="ecosystem-desc">
+                Hosted open-source repository mirror, milestone tracking, and project statistics on SourceForge.
+              </p>
+            </div>
+            <div class="ecosystem-link-text" style="color: #ee5922;">
+              <span>View SourceForge Project</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
+          <!-- Peerlist -->
+          <a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-peerlist" style="--card-accent: #00aa4f;">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper" style="color: #00aa4f; background: rgba(0, 170, 79, 0.1);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge" style="color: #00aa4f; border-color: rgba(0, 170, 79, 0.3); background: rgba(0, 170, 79, 0.1);">Project Spotlight</span>
+              </div>
+              <h3 class="ecosystem-title">Peerlist</h3>
+              <p class="ecosystem-desc">
+                Connect on Peerlist. View builder updates, project timeline, and community feedback for Stop the Slop.
+              </p>
+            </div>
+            <div class="ecosystem-link-text" style="color: #00aa4f;">
+              <span>View on Peerlist</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
+          <!-- DEV Community -->
+          <a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-devto" style="--card-accent: #6366f1;">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper" style="color: #6366f1; background: rgba(99, 102, 241, 0.1);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.42 10.05c-.18-.12-.46-.23-.85-.23H5.2v4.36h1.33c.43 0 .73-.1.91-.25.26-.2.39-.58.39-1.14 0-.58-.14-1.54-.41-1.74zm9.32-6.05H7.26C3.25 4 0 7.25 0 11.26v1.48C0 16.75 3.25 20 7.26 20h9.48c4.01 0 7.26-3.25 7.26-7.26v-1.48c0-4.01-3.25-7.26-7.26-7.26zm-7.9 11.66c-.36.31-.9.47-1.63.47H4.03V8.67h3.19c.72 0 1.25.16 1.6.47.46.41.69 1.05.69 1.93 0 .88-.23 1.54-.67 1.96zm4.84-2.83h-2.14v1.51h1.94v1.14h-1.94v1.69h2.24v1.14H8.43V8.67h4.25v1.16zm5.18 5.48h-1.39l-1.63-6.97h1.47l1.01 4.96 1.03-4.96h1.43l-1.92 6.97z"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge" style="color: #6366f1; border-color: rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.1);">Technical Deep-Dive</span>
+              </div>
+              <h3 class="ecosystem-title">DEV.to Article</h3>
+              <p class="ecosystem-desc">
+                Engineering story: "How I Built an Open-Source Browser Extension to Detect AI Slop on YouTube".
+              </p>
+            </div>
+            <div class="ecosystem-link-text" style="color: #6366f1;">
+              <span>Read Article on DEV</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
          Installation Section
          ======================================================================== -->
     <section class="section" id="install">
@@ -519,6 +704,23 @@
             <li><a href="#demo" class="footer-link">Live Demo</a></li>
             <li><a href="#how-it-works" class="footer-link">How it Works</a></li>
             <li><a href="#install" class="footer-link">Install</a></li>
+            <li><a href="#faq" class="footer-link">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Ecosystem</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer"
+                class="footer-link">Product Hunt</a></li>
+            <li><a href="https://alternativeto.net/software/stop-the-slop/about/" target="_blank" rel="noopener noreferrer"
+                class="footer-link">AlternativeTo</a></li>
+            <li><a href="https://sourceforge.net/projects/stop-the-slop/" target="_blank" rel="noopener noreferrer"
+                class="footer-link">SourceForge</a></li>
+            <li><a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer"
+                class="footer-link">Peerlist</a></li>
+            <li><a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer"
+                class="footer-link">DEV.to Article</a></li>
           </ul>
         </div>
 
@@ -527,18 +729,21 @@
           <ul class="footer-links">
             <li><a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer"
                 class="footer-link">GitHub Repository</a></li>
+            <li><a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer"
+                class="footer-link">Chrome Web Store</a></li>
+            <li><a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer"
+                class="footer-link">Firefox Add-on</a></li>
             <li><a href="https://github.com/MauroPello/stop-the-slop/issues" target="_blank" rel="noopener noreferrer"
                 class="footer-link">Report an Issue</a></li>
-            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-title">Legal & Community</h4>
+          <h4 class="footer-title">Legal</h4>
           <ul class="footer-links">
+            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
             <li><a href="https://github.com/MauroPello/stop-the-slop/blob/main/LICENSE" target="_blank"
                 rel="noopener noreferrer" class="footer-link">MIT License</a></li>
-            <li><a href="privacy.html" class="footer-link">Privacy Statement</a></li>
           </ul>
         </div>
       </div>
