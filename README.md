@@ -3,6 +3,7 @@
 > **AI Script Detector for YouTube** — A lightweight, privacy-friendly browser extension that analyzes YouTube video transcripts in real-time to detect AI-generated scripts.
 
 [![Live Website](https://img.shields.io/badge/Website-GitHub%20Pages-6366f1?style=flat-square)](https://mauropello.github.io/stop-the-slop/)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?style=flat-square&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg)
 [![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--ons-FF7139?style=flat-square&logo=firefox-browser&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/)
 [![Privacy Policy](https://img.shields.io/badge/Privacy-Policy-10b981?style=flat-square)](https://mauropello.github.io/stop-the-slop/privacy.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
@@ -10,8 +11,8 @@
 ---
 
 ## 🌐 Official Store Listings & Website
+- **Chrome Web Store (Official):** [Install for Chrome, Brave & Edge](https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg)
 - **Firefox Add-on (Official AMO):** [Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/)
-- **Chrome Web Store:** [Available for Chrome & Chromium](https://mauropello.github.io/stop-the-slop/) *(Chrome Web Store Listing)*
 - **Interactive Web Demo:** [https://mauropello.github.io/stop-the-slop/](https://mauropello.github.io/stop-the-slop/)
 - **Official Privacy Policy:** [https://mauropello.github.io/stop-the-slop/privacy.html](https://mauropello.github.io/stop-the-slop/privacy.html)
 

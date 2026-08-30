@@ -36,9 +36,10 @@ So I built **Stop the Slop** — a lightweight, open-source browser extension.
 
 Built on Manifest V3 with vanilla JS and CSS.
 
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **GitHub (MIT)**: https://github.com/MauroPello/stop-the-slop
 - **Live Demo & Website**: https://mauropello.github.io/stop-the-slop/
-- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 Would love to hear your feedback on the UI and performance!
 ```
@@ -68,9 +69,10 @@ Most AI detection tools on the web are paywalled SaaS products that harvest data
 - Lightweight vanilla JavaScript architecture (zero heavy dependencies).
 
 Check out the code, inspect the permissions, or contribute:
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox AMO**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **Repo**: https://github.com/MauroPello/stop-the-slop
 - **Interactive Simulator**: https://mauropello.github.io/stop-the-slop/
-- **Firefox AMO**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 PRs, feature suggestions, and code reviews are very welcome!
 ```
@@ -97,9 +99,10 @@ I built **Stop the Slop** as a weekend project to solve my own frustration.
 
 It's 100% free and open source (MIT).
 
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **Website / Interactive Simulator**: https://mauropello.github.io/stop-the-slop/
 - **Source Code**: https://github.com/MauroPello/stop-the-slop
-- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 Check it out and let me know what you think! What features would you like to see next?
 ```
@@ -138,9 +141,10 @@ To counter this, I developed **Stop the Slop**, a browser extension for Chrome a
 - Global edge caching on Cloudflare D1 to enable instant thumbnail badging.
 
 Everything is open source under the MIT License:
+- **Chrome Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox Listing**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **GitHub**: https://github.com/MauroPello/stop-the-slop
 - **Demo**: https://mauropello.github.io/stop-the-slop/
-- **Firefox Listing**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 Curious to hear your thoughts on where the cat-and-mouse game between LLM generation and linguistic detection goes from here!
 ```
@@ -166,9 +170,10 @@ I built a free, open-source browser extension called **Stop the Slop** to help v
 - Adds badges to video thumbnails across feeds.
 
 It's completely free, MIT licensed, and has zero tracking:
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **Website & Interactive Demo**: https://mauropello.github.io/stop-the-slop/
 - **GitHub**: https://github.com/MauroPello/stop-the-slop
-- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 I'd love feedback from creators: are there specific ways you script your videos that you'd like to make sure never get false-flagged?
 ```
@@ -194,6 +199,7 @@ I've just published **Stop the Slop** to Mozilla Add-ons (AMO). It's a lightweig
 - Fully MIT licensed.
 
 - **Install on Firefox (AMO)**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
+- **Chrome Web Store (Chromium)**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 - **GitHub Repo**: https://github.com/MauroPello/stop-the-slop
 - **Landing Page**: https://mauropello.github.io/stop-the-slop/
 
@@ -217,9 +223,10 @@ I built **Stop the Slop** with a strict privacy-first architecture:
 3. **Transparent source code**: 100% open source under the MIT license on GitHub.
 4. **Independent verification**: Compliant with Mozilla's strict `data_collection_permissions: ["none"]` policy.
 
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **Source Code**: https://github.com/MauroPello/stop-the-slop
 - **Privacy Statement**: https://mauropello.github.io/stop-the-slop/privacy.html
-- **Firefox Add-on**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **Live Demo**: https://mauropello.github.io/stop-the-slop/
 
 Feedback on our permissions scope and privacy model is very welcome!
@@ -236,6 +243,8 @@ Feedback on our permissions scope and privacy model is very welcome!
 ```markdown
 Stop the Slop is an open-source (MIT) extension for Chrome and Firefox. It extracts YouTube captions, evaluates AI probabilities with edge caching on Cloudflare D1, and overlays instant badges on video thumbnails.
 
+- Chrome Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- Firefox AMO: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - GitHub: https://github.com/MauroPello/stop-the-slop
 - Live Demo: https://mauropello.github.io/stop-the-slop/
 ```
@@ -264,9 +273,10 @@ YouTube feeds render dozens of dynamic video thumbnails. If you make a fresh AI 
 
 The whole project is vanilla JS + CSS with zero heavy frontend frameworks.
 
+- **Chrome Web Store**: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+- **Firefox AMO**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 - **GitHub (MIT)**: https://github.com/MauroPello/stop-the-slop
 - **Live Simulator**: https://mauropello.github.io/stop-the-slop/
-- **Firefox AMO**: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 Happy to answer questions about Manifest V3 gotchas or Cloudflare Worker architectures!
 ```
@@ -310,6 +320,7 @@ I built Stop the Slop: a free, open-source browser extension that flags AI scrip
 **Tweet 5 (Links & Call to Action)**:
 > 4/ Try it out or inspect the code:
 >
+> 🌐 Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 > 🦊 Firefox: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 > 🌐 Interactive Demo: https://mauropello.github.io/stop-the-slop/
 > ⭐ Star on GitHub: https://github.com/MauroPello/stop-the-slop
@@ -340,8 +351,9 @@ Architecture highlights:
 
 Check out the interactive demo and source code below:
 🌐 Web Demo: https://mauropello.github.io/stop-the-slop/
-💻 GitHub (MIT): https://github.com/MauroPello/stop-the-slop
+📦 Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 🦊 Firefox Add-on: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
+💻 GitHub (MIT): https://github.com/MauroPello/stop-the-slop
 
 #OpenSource #ArtificialIntelligence #SoftwareEngineering #WebDevelopment #ChromeExtension #YouTube #Tech
 ```
@@ -361,6 +373,7 @@ Introducing **Stop the Slop** — a 100% free, MIT-licensed browser extension fo
 • Sub-50ms edge cache via Cloudflare Workers
 • 🔒 Zero telemetry, no user tracking, no accounts
 
+📦 Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 🦊 Firefox Add-on: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 💻 Source: https://github.com/MauroPello/stop-the-slop
 🌐 Interactive Demo: https://mauropello.github.io/stop-the-slop/

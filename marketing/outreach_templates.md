@@ -30,6 +30,7 @@ How it works in 10 seconds:
 4. It's 100% free, MIT-licensed, and collects zero user data.
 
 Source Code: https://github.com/MauroPello/stop-the-slop
+Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 Firefox Store: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 I thought this might be useful for your research or interesting to your audience when discussing the rise of synthetic video churn. If you want to check it out or have any thoughts on improving detection accuracy, I'd love to hear your feedback!
@@ -99,6 +100,8 @@ Key Story Angles:
 - Zero-Data Privacy: Built with strict zero-telemetry and open-source transparency (MIT License).
 
 Code Repository: https://github.com/MauroPello/stop-the-slop
+Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
+Firefox Add-on: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 Interactive Demo: https://mauropello.github.io/stop-the-slop/
 
 I am happy to provide high-res screenshots, architecture documentation, or walk through data on the most common AI script markers we detect.

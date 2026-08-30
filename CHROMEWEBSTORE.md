@@ -1,6 +1,9 @@
 # Chrome Web Store Listing — Stop the Slop — AI Script Detector
 
-> Last Updated: 2026-08-21
+> **Status**: ✅ **Published & Live on Chrome Web Store**  
+> **Direct Store Link**: [Install on Chrome Web Store](https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg)  
+> **Extension ID**: `afifehnicpeokjjhpbicikfoalkemelg`  
+> **Last Updated**: 2026-08-30
 
 ## Store Listing
 
@@ -109,8 +112,8 @@ https://mauropello.github.io/stop-the-slop/
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
-| 1.1.0 | 2026-08-21 | Added real-time thumbnail AI badges using Cloudflare Worker batch cache lookups | Draft |
-| 1.0.0 | 2026-08-21 | Initial release with in-player popup analysis, gauge, and sentence breakdown | Draft |
+| 1.1.0 | 2026-08-30 | Full release with real-time thumbnail AI badges & Cloudflare Worker batch cache lookups | ✅ Published |
+| 1.0.0 | 2026-08-21 | Initial release with in-player popup analysis, gauge, and sentence breakdown | Archived |
 
 ## Review Notes
 

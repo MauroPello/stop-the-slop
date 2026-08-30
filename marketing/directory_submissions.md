@@ -13,8 +13,9 @@ Use these whenever a platform asks for general information:
 | **Product Name** | Stop the Slop — AI Script Detector |
 | **Short Name** | Stop the Slop |
 | **Official Website** | https://mauropello.github.io/stop-the-slop/ |
-| **GitHub Repository** | https://github.com/MauroPello/stop-the-slop |
+| **Chrome Web Store** | https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg |
 | **Firefox Add-on** | https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/ |
+| **GitHub Repository** | https://github.com/MauroPello/stop-the-slop |
 | **License** | MIT (Open Source) |
 | **Pricing** | 100% Free / Open Source (Zero ads, zero paywalls) |
 | **Logo / Icon** | `docs/icons/icon-128.png` |
@@ -156,6 +157,7 @@ Privacy & Design:
 
 Repo: https://github.com/MauroPello/stop-the-slop
 Interactive Demo & Site: https://mauropello.github.io/stop-the-slop/
+Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 Firefox Add-on: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
 
 I'd love your feedback on the heuristic scoring, edge architecture, and false-positive handling!
@@ -214,8 +216,9 @@ I wanted a way to know before clicking whether a video was made by a real human 
 
 Links:
 - Website & Live Demo: https://mauropello.github.io/stop-the-slop/
-- GitHub (MIT): https://github.com/MauroPello/stop-the-slop
+- Chrome Web Store: https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg
 - Firefox Add-on: https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/
+- GitHub (MIT): https://github.com/MauroPello/stop-the-slop
 
 Happy to answer any questions about building Manifest V3 extensions or edge-cached APIs!
 ```

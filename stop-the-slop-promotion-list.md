@@ -3,9 +3,10 @@
 > **Quick Start Dashboard**: Open [`marketing/promotion-hub.html`](file:///Users/mpellonara/Personal/stop-the-slop/marketing/promotion-hub.html) in your browser for a local, interactive 1-click copy dashboard with live checkbox progress tracking!
 
 ### Quick Links & Resources
+- **Official Chrome Web Store:** [Install for Chrome, Brave & Edge](https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg)
+- **Official Firefox Add-on (AMO):** [Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/)
 - **Live Website & Interactive Demo:** [https://mauropello.github.io/stop-the-slop/](https://mauropello.github.io/stop-the-slop/)
 - **GitHub Repository (MIT):** [https://github.com/MauroPello/stop-the-slop](https://github.com/MauroPello/stop-the-slop)
-- **Official Firefox Add-on (AMO):** [Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/)
 - **Privacy Statement:** [https://mauropello.github.io/stop-the-slop/privacy.html](https://mauropello.github.io/stop-the-slop/privacy.html)
 - **Promo Assets Folder:** [`marketing/`](file:///Users/mpellonara/Personal/stop-the-slop/marketing/) (includes high-res 1280×800 screenshots and promo tiles)
 

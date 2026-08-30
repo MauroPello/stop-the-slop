@@ -158,8 +158,9 @@ Browser extensions often have a terrible reputation for data harvesting. With St
 
 Stop the Slop is 100% free and open-source under the MIT license.
 
-- **Official Website & Interactive Simulator**: [https://mauropello.github.io/stop-the-slop/](https://mauropello.github.io/stop-the-slop/)
+- **Chrome Web Store**: [Install for Chrome, Brave & Edge](https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg)
 - **Firefox Add-ons (AMO)**: [Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/)
+- **Official Website & Interactive Simulator**: [https://mauropello.github.io/stop-the-slop/](https://mauropello.github.io/stop-the-slop/)
 - **GitHub Repository**: [https://github.com/MauroPello/stop-the-slop](https://github.com/MauroPello/stop-the-slop)
 
 If you're interested in browser extensions, edge computing, or open-source tools, I’d love your feedback, PRs, and a star on GitHub! 🌟
