@@ -112,6 +112,7 @@ https://mauropello.github.io/stop-the-slop/
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
+| 1.1.1 | 2026-09-01 | Backend throttling & anti-abuse rate limiting with live countdown UI feedback | 🚀 Ready |
 | 1.1.0 | 2026-08-30 | Full release with real-time thumbnail AI badges & Cloudflare Worker batch cache lookups | ✅ Published |
 | 1.0.0 | 2026-08-21 | Initial release with in-player popup analysis, gauge, and sentence breakdown | Archived |
 

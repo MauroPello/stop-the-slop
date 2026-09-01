@@ -13,12 +13,16 @@
  *   SAPLING_API_KEY — Sapling AI API key (optional fallback)
  */
 
+// In-memory sliding rate limiter per isolate (fast, 0-cost protection against floods)
+const memoryRateLimits = new Map();
+
 export default {
   async fetch(request, env) {
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Headers': 'Content-Type, Retry-After',
+      'Access-Control-Expose-Headers': 'Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
     };
 
     if (request.method === 'OPTIONS') {
@@ -33,6 +37,18 @@ export default {
       }
 
       if (url.pathname === '/api/check' && request.method === 'GET') {
+        // Rate limit cache checks (120 req / min per IP)
+        const rateLimitRes = await enforceRateLimit(
+          env,
+          request,
+          'check',
+          120,
+          60,
+          corsHeaders,
+          'Too many video status checks. Please slow down.'
+        );
+        if (rateLimitRes) return rateLimitRes;
+
         const videoId = url.searchParams.get('videoId');
         if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
           return json({ error: 'Invalid or missing videoId' }, corsHeaders, 400);
@@ -42,6 +58,18 @@ export default {
       }
 
       if (url.pathname === '/api/check-batch') {
+        // Rate limit batch checks (60 req / min per IP)
+        const rateLimitRes = await enforceRateLimit(
+          env,
+          request,
+          'check_batch',
+          60,
+          60,
+          corsHeaders,
+          'Too many batch checks. Please wait a moment.'
+        );
+        if (rateLimitRes) return rateLimitRes;
+
         let videoIds = [];
         if (request.method === 'POST') {
           const body = await request.json().catch(() => ({}));
@@ -65,6 +93,37 @@ export default {
           return json({ error: 'Transcript too short or missing (min 50 chars)' }, corsHeaders, 422);
         }
 
+        // 1. Check cache first (0 cost if already analyzed)
+        const cached = await checkCache(videoId, env);
+        if (cached.found) {
+          return json(cached, corsHeaders);
+        }
+
+        // 2. Enforce strict rate limits on expensive AI detections
+        // - 10 analyses per minute per IP
+        const minuteLimitRes = await enforceRateLimit(
+          env,
+          request,
+          'analyze_min',
+          10,
+          60,
+          corsHeaders,
+          'Rate limit exceeded (max 10 analyses/min). Please wait a moment before analyzing more videos.'
+        );
+        if (minuteLimitRes) return minuteLimitRes;
+
+        // - 60 analyses per hour per IP
+        const hourLimitRes = await enforceRateLimit(
+          env,
+          request,
+          'analyze_hr',
+          60,
+          3600,
+          corsHeaders,
+          'Hourly rate limit exceeded (max 60 analyses/hr). Please try again later.'
+        );
+        if (hourLimitRes) return hourLimitRes;
+
         const result = await analyzeTranscript(videoId, transcript, env);
         return json(result, corsHeaders);
       }
@@ -80,6 +139,155 @@ export default {
     }
   },
 };
+
+/**
+ * Extract client IP address from request headers.
+ */
+function getClientIp(request) {
+  return (
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('x-real-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    '127.0.0.1'
+  );
+}
+
+/**
+ * Layer 1: In-memory sliding window rate limiter per isolate.
+ */
+function checkMemoryRateLimit(ip, action, limit, windowSecs) {
+  const now = Math.floor(Date.now() / 1000);
+  const key = `${ip}:${action}`;
+
+  // Periodic lazy cleanup of expired entries
+  if (memoryRateLimits.size > 1500) {
+    for (const [k, v] of memoryRateLimits.entries()) {
+      if (v.resetAt <= now) memoryRateLimits.delete(k);
+    }
+  }
+
+  const entry = memoryRateLimits.get(key);
+  if (!entry || entry.resetAt <= now) {
+    memoryRateLimits.set(key, { count: 1, resetAt: now + windowSecs });
+    return { allowed: true, remaining: limit - 1, resetAt: now + windowSecs };
+  }
+
+  if (entry.count >= limit) {
+    const retryAfter = Math.max(1, entry.resetAt - now);
+    return { allowed: false, remaining: 0, resetAt: entry.resetAt, retryAfter };
+  }
+
+  entry.count += 1;
+  return { allowed: true, remaining: limit - entry.count, resetAt: entry.resetAt };
+}
+
+/**
+ * Layer 2: Persistent D1 rate limiter across all global Cloudflare edge isolates.
+ */
+async function checkD1RateLimit(env, ip, action, limit, windowSecs) {
+  if (!env.DB) return { allowed: true, remaining: limit, resetAt: 0 };
+
+  const now = Math.floor(Date.now() / 1000);
+  const key = `rl:${ip}:${action}`;
+
+  try {
+    const row = await env.DB.prepare(
+      'SELECT count, reset_at FROM rate_limits WHERE key = ?'
+    )
+      .bind(key)
+      .first();
+
+    if (!row || row.reset_at <= now) {
+      await env.DB.prepare(
+        `INSERT INTO rate_limits (key, count, reset_at)
+         VALUES (?, 1, ?)
+         ON CONFLICT(key) DO UPDATE SET count = 1, reset_at = ?`
+      )
+        .bind(key, now + windowSecs, now + windowSecs)
+        .run();
+      return { allowed: true, remaining: limit - 1, resetAt: now + windowSecs };
+    }
+
+    if (row.count >= limit) {
+      const retryAfter = Math.max(1, row.reset_at - now);
+      return { allowed: false, remaining: 0, resetAt: row.reset_at, retryAfter };
+    }
+
+    await env.DB.prepare(
+      'UPDATE rate_limits SET count = count + 1 WHERE key = ?'
+    )
+      .bind(key)
+      .run();
+
+    return {
+      allowed: true,
+      remaining: Math.max(0, limit - (row.count + 1)),
+      resetAt: row.reset_at,
+    };
+  } catch (err) {
+    console.warn('[Stop the Slop] D1 rate limit check error:', err);
+    try {
+      await env.DB.prepare(
+        'CREATE TABLE IF NOT EXISTS rate_limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, reset_at INTEGER NOT NULL)'
+      ).run();
+    } catch (_) {}
+    return { allowed: true, remaining: limit, resetAt: now + windowSecs };
+  }
+}
+
+/**
+ * Enforce multi-layer rate limits and return 429 Response if exceeded.
+ */
+async function enforceRateLimit(env, request, action, limit, windowSecs, corsHeaders, customMsg) {
+  const ip = getClientIp(request);
+
+  // 1. Fast in-memory check (catches rapid-fire bursts with 0 DB overhead)
+  const memResult = checkMemoryRateLimit(ip, action, limit, windowSecs);
+  if (!memResult.allowed) {
+    const retryAfter = memResult.retryAfter || 30;
+    return rateLimitResponse(retryAfter, limit, memResult.resetAt, corsHeaders, customMsg);
+  }
+
+  // 2. Persistent D1 check (coordinates across all global edge nodes)
+  const d1Result = await checkD1RateLimit(env, ip, action, limit, windowSecs);
+  if (!d1Result.allowed) {
+    const retryAfter = d1Result.retryAfter || 30;
+    return rateLimitResponse(retryAfter, limit, d1Result.resetAt, corsHeaders, customMsg);
+  }
+
+  return null;
+}
+
+/**
+ * Create a standardized 429 Too Many Requests response.
+ */
+function rateLimitResponse(retryAfter, limit, resetAt, corsHeaders, customMsg) {
+  const message =
+    customMsg ||
+    `Rate limit exceeded. Please wait ${retryAfter} second${retryAfter === 1 ? '' : 's'} before trying again.`;
+
+  return new Response(
+    JSON.stringify({
+      error: message,
+      code: 'RATE_LIMITED',
+      retryAfter,
+      limit,
+      resetAt,
+    }),
+    {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(retryAfter),
+        'X-RateLimit-Limit': String(limit),
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': String(resetAt),
+        ...corsHeaders,
+      },
+    }
+  );
+}
+
 
 /**
  * Check if we have a cached result for a video.

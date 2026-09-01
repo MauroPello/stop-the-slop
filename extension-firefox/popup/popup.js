@@ -17,12 +17,18 @@ const states = {
   notYoutube: document.getElementById('state-not-youtube'),
   loading: document.getElementById('state-loading'),
   error: document.getElementById('state-error'),
+  rateLimit: document.getElementById('state-rate-limit'),
   result: document.getElementById('state-result'),
 };
 
 const els = {
   errorMessage: document.getElementById('error-message'),
   btnRetry: document.getElementById('btn-retry'),
+  rateLimitMessage: document.getElementById('rate-limit-message'),
+  rateLimitCooldown: document.getElementById('rate-limit-cooldown'),
+  cooldownSeconds: document.getElementById('cooldown-seconds'),
+  btnRateLimitRetry: document.getElementById('btn-rate-limit-retry'),
+  rateLimitRetryText: document.getElementById('rate-limit-retry-text'),
   scoreValue: document.getElementById('score-value'),
   scoreLabel: document.getElementById('score-label'),
   gaugeFill: document.getElementById('gauge-fill'),
@@ -42,6 +48,7 @@ const els = {
 let currentVideoId = null;
 let currentTabId = null;
 let currentTheme = 'system';
+let rateLimitTimer = null;
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', init);
@@ -50,8 +57,14 @@ async function init() {
   await initTheme();
 
   els.btnRetry.addEventListener('click', () => {
-    if (currentVideoId) analyzeVideo(currentVideoId);
+    if (currentVideoId) analyzeVideo(currentVideoId, true);
   });
+
+  if (els.btnRateLimitRetry) {
+    els.btnRateLimitRetry.addEventListener('click', () => {
+      if (currentVideoId) analyzeVideo(currentVideoId, true);
+    });
+  }
 
   // Get the current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -163,6 +176,11 @@ function extractVideoId(url) {
  * Main analysis flow.
  */
 async function analyzeVideo(videoId, forceRefresh = false) {
+  if (rateLimitTimer) {
+    clearInterval(rateLimitTimer);
+    rateLimitTimer = null;
+  }
+
   showState('loading');
 
   try {
@@ -171,6 +189,15 @@ async function analyzeVideo(videoId, forceRefresh = false) {
       const cacheResp = await fetch(
         `${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`
       );
+      if (cacheResp.status === 429) {
+        const cacheData = await cacheResp.json().catch(() => ({}));
+        const retryAfter =
+          Number(cacheResp.headers.get('Retry-After')) ||
+          Number(cacheData.retryAfter) ||
+          20;
+        showRateLimit(retryAfter, cacheData.error);
+        return;
+      }
       if (cacheResp.ok) {
         const cacheData = await cacheResp.json();
         if (cacheData.found) {
@@ -202,6 +229,14 @@ async function analyzeVideo(videoId, forceRefresh = false) {
 
     if (!analyzeResp.ok) {
       const data = await analyzeResp.json().catch(() => ({}));
+      if (analyzeResp.status === 429 || data.code === 'RATE_LIMITED') {
+        const retryAfter =
+          Number(analyzeResp.headers.get('Retry-After')) ||
+          Number(data.retryAfter) ||
+          30;
+        showRateLimit(retryAfter, data.error);
+        return;
+      }
       throw new Error(data.error || `Analysis failed: ${analyzeResp.status}`);
     }
 
@@ -514,3 +549,55 @@ function showError(message) {
   els.errorMessage.textContent = message || 'Something went wrong';
   showState('error');
 }
+
+function showRateLimit(retryAfterSeconds = 30, message) {
+  if (rateLimitTimer) {
+    clearInterval(rateLimitTimer);
+    rateLimitTimer = null;
+  }
+
+  showState('rateLimit');
+
+  if (els.rateLimitMessage) {
+    els.rateLimitMessage.textContent =
+      message || 'You have made too many requests. Please wait a moment before analyzing more videos.';
+  }
+
+  let remaining = Math.max(1, Math.round(Number(retryAfterSeconds) || 30));
+
+  const updateUI = () => {
+    if (remaining <= 0) {
+      if (rateLimitTimer) {
+        clearInterval(rateLimitTimer);
+        rateLimitTimer = null;
+      }
+      if (els.cooldownSeconds) els.cooldownSeconds.textContent = '0s';
+      if (els.btnRateLimitRetry) {
+        els.btnRateLimitRetry.disabled = false;
+        els.btnRateLimitRetry.removeAttribute('disabled');
+      }
+      if (els.rateLimitRetryText) {
+        els.rateLimitRetryText.textContent = 'Try Again Now';
+      }
+      return;
+    }
+
+    if (els.cooldownSeconds) {
+      els.cooldownSeconds.textContent = `${remaining}s`;
+    }
+    if (els.btnRateLimitRetry) {
+      els.btnRateLimitRetry.disabled = true;
+      els.btnRateLimitRetry.setAttribute('disabled', 'true');
+    }
+    if (els.rateLimitRetryText) {
+      els.rateLimitRetryText.textContent = `Wait ${remaining}s...`;
+    }
+  };
+
+  updateUI();
+  rateLimitTimer = setInterval(() => {
+    remaining -= 1;
+    updateUI();
+  }, 1000);
+}
+

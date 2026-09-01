@@ -71,6 +71,26 @@
       <button class="btn btn-retry" id="btn-retry">Try Again</button>
     </div>
 
+    <!-- State: Rate Limited -->
+    <div id="state-rate-limit" class="state hidden">
+      <div class="rate-limit-card">
+        <div class="rate-limit-icon-wrap">
+          <span class="rate-limit-icon">⏳</span>
+        </div>
+        <h2 class="rate-limit-title">Rate Limit Reached</h2>
+        <p class="state-message" id="rate-limit-message">You have reached the request limit. Please wait a moment before analyzing more videos.</p>
+        
+        <div class="cooldown-badge" id="rate-limit-cooldown">
+          <span class="cooldown-dot"></span>
+          <span>Available again in <strong id="cooldown-seconds">30s</strong></span>
+        </div>
+
+        <button class="btn btn-retry" id="btn-rate-limit-retry" disabled>
+          <span id="rate-limit-retry-text">Wait 30s...</span>
+        </button>
+      </div>
+    </div>
+
     <!-- State: Result -->
     <div id="state-result" class="state hidden">
       <!-- Score gauge -->

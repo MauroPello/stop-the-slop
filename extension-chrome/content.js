@@ -20,6 +20,7 @@
   const videoCache = new Map();
   const pendingBatch = new Set();
   let batchTimer = null;
+  let batchCooldownUntil = 0;
   let scanScheduled = false;
   let isScanning = false;
 
@@ -278,6 +279,7 @@
   // --- BATCH QUERY ENGINE ---
   async function flushBatch() {
     if (pendingBatch.size === 0) return;
+    if (Date.now() < batchCooldownUntil) return;
 
     const videoIdsToQuery = Array.from(pendingBatch).slice(0, 40);
     for (const id of videoIdsToQuery) {
@@ -290,6 +292,21 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ videoIds: videoIdsToQuery }),
       });
+
+      if (response.status === 429) {
+        const data = await response.json().catch(() => ({}));
+        const retrySecs =
+          Number(response.headers.get('Retry-After')) ||
+          Number(data.retryAfter) ||
+          30;
+        batchCooldownUntil = Date.now() + retrySecs * 1000;
+        console.warn(`[Stop the Slop] Batch check rate-limited. Cooling down for ${retrySecs}s.`);
+        // Re-queue IDs so they can be processed once cooldown ends
+        for (const id of videoIdsToQuery) {
+          pendingBatch.add(id);
+        }
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(`Batch check failed with status: ${response.status}`);
@@ -339,6 +356,8 @@
     if (!videoId || videoCache.has(videoId)) return;
 
     pendingBatch.add(videoId);
+
+    if (Date.now() < batchCooldownUntil) return;
 
     if (batchTimer) clearTimeout(batchTimer);
     if (pendingBatch.size >= 30) {
