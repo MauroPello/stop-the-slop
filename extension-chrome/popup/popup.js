@@ -1,5 +1,5 @@
 /**
- * Stop the Slop — Popup Script
+ * Stop the Slop: Popup Script
  *
  * Flow:
  *   1. Initialize theme (system default, dark, light)
@@ -34,7 +34,7 @@ const els = {
   gaugeFill: document.getElementById('gauge-fill'),
   gaugeNeedle: document.getElementById('gauge-needle'),
   verdict: document.getElementById('verdict'),
-  verdictEmoji: document.getElementById('verdict-emoji'),
+  verdictDot: document.getElementById('verdict-dot'),
   verdictText: document.getElementById('verdict-text'),
   transcriptLength: document.getElementById('transcript-length'),
   sentencesSection: document.getElementById('sentences-section'),
@@ -252,6 +252,26 @@ async function analyzeVideo(videoId, forceRefresh = false) {
  * This directly accesses YouTube's DOM and player objects without message-passing hops.
  */
 async function fetchTranscriptFromTab(tabId, videoId) {
+  // First, try requesting transcript through content script bridge
+  try {
+    const response = await new Promise((resolve) => {
+      chrome.tabs.sendMessage(tabId, { type: 'FETCH_TRANSCRIPT', videoId }, (res) => {
+        if (chrome.runtime.lastError || !res) {
+          resolve(null);
+        } else {
+          resolve(res);
+        }
+      });
+    });
+
+    if (response?.transcript && response.transcript.length >= 20) {
+      return response.transcript;
+    }
+  } catch (e) {
+    // Fall back to direct script execution
+  }
+
+  // Fallback: direct stealth script execution in MAIN world
   try {
     const results = await chrome.scripting.executeScript({
       target: { tabId },
@@ -273,9 +293,42 @@ async function fetchTranscriptFromTab(tabId, videoId) {
             .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));
         }
 
+        // Stealth style injection so transcript panel is NEVER visible to user
+        function ensureStealthStyle() {
+          let style = document.getElementById('sts-stealth-transcript-style');
+          if (!style) {
+            style = document.createElement('style');
+            style.id = 'sts-stealth-transcript-style';
+            style.textContent = `
+              ytd-engagement-panel-section-list-renderer[target-id*="transcript"],
+              ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"],
+              ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"] {
+                position: fixed !important;
+                top: -9999px !important;
+                left: -9999px !important;
+                width: 1px !important;
+                height: 1px !important;
+                overflow: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                z-index: -99999 !important;
+              }
+            `;
+            (document.head || document.documentElement).appendChild(style);
+          }
+        }
+
+        function removeStealthStyle() {
+          const style = document.getElementById('sts-stealth-transcript-style');
+          if (style) style.remove();
+        }
+
         // 1. Check if segments are already rendered in DOM
         function getSegmentsFromDom() {
           const segments = document.querySelectorAll(
+            'transcript-segment-view-model .yt-core-attributed-string, ' +
+            'transcript-segment-view-model [class*="segment-text"], ' +
+            'transcript-segment-view-model, ' +
             'ytd-transcript-segment-renderer .segment-text, ' +
             'ytd-transcript-segment-renderer #segment-text, ' +
             'ytd-transcript-segment-renderer yt-formatted-string, ' +
@@ -285,8 +338,8 @@ async function fetchTranscriptFromTab(tabId, videoId) {
           );
           if (segments && segments.length > 0) {
             const texts = Array.from(segments)
-              .map((el) => el.textContent.trim())
-              .filter(Boolean);
+              .map((el) => (el.textContent || '').trim())
+              .filter(t => t.length > 0 && !/^\d+:\d+$/.test(t));
             if (texts.length > 0) return texts.join(' ');
           }
           return null;
@@ -305,76 +358,70 @@ async function fetchTranscriptFromTab(tabId, videoId) {
           if (!pr && typeof window.ytInitialPlayerResponse !== 'undefined') {
             pr = window.ytInitialPlayerResponse;
           }
-          const tracks = pr?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-          if (tracks && tracks.length > 0) {
-            const enTrack =
-              tracks.find(
-                (t) =>
-                  t.languageCode === 'en' ||
-                  (t.languageCode && t.languageCode.startsWith('en'))
-              ) || tracks[0];
+          const respVideoId = pr?.videoDetails?.videoId;
+          if (!respVideoId || respVideoId === vid) {
+            const tracks = pr?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+            if (tracks && tracks.length > 0) {
+              const enTrack =
+                tracks.find(
+                  (t) =>
+                    t.languageCode === 'en' ||
+                    (t.languageCode && t.languageCode.startsWith('en'))
+                ) || tracks[0];
 
-            if (enTrack?.baseUrl) {
-              // Try json3
-              try {
-                const u = new URL(enTrack.baseUrl);
-                u.searchParams.set('fmt', 'json3');
-                const r = await fetch(u.toString(), { credentials: 'include' });
-                if (r.ok) {
-                  const d = await r.json();
-                  if (d.events) {
-                    const segs = d.events
-                      .filter((e) => e.segs)
-                      .map((e) =>
-                        e.segs
-                          .map((s) => s.utf8 || '')
-                          .join('')
-                          .replace(/\n/g, ' ')
-                          .trim()
-                      )
-                      .filter(Boolean);
-                    if (segs.length > 0) return segs.join(' ');
-                  }
-                }
-              } catch (e) {}
-
-              // Try xml
-              try {
-                const r = await fetch(enTrack.baseUrl, { credentials: 'include' });
-                if (r.ok) {
-                  const xml = await r.text();
-                  if (xml && xml.length > 20) {
-                    const segs = [];
-                    const rx = /<text[^>]*>([\s\S]*?)<\/text>/gi;
-                    let m;
-                    while ((m = rx.exec(xml)) !== null) {
-                      const clean = decodeEntities(m[1]).replace(/\n/g, ' ').trim();
-                      if (clean) segs.push(clean);
+              if (enTrack?.baseUrl) {
+                try {
+                  const u = new URL(enTrack.baseUrl);
+                  u.searchParams.set('fmt', 'json3');
+                  const r = await fetch(u.toString(), { credentials: 'include' });
+                  if (r.ok) {
+                    const d = await r.json();
+                    if (d.events) {
+                      const segs = d.events
+                        .filter((e) => e.segs)
+                        .map((e) =>
+                          e.segs
+                            .map((s) => s.utf8 || '')
+                            .join('')
+                            .replace(/\n/g, ' ')
+                            .trim()
+                        )
+                        .filter(Boolean);
+                      if (segs.length > 0) return segs.join(' ');
                     }
-                    if (segs.length > 0) return segs.join(' ');
                   }
-                }
-              } catch (e) {}
+                } catch (e) {}
+              }
             }
           }
         } catch (e) {}
 
-        // 3. Automated DOM expansion: expand description and trigger transcript panel
+        // 3. Automated stealth DOM extraction
+        ensureStealthStyle();
+        let didExpand = false;
+
         try {
-          // Expand description section
+          // Expand description if collapsed
           const expandDesc = document.querySelector(
-            '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand, #description-inline-expander'
+            '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand, #description-inline-expander #expand'
           );
-          if (expandDesc) {
-            try { expandDesc.click(); } catch (e) {}
+          if (expandDesc && expandDesc.offsetParent !== null) {
+            try {
+              expandDesc.click();
+              didExpand = true;
+            } catch (e) {}
           }
 
-          // Expand engagement panel directly if available
-          const panel = document.querySelector(
+          // Expand engagement panels
+          const panels = document.querySelectorAll(
+            'ytd-engagement-panel-section-list-renderer[target-id*="transcript"], ' +
+            'ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"], ' +
             'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
           );
-          if (panel) {
-            panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
+          for (const panel of panels) {
+            try {
+              panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
+            } catch (e) {}
           }
 
           // Find & click "Show transcript" button
@@ -397,14 +444,43 @@ async function fetchTranscriptFromTab(tabId, videoId) {
             } catch (e) {}
           }
 
-          // Poll up to 4 seconds for segments to load in DOM
+          // Poll up to 3.5 seconds for segments to load in DOM
           const start = Date.now();
-          while (Date.now() - start < 4000) {
-            await new Promise((r) => setTimeout(r, 200));
+          while (Date.now() - start < 3500) {
+            await new Promise((r) => setTimeout(r, 180));
             domText = getSegmentsFromDom();
             if (domText && domText.length >= 20) return domText;
           }
-        } catch (e) {}
+        } finally {
+          // Cleanup
+          if (didExpand) {
+            try {
+              const collapseDesc = document.querySelector(
+                '#description #collapse, #collapse.ytd-text-inline-expander, tp-yt-paper-button#collapse, ytd-text-inline-expander #collapse, #description-inline-expander #collapse'
+              );
+              if (collapseDesc && collapseDesc.offsetParent !== null) {
+                collapseDesc.click();
+              }
+            } catch (e) {}
+          }
+
+          const panelsToHide = document.querySelectorAll(
+            'ytd-engagement-panel-section-list-renderer[target-id*="transcript"], ' +
+            'ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"], ' +
+            'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
+          );
+          for (const panel of panelsToHide) {
+            try {
+              panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_HIDDEN');
+              const closeBtn = panel.querySelector('#visibility-button button, button[aria-label*="Close" i]');
+              if (closeBtn) closeBtn.click();
+            } catch (e) {}
+          }
+
+          setTimeout(() => {
+            removeStealthStyle();
+          }, 400);
+        }
 
         return null;
       },
@@ -473,15 +549,12 @@ function displayResult(result) {
   els.verdict.classList.remove('verdict--human', 'verdict--mixed', 'verdict--ai');
 
   if (score < 0.35) {
-    els.verdictEmoji.textContent = '✅';
     els.verdictText.textContent = 'Likely Human-Written';
     els.verdict.classList.add('verdict--human');
   } else if (score < 0.65) {
-    els.verdictEmoji.textContent = '🤔';
-    els.verdictText.textContent = 'Mixed / Uncertain';
+    els.verdictText.textContent = 'Mixed Signals';
     els.verdict.classList.add('verdict--mixed');
   } else {
-    els.verdictEmoji.textContent = '🤖';
     els.verdictText.textContent = 'Likely AI-Generated';
     els.verdict.classList.add('verdict--ai');
   }

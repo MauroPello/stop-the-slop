@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Stop the Slop — Interactive Client Scripts
+   Stop the Slop: Interactive Client Scripts
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,9 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const SIM_PRESETS = {
   ai: {
     score: 88,
-    verdict: 'High AI Probability (88%)',
+    verdict: 'High AI probability (88%)',
     verdictClass: 'verdict-ai',
-    verdictEmoji: '🤖',
     transcript: `
       <p><span class="highlight-ai">In today's fast-paced digital era, the landscape of technology is evolving at an unprecedented pace.</span></p>
       <p>Many individuals often wonder how these modern innovations can transform our daily routines.</p>
@@ -27,9 +26,8 @@ const SIM_PRESETS = {
   },
   human: {
     score: 14,
-    verdict: 'Likely Human Script (14%)',
+    verdict: 'Likely human script (14%)',
     verdictClass: 'verdict-human',
-    verdictEmoji: '✨',
     transcript: `
       <p>I spent three weeks in Tokyo trying to find the best ramen spot that tourists don't know about.</p>
       <p>On my fourth night, getting caught in the rain near Shinjuku, I stumbled into this tiny four-seat basement bar.</p>
@@ -39,9 +37,8 @@ const SIM_PRESETS = {
   },
   custom: {
     score: 62,
-    verdict: 'Mixed / Moderate AI Signals (62%)',
-    verdictClass: 'verdict-ai',
-    verdictEmoji: '⚠️',
+    verdict: 'Mixed signals (62%)',
+    verdictClass: 'verdict-mixed',
     transcript: `
       <p><span class="highlight-ai">In this comprehensive guide, we will delve deep into the step-by-step nuances of modern web architecture.</span></p>
       <p>We built our background worker using Cloudflare edge functions for sub-50ms latency across global clusters.</p>
@@ -68,13 +65,13 @@ function initSimulator() {
 
     // Update score counter with smooth count
     if (scoreDisplay) {
-      animateValue(scoreDisplay, parseInt(scoreDisplay.innerText) || 0, data.score, 600);
+      animateValue(scoreDisplay, parseInt(scoreDisplay.innerText, 10) || 0, data.score, 400);
     }
 
-    // Update verdict
+    // Update verdict with clean status dot
     if (verdictBanner) {
       verdictBanner.className = `sim-verdict-banner ${data.verdictClass}`;
-      verdictBanner.innerHTML = `<span>${data.verdictEmoji}</span> <span>${data.verdict}</span>`;
+      verdictBanner.innerHTML = `<span class="verdict-dot"></span> <span>${data.verdict}</span>`;
     }
 
     // Update transcript text
@@ -95,7 +92,7 @@ function initSimulator() {
   // Run initial AI preset on page load
   setTimeout(() => {
     applyPreset('ai');
-  }, 300);
+  }, 200);
 }
 
 function animateValue(obj, start, end, duration) {
@@ -148,15 +145,17 @@ function initCopyButtons() {
       try {
         await navigator.clipboard.writeText(codeElement.innerText.trim());
         const originalText = btn.innerText;
-        btn.innerText = 'Copied!';
-        btn.style.color = 'var(--accent-emerald)';
-        btn.style.borderColor = 'var(--accent-emerald)';
+        btn.innerText = 'Copied';
+        btn.style.color = '#ffffff';
+        btn.style.borderColor = '#15803d';
+        btn.style.backgroundColor = '#15803d';
         
         setTimeout(() => {
           btn.innerText = originalText;
           btn.style.color = '';
           btn.style.borderColor = '';
-        }, 2000);
+          btn.style.backgroundColor = '';
+        }, 1800);
       } catch (err) {
         console.error('Failed to copy:', err);
       }

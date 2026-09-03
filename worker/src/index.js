@@ -1,16 +1,16 @@
 /**
- * Stop the Slop — Cloudflare Worker API
+ * Stop the Slop: Cloudflare Worker API
  *
  * Endpoints:
- *   POST /api/analyze  — Analyze text for AI-generated content (receives transcript from extension)
- *   GET  /api/check?videoId=<id> — Check if a video has been analyzed (cache lookup)
- *   GET  /api/check-batch — Check multiple video IDs at once
- *   GET  /api/health   — Health check
+ *   POST /api/analyze: Analyze text for AI-generated content (receives transcript from extension)
+ *   GET  /api/check?videoId=<id>: Check if a video has been analyzed (cache lookup)
+ *   GET  /api/check-batch: Check multiple video IDs at once
+ *   GET  /api/health: Health check
  *
  * Environment bindings:
- *   DB              — D1 database for caching results
- *   GEMINI_API_KEY  — Google Gemini API key (primary AI detection engine)
- *   SAPLING_API_KEY — Sapling AI API key (optional fallback)
+ *   DB: D1 database for caching results
+ *   GEMINI_API_KEY: Google Gemini API key (primary AI detection engine)
+ *   SAPLING_API_KEY: Sapling AI API key (optional fallback)
  */
 
 // In-memory sliding rate limiter per isolate (fast, 0-cost protection against floods)

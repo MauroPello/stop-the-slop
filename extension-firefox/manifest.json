@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Stop the Slop — AI Script Detector",
+  "name": "Stop the Slop: AI Script Detector",
   "description": "Detects whether a YouTube video's script was written using AI by analyzing its transcript.",
   "version": "1.0.0",
   "browser_specific_settings": {

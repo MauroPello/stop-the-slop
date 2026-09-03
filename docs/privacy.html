@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Stop the Slop</title>
-  <meta name="description" content="Privacy Policy for Stop the Slop browser extension. Learn how your data and YouTube transcripts are handled.">
+  <title>Privacy Policy: Stop the Slop</title>
+  <meta name="description" content="Privacy Policy for the Stop the Slop browser extension. How your data and YouTube transcripts are handled.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
@@ -23,13 +23,13 @@
   <header class="site-nav" id="privacy-nav">
     <div class="container nav-inner">
       <a href="index.html" class="brand-link">
-        <img src="icons/icon-48.png" alt="Stop the Slop" class="brand-logo" width="34" height="34">
+        <img src="icons/icon-48.png" alt="Stop the Slop" class="brand-logo" width="30" height="30">
         <span>Stop the Slop</span>
       </a>
 
       <div class="nav-actions">
         <a href="index.html" class="btn btn-secondary">
-          <span>&larr; Back to Home</span>
+          <span>Back to Home</span>
         </a>
       </div>
     </div>
@@ -40,59 +40,59 @@
     <article class="privacy-card">
       <h1>Privacy Policy</h1>
       <div class="privacy-meta">
-        <span>Last Updated: August 2026</span> · <span>Applies to: Stop the Slop Extension</span>
+        <span>Last Updated: August 2026</span> &middot; <span>Applies to: Stop the Slop Extension</span>
       </div>
 
       <div class="privacy-badge-box">
-        <strong>TL;DR Summary:</strong> Stop the Slop is privacy-first and open source. We do not collect personal identification, browsing histories, IP tracking logs, or analytics cookies. The extension only processes the YouTube video transcripts you inspect to calculate AI detection scores.
+        <strong>Summary:</strong> Stop the Slop is an open-source project. We do not collect personal identification, user accounts, browsing histories, IP tracking logs, or cookies. The extension only reads public YouTube video transcripts to calculate script probability scores.
       </div>
 
       <h2>1. Information We Process</h2>
       <p>
-        To perform AI script detection, the extension extracts the publicly accessible transcript or subtitle track of the YouTube video currently open in your active tab.
+        To perform script detection, the extension extracts the publicly accessible transcript or subtitle track of the YouTube video currently open in your active tab.
       </p>
       <ul>
-        <li><strong>YouTube Video ID & Transcript:</strong> Sent securely to our backend analysis API to calculate linguistic AI probability scores and highlight repetitive AI patterns.</li>
-        <li><strong>No Personal Data:</strong> We do not collect names, email addresses, IP addresses, search history, browsing history outside of YouTube, or Google account information.</li>
+        <li><strong>YouTube Video ID and Transcript:</strong> Sent to the backend analysis endpoint to calculate linguistic AI probability scores and highlight repetitive patterns.</li>
+        <li><strong>No Personal Data:</strong> We do not collect names, email addresses, IP addresses, search queries, browsing history outside of YouTube, or Google account information.</li>
       </ul>
 
-      <h2>2. Chrome & Browser Permissions Explained</h2>
+      <h2>2. Browser Permissions</h2>
       <p>
         When installing the extension, your browser may prompt you about the following permissions:
       </p>
       <ul>
         <li><code>tabs</code> / <code>activeTab</code>: Used strictly to check if the currently focused browser tab is a YouTube video URL (e.g. <code>youtube.com/watch?v=...</code>) and retrieve its video ID.</li>
-        <li><code>storage</code>: Used locally on your device to store your theme preferences (dark/light/system) and cache recent analysis scores to minimize repeated network calls.</li>
-        <li><code>scripting</code> & <code>host_permissions: https://www.youtube.com/*</code>: Required to inspect captions and render the in-player detection badge directly on the YouTube video interface.</li>
+        <li><code>storage</code>: Used locally on your device to store your theme preferences (dark, light, system) and cache recent analysis scores to minimize repeated network calls.</li>
+        <li><code>scripting</code> and <code>host_permissions: https://www.youtube.com/*</code>: Required to inspect captions and render thumbnail probability badges directly on the YouTube video interface.</li>
       </ul>
 
-      <h2>3. Third-Party Services & Infrastructure</h2>
+      <h2>3. Third-Party Services</h2>
       <p>
-        The extension communicates with a lightweight backend service hosted on <strong>Cloudflare Workers</strong>:
+        The extension communicates with a lightweight backend service hosted on Cloudflare Workers:
       </p>
       <ul>
-        <li><strong>AI Linguistic Analysis:</strong> Analysis is executed via verified AI language scoring APIs (Sapling AI) to evaluate text perplexity and style markers.</li>
-        <li><strong>Caching:</strong> Analysis scores are cached anonymously by YouTube Video ID in Cloudflare D1 to speed up response times for all users and reduce server strain. No user identifiers are associated with cached results.</li>
+        <li><strong>Linguistic Analysis:</strong> Transcripts are evaluated against language model markers to detect text uniformity and formulaic phrasing.</li>
+        <li><strong>Caching:</strong> Analysis scores are cached anonymously by YouTube Video ID in Cloudflare D1 to speed up response times and reduce server load. No user identifiers are associated with cached results.</li>
       </ul>
 
-      <h2>4. Data Sharing & Monetization</h2>
+      <h2>4. Data Sharing and Monetization</h2>
       <p>
-        We do not sell, rent, monetize, or trade any user data to third parties, advertisers, or data brokers. The extension is 100% free and open-source under the MIT license.
+        We do not sell, rent, monetize, or trade any user data to third parties, advertisers, or data brokers. The extension is free and open-source under the MIT license.
       </p>
 
       <h2>5. Open Source Transparency</h2>
       <p>
         The entire codebase for the browser extension and backend worker is public. You can inspect, audit, or verify the exact code running in the extension on our 
-        <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: underline;">GitHub repository</a>.
+        <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: underline;">GitHub repository</a>.
       </p>
 
-      <h2>6. Contact & Inquiries</h2>
+      <h2>6. Contact and Inquiries</h2>
       <p>
-        If you have any questions or feedback regarding this Privacy Policy or the extension's data practices, please open an issue on our GitHub repository:
+        If you have questions or feedback regarding this Privacy Policy or data handling in the extension, please open an issue on our GitHub repository:
       </p>
       <p>
         <a href="https://github.com/MauroPello/stop-the-slop/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top: 0.5rem;">
-          GitHub Issues & Support
+          GitHub Issues
         </a>
       </p>
     </article>
@@ -101,7 +101,7 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-bottom">
-      <span>&copy; 2026 Stop the Slop · Open Source Project</span>
+      <span>&copy; 2026 Stop the Slop. Open Source Project.</span>
       <a href="index.html" class="footer-link">Home</a>
     </div>
   </footer>

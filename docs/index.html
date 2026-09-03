@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stop the Slop — AI Script Detector for YouTube</title>
+  <title>Stop the Slop: AI Script Detector for YouTube</title>
   <meta name="description"
-    content="Free, privacy-first browser extension that analyzes YouTube video transcripts in real-time to detect AI-generated slop, robotic narration, and recycled content.">
+    content="Open-source browser extension that analyzes YouTube video transcripts to flag AI-generated scripts, repetitive patterns, and content farm videos.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
@@ -14,23 +14,23 @@
 
   <!-- Canonical & SEO Meta -->
   <link rel="canonical" href="https://mauropello.github.io/stop-the-slop/">
-  <meta name="keywords" content="YouTube AI detector, AI script detector, stop AI slop, YouTube browser extension, AI video detection, content farm detector, chrome extension, firefox addon, sapling ai, open source">
+  <meta name="keywords" content="YouTube AI detector, AI script detector, stop AI slop, YouTube browser extension, AI video detection, content farm detector, chrome extension, firefox addon, open source">
   <meta name="author" content="Mauro Pellonara">
 
   <!-- Open Graph / Meta -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mauropello.github.io/stop-the-slop/">
-  <meta property="og:title" content="Stop the Slop — AI Script Detector for YouTube">
+  <meta property="og:title" content="Stop the Slop: AI Script Detector for YouTube">
   <meta property="og:description"
-    content="Instant AI script detection for YouTube videos. Unmask robotic content farms directly in your browser.">
+    content="Detect AI-generated video scripts on YouTube using transcript analysis directly in your browser.">
   <meta property="og:image" content="icons/icon-128.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://mauropello.github.io/stop-the-slop/">
-  <meta property="twitter:title" content="Stop the Slop — AI Script Detector for YouTube">
+  <meta property="twitter:title" content="Stop the Slop: AI Script Detector for YouTube">
   <meta property="twitter:description"
-    content="Instant AI script detection for YouTube videos. Unmask robotic content farms directly in your browser.">
+    content="Detect AI-generated video scripts on YouTube using transcript analysis directly in your browser.">
   <meta property="twitter:image" content="icons/icon-128.png">
 
   <!-- Google Fonts -->
@@ -40,7 +40,7 @@
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- Structured Data (JSON-LD) for Search Engine Authority & Entity Linking -->
+  <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,11 +48,11 @@
       {
         "@type": "SoftwareApplication",
         "@id": "https://mauropello.github.io/stop-the-slop/#software",
-        "name": "Stop the Slop — AI Script Detector for YouTube",
+        "name": "Stop the Slop: AI Script Detector for YouTube",
         "alternateName": "Stop the Slop",
         "applicationCategory": "BrowserExtension",
         "operatingSystem": "Chrome, Brave, Microsoft Edge, Mozilla Firefox, Opera",
-        "description": "Free, privacy-first browser extension that analyzes YouTube video transcripts in real-time to detect AI-generated slop, robotic narration, and recycled content.",
+        "description": "Open-source browser extension that analyzes YouTube video transcripts in real-time to detect AI-generated scripts and robotic narration.",
         "url": "https://mauropello.github.io/stop-the-slop/",
         "image": "https://mauropello.github.io/stop-the-slop/icons/icon-128.png",
         "offers": {
@@ -82,7 +82,7 @@
         "@id": "https://mauropello.github.io/stop-the-slop/#website",
         "url": "https://mauropello.github.io/stop-the-slop/",
         "name": "Stop the Slop",
-        "description": "Free, open-source AI script detector for YouTube videos.",
+        "description": "Open-source AI script detector for YouTube videos.",
         "publisher": {
           "@type": "Person",
           "name": "Mauro Pellonara"
@@ -103,15 +103,15 @@
   <header class="site-nav" id="main-nav">
     <div class="container nav-inner">
       <a href="index.html" class="brand-link" id="nav-brand">
-        <img src="icons/icon-48.png" alt="Stop the Slop Logo" class="brand-logo" width="34" height="34">
+        <img src="icons/icon-48.png" alt="Stop the Slop Logo" class="brand-logo" width="30" height="30">
         <span>Stop the Slop</span>
       </a>
 
       <nav aria-label="Main Navigation">
         <ul class="nav-links" id="nav-links">
           <li><a href="#features" class="nav-link" id="nav-link-features">Features</a></li>
+          <li><a href="#demo" class="nav-link" id="nav-link-demo">Demo</a></li>
           <li><a href="#how-it-works" class="nav-link" id="nav-link-how">How it Works</a></li>
-          <li><a href="#ecosystem" class="nav-link" id="nav-link-ecosystem">Ecosystem</a></li>
           <li><a href="#install" class="nav-link" id="nav-link-install">Install</a></li>
           <li><a href="#faq" class="nav-link" id="nav-link-faq">FAQ</a></li>
           <li><a href="privacy.html" class="nav-link" id="nav-link-privacy">Privacy</a></li>
@@ -120,18 +120,12 @@
 
       <div class="nav-actions">
         <a href="#install" class="btn btn-primary" id="nav-btn-install">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
           <span>Get Extension</span>
         </a>
 
         <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu"
           aria-expanded="false">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -149,27 +143,24 @@
     <section class="hero" id="hero-section">
       <div class="container hero-grid">
         <div class="hero-content">
+          <div class="hero-tagline">Open Source YouTube Extension</div>
           <h1 class="hero-title">
-            Spot AI-Generated Video Scripts <span class="hero-title-grad">In Real Time.</span>
+            Spot AI-generated video scripts <span class="hero-title-accent">before watching.</span>
           </h1>
 
           <p class="hero-description">
-            A free, open-source browser extension that analyzes YouTube video transcripts, revealing AI probability
-            gauges and sentence-by-sentence linguistic heatmaps right on the page.
+            Stop the Slop inspects YouTube transcripts to calculate AI probability scores and highlight robotic,
+            repetitive phrasing directly on video pages and thumbnails.
           </p>
 
           <div class="hero-actions">
             <a href="#install" class="btn btn-primary" id="hero-btn-chrome">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                <circle cx="12" cy="12" r="4" fill="currentColor" />
-              </svg>
-              <span>Add to Chrome / Brave</span>
+              <span>Install Extension</span>
             </a>
 
             <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer"
               class="btn btn-secondary" id="hero-btn-github">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
@@ -179,16 +170,16 @@
 
           <div class="hero-trust">
             <div class="trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span>100% Free & Open Source</span>
+              <span>MIT License</span>
             </div>
             <div class="trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span>Zero Tracking & Ad-Free</span>
+              <span>No user tracking</span>
             </div>
           </div>
         </div>
@@ -209,9 +200,9 @@
             </div>
 
             <div class="sim-presets">
-              <button class="preset-btn active" data-preset="ai" id="preset-ai-btn">🤖 AI Content Farm</button>
-              <button class="preset-btn" data-preset="human" id="preset-human-btn">✨ Authentic Creator</button>
-              <button class="preset-btn" data-preset="custom" id="preset-mixed-btn">⚠️ Mixed Script</button>
+              <button class="preset-btn active" data-preset="ai" id="preset-ai-btn">AI script</button>
+              <button class="preset-btn" data-preset="human" id="preset-human-btn">Human creator</button>
+              <button class="preset-btn" data-preset="custom" id="preset-mixed-btn">Mixed script</button>
             </div>
 
             <div class="simulator-body">
@@ -220,21 +211,21 @@
                 <svg viewBox="0 0 200 120" class="gauge-svg">
                   <defs>
                     <linearGradient id="demoGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#10b981" />
-                      <stop offset="50%" stop-color="#f59e0b" />
-                      <stop offset="100%" stop-color="#ef4444" />
+                      <stop offset="0%" stop-color="#15803d" />
+                      <stop offset="50%" stop-color="#b45309" />
+                      <stop offset="100%" stop-color="#dc2626" />
                     </linearGradient>
                   </defs>
                   <!-- Background arc -->
-                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" class="gauge-bg-track" stroke-width="14"
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" class="gauge-bg-track" stroke-width="12"
                     stroke-linecap="round" />
                   <!-- Colored arc -->
-                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#demoGaugeGrad)" stroke-width="14"
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#demoGaugeGrad)" stroke-width="12"
                     stroke-linecap="round" stroke-dasharray="251.33" stroke-dashoffset="0" />
                   <!-- Animated Needle -->
-                  <line id="sim-needle" class="gauge-needle" x1="100" y1="100" x2="100" y2="30" stroke-width="3"
+                  <line id="sim-needle" class="gauge-needle" x1="100" y1="100" x2="100" y2="30" stroke-width="2.5"
                     stroke-linecap="round" style="transform: rotate(68.4deg);" />
-                  <circle class="gauge-needle-center" cx="100" cy="100" r="6" />
+                  <circle class="gauge-needle-center" cx="100" cy="100" r="5" />
                 </svg>
 
                 <div class="gauge-score-display">
@@ -245,10 +236,10 @@
 
               <!-- Verdict Banner -->
               <div class="sim-verdict-banner verdict-ai" id="sim-verdict">
-                <span>🤖</span> <span>High AI Probability (88%)</span>
+                <span class="verdict-dot"></span> <span>High AI probability (88%)</span>
               </div>
 
-              <!-- Transcript / Sentences snippet -->
+              <!-- Transcript snippet -->
               <div class="sim-transcript-box" id="sim-transcript">
                 <p><span class="highlight-ai">In today's fast-paced digital era, the landscape of technology is evolving
                     at an unprecedented pace.</span></p>
@@ -270,103 +261,96 @@
     <section class="section" id="features">
       <div class="container">
         <div class="section-header">
-          <span class="section-pill">Why Stop the Slop</span>
-          <h2 class="section-title">Cut Through the Automated Noise</h2>
+          <span class="section-pill">Features</span>
+          <h2 class="section-title">Built for cleaner browsing</h2>
           <p class="section-subtitle">
-            Everything you need to distinguish genuine creator effort from low-quality AI generated churn.
+            Practical tools to help you identify automated video scripts and content farms.
           </p>
         </div>
 
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
             </div>
-            <h3 class="feature-title">Thumbnail & Feed AI Badges</h3>
+            <h3 class="feature-title">Thumbnail Badges</h3>
             <p class="feature-desc">
-              Get instant AI probability badges right on video thumbnails in your Home feed, Search, and Recommendations
-              before you even click.
+              AI probability indicators appear directly on video thumbnails across your Home feed, Search results, and recommendations.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14 2 14 8 20 8"></polyline>
                 <line x1="16" y1="13" x2="8" y2="13"></line>
                 <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
               </svg>
             </div>
-            <h3 class="feature-title">Sentence-Level AI Heatmap</h3>
+            <h3 class="feature-title">Sentence Breakdown</h3>
             <p class="feature-desc">
-              Inspect the breakdown to see the exact robotic sentences and repetitive formulas that triggered the AI
-              detector.
+              Inspect flagged sentences to see which formulaic phrases and repetitive passages contributed to the detection score.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
-            <h3 class="feature-title">100% Privacy Focused</h3>
+            <h3 class="feature-title">Privacy Focused</h3>
             <p class="feature-desc">
-              No browsing history tracked. No login required. No tracking cookies. Video transcripts are processed
-              purely for script analysis.
+              No account required. No browsing history collected. Only public video transcripts are inspected for script analysis.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M8 12h8"></path>
                 <path d="M12 8v8"></path>
               </svg>
             </div>
-            <h3 class="feature-title">Cloudflare Edge Caching</h3>
+            <h3 class="feature-title">Fast Local Cache</h3>
             <p class="feature-desc">
-              Analyzed videos are cached on global Cloudflare D1 edge storage, delivering sub-100ms instant verdicts for
-              trending videos.
+              Previously evaluated videos are cached locally and at the edge, loading badge ratings without repeated network requests.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </div>
-            <h3 class="feature-title">Dark & Light Adaptive</h3>
+            <h3 class="feature-title">Matches YouTube</h3>
             <p class="feature-desc">
-              Seamlessly matches YouTube's dark and light aesthetic, with automatic OS system preference detection and
-              smooth transitions.
+              Adapts automatically to dark and light modes, integrating smoothly with YouTube's interface.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
                 <line x1="16" y1="8" x2="2" y2="22"></line>
                 <line x1="17.5" y1="15" x2="9" y2="15"></line>
               </svg>
             </div>
-            <h3 class="feature-title">Multi-Browser Ready</h3>
+            <h3 class="feature-title">Chrome & Firefox</h3>
             <p class="feature-desc">
-              Built on modern Manifest V3 standards with full compatibility for Google Chrome, Brave, Microsoft Edge,
-              Opera, and Mozilla Firefox.
+              Built on Manifest V3 standards with official support for Google Chrome, Brave, Microsoft Edge, and Mozilla Firefox.
             </p>
           </div>
         </div>
@@ -379,38 +363,35 @@
     <section class="section" id="how-it-works" style="background-color: var(--bg-surface-elevated);">
       <div class="container">
         <div class="section-header">
-          <span class="section-pill">Workflow</span>
-          <h2 class="section-title">How Detection Works</h2>
+          <span class="section-pill">Process</span>
+          <h2 class="section-title">How detection works</h2>
           <p class="section-subtitle">
-            A seamless three-step pipeline designed for speed, accuracy, and lightweight browser performance.
+            Three straightforward steps to evaluate video scripts.
           </p>
         </div>
 
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-number">01</div>
-            <h3 class="step-title">Extract Transcript</h3>
+            <h3 class="step-title">Read Transcript</h3>
             <p class="step-desc">
-              When you load a YouTube video, the extension non-intrusively extracts official or auto-generated subtitle
-              tracks directly from the page.
+              When you open a YouTube video, the extension reads the available subtitle track directly on page.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">02</div>
-            <h3 class="step-title">Edge AI Evaluation</h3>
+            <h3 class="step-title">Analyze Phrasing</h3>
             <p class="step-desc">
-              The transcript is analyzed via our fast Cloudflare Worker API to detect typical LLM stylistic markers,
-              sentence perplexity, and repetitive filler formulas.
+              The text is evaluated for typical LLM markers, stylistic uniformity, and repetitive sentence templates.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">03</div>
-            <h3 class="step-title">Instant In-Page Score</h3>
+            <h3 class="step-title">Display Score</h3>
             <p class="step-desc">
-              You receive an intuitive probability gauge and an itemized breakdown of flagged sentences in the extension
-              popup and on-screen badge.
+              View the overall probability score, verdict, and highlighted sentences in the popup or on thumbnails.
             </p>
           </div>
         </div>
@@ -418,126 +399,126 @@
     </section>
 
     <!-- ========================================================================
-         Featured On & Community Ecosystem Section
+         Community & Project Links Section
          ======================================================================== -->
     <section class="section" id="ecosystem">
       <div class="container">
         <div class="section-header">
-          <span class="section-pill">Ecosystem & Directory Listings</span>
-          <h2 class="section-title">Featured Across the Web</h2>
+          <span class="section-pill">Community</span>
+          <h2 class="section-title">Project links and directories</h2>
           <p class="section-subtitle">
-            Explore community discussions, software directory listings, open-source mirrors, and engineering writeups.
+            Follow the project on developer platforms and open-source directories.
           </p>
         </div>
 
         <div class="ecosystem-grid">
           <!-- Product Hunt -->
-          <a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-producthunt" style="--card-accent: #da552f;">
+          <a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-producthunt">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper" style="color: #da552f; background: rgba(218, 85, 47, 0.1);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <div class="ecosystem-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M13.6 8.4h-3.4v3.6h3.4c1 0 1.8-.8 1.8-1.8s-.8-1.8-1.8-1.8zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.6 14.4h-3.4V18H7.8V6h5.8c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge" style="color: #da552f; border-color: rgba(218, 85, 47, 0.3); background: rgba(218, 85, 47, 0.1);">Product Launch</span>
+                <span class="ecosystem-badge">Product Hunt</span>
               </div>
               <h3 class="ecosystem-title">Product Hunt</h3>
               <p class="ecosystem-desc">
-                Featured on Product Hunt. Join the community launch discussion, upvote the tool, and share your feedback.
+                Community launch discussion and feedback thread for Stop the Slop.
               </p>
             </div>
-            <div class="ecosystem-link-text" style="color: #da552f;">
-              <span>View Product on Product Hunt</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="ecosystem-link-text">
+              <span>View listing</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
           <!-- AlternativeTo -->
-          <a href="https://alternativeto.net/software/stop-the-slop/about/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-alternativeto" style="--card-accent: #0088cc;">
+          <a href="https://alternativeto.net/software/stop-the-slop/about/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-alternativeto">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper" style="color: #0088cc; background: rgba(0, 136, 204, 0.1);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <div class="ecosystem-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2L1 21h22L12 2zm0 4.5l7.5 13H4.5L12 6.5zm-1.5 5.5v4h3v-4h-3z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge" style="color: #0088cc; border-color: rgba(0, 136, 204, 0.3); background: rgba(0, 136, 204, 0.1);">Directory & Reviews</span>
+                <span class="ecosystem-badge">Directory</span>
               </div>
               <h3 class="ecosystem-title">AlternativeTo</h3>
               <p class="ecosystem-desc">
-                Listed on AlternativeTo. Discover crowdsourced ratings, find open-source alternatives, and post your review.
+                Crowdsourced software directory with user reviews and alternatives.
               </p>
             </div>
-            <div class="ecosystem-link-text" style="color: #0088cc;">
-              <span>View on AlternativeTo</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="ecosystem-link-text">
+              <span>View listing</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
           <!-- SourceForge -->
-          <a href="https://sourceforge.net/projects/stop-the-slop/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-sourceforge" style="--card-accent: #ee5922;">
+          <a href="https://sourceforge.net/projects/stop-the-slop/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-sourceforge">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper" style="color: #ee5922; background: rgba(238, 89, 34, 0.1);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <div class="ecosystem-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12.04 0C5.4 0 .02 5.38.02 12.02c0 6.64 5.38 12.02 12.02 12.02 6.64 0 12.02-5.38 12.02-12.02C24.06 5.38 18.68 0 12.04 0zm0 3.7c4.6 0 8.32 3.72 8.32 8.32 0 4.6-3.72 8.32-8.32 8.32-4.6 0-8.32-3.72-8.32-8.32 0-4.6 3.72-8.32 8.32-8.32zm-2.4 4.5v7.6l6.2-3.8-6.2-3.8z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge" style="color: #ee5922; border-color: rgba(238, 89, 34, 0.3); background: rgba(238, 89, 34, 0.1);">Open Source Hub</span>
+                <span class="ecosystem-badge">Mirror</span>
               </div>
               <h3 class="ecosystem-title">SourceForge</h3>
               <p class="ecosystem-desc">
-                Hosted open-source repository mirror, milestone tracking, and project statistics on SourceForge.
+                Open-source software mirror and project statistics.
               </p>
             </div>
-            <div class="ecosystem-link-text" style="color: #ee5922;">
-              <span>View SourceForge Project</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="ecosystem-link-text">
+              <span>View listing</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
           <!-- Peerlist -->
-          <a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-peerlist" style="--card-accent: #00aa4f;">
+          <a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-peerlist">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper" style="color: #00aa4f; background: rgba(0, 170, 79, 0.1);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <div class="ecosystem-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge" style="color: #00aa4f; border-color: rgba(0, 170, 79, 0.3); background: rgba(0, 170, 79, 0.1);">Project Spotlight</span>
+                <span class="ecosystem-badge">Spotlight</span>
               </div>
               <h3 class="ecosystem-title">Peerlist</h3>
               <p class="ecosystem-desc">
-                Connect on Peerlist. View builder updates, project timeline, and community feedback for Stop the Slop.
+                Developer profile, project updates, and community timeline.
               </p>
             </div>
-            <div class="ecosystem-link-text" style="color: #00aa4f;">
-              <span>View on Peerlist</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="ecosystem-link-text">
+              <span>View listing</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
           <!-- DEV Community -->
-          <a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-devto" style="--card-accent: #6366f1;">
+          <a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-devto">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper" style="color: #6366f1; background: rgba(99, 102, 241, 0.1);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <div class="ecosystem-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M7.42 10.05c-.18-.12-.46-.23-.85-.23H5.2v4.36h1.33c.43 0 .73-.1.91-.25.26-.2.39-.58.39-1.14 0-.58-.14-1.54-.41-1.74zm9.32-6.05H7.26C3.25 4 0 7.25 0 11.26v1.48C0 16.75 3.25 20 7.26 20h9.48c4.01 0 7.26-3.25 7.26-7.26v-1.48c0-4.01-3.25-7.26-7.26-7.26zm-7.9 11.66c-.36.31-.9.47-1.63.47H4.03V8.67h3.19c.72 0 1.25.16 1.6.47.46.41.69 1.05.69 1.93 0 .88-.23 1.54-.67 1.96zm4.84-2.83h-2.14v1.51h1.94v1.14h-1.94v1.69h2.24v1.14H8.43V8.67h4.25v1.16zm5.18 5.48h-1.39l-1.63-6.97h1.47l1.01 4.96 1.03-4.96h1.43l-1.92 6.97z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge" style="color: #6366f1; border-color: rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.1);">Technical Deep-Dive</span>
+                <span class="ecosystem-badge">Article</span>
               </div>
-              <h3 class="ecosystem-title">DEV.to Article</h3>
+              <h3 class="ecosystem-title">DEV Article</h3>
               <p class="ecosystem-desc">
-                Engineering story: "How I Built an Open-Source Browser Extension to Detect AI Slop on YouTube".
+                Technical writeup on the architecture and transcript extraction mechanism.
               </p>
             </div>
-            <div class="ecosystem-link-text" style="color: #6366f1;">
-              <span>Read Article on DEV</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="ecosystem-link-text">
+              <span>Read article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
         </div>
@@ -550,59 +531,46 @@
     <section class="section" id="install">
       <div class="container">
         <div class="install-box">
-          <span class="section-pill">Get Started</span>
-          <h2 class="section-title">Install Stop the Slop Today</h2>
-          <p class="section-subtitle" style="margin-bottom: 2rem;">
-            Choose your preferred browser or install directly from source for local development.
+          <span class="section-pill">Installation</span>
+          <h2 class="section-title">Install Stop the Slop</h2>
+          <p class="section-subtitle" style="margin-bottom: 1.75rem;">
+            Install from official store listings or load directly from source.
           </p>
 
           <div class="install-tabs">
             <button class="tab-btn active" data-tab="tab-chrome" id="tab-btn-chrome">Chrome / Chromium</button>
             <button class="tab-btn" data-tab="tab-firefox" id="tab-btn-firefox">Firefox</button>
-            <button class="tab-btn" data-tab="tab-dev" id="tab-btn-dev">Developer Mode (Unpacked)</button>
+            <button class="tab-btn" data-tab="tab-dev" id="tab-btn-dev">Developer Mode</button>
           </div>
 
           <!-- Chrome Tab -->
           <div class="tab-pane active" id="tab-chrome">
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
-              Install directly with one click from the official Chrome Web Store for Google Chrome, Brave, and Microsoft
-              Edge:
+            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; text-align: center; font-size: 0.92rem;">
+              Available on the Chrome Web Store for Chrome, Brave, and Edge:
             </p>
             <div style="text-align: center;">
-              <a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-chrome-store" style="padding: 1rem 2rem; font-size: 1.05rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                  <circle cx="12" cy="12" r="4" fill="currentColor" />
-                </svg>
-                <span>Add to Chrome (Free)</span>
+              <a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-chrome-store">
+                <span>Add to Chrome</span>
               </a>
-              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem;">
-                *Official listing on Chrome Web Store. Also compatible with Brave, Opera, and Microsoft Edge.
-              </p>
             </div>
           </div>
 
           <!-- Firefox Tab -->
           <div class="tab-pane" id="tab-firefox">
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
-              Get Stop the Slop for Mozilla Firefox from the Firefox Add-ons repository:
+            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; text-align: center; font-size: 0.92rem;">
+              Available on Firefox Add-ons:
             </p>
             <div style="text-align: center;">
-              <a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-firefox-store"
-                style="padding: 1rem 2rem; font-size: 1.05rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                </svg>
-                <span>Get Firefox Add-on</span>
+              <a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-firefox-store">
+                <span>Add to Firefox</span>
               </a>
             </div>
           </div>
 
           <!-- Developer Mode Tab -->
           <div class="tab-pane" id="tab-dev">
-            <p style="color: var(--text-secondary); font-size: 0.95rem;">
-              Load directly into your browser in developer mode:
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              Clone the repository and load unpacked:
             </p>
 
             <div class="code-block" id="code-clone">
@@ -610,11 +578,11 @@
               <pre><code id="code-clone-text">git clone https://github.com/MauroPello/stop-the-slop.git</code></pre>
             </div>
 
-            <ol style="padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8;">
-              <li>Open <code>chrome://extensions</code> (or <code>edge://extensions</code>) in your browser.</li>
-              <li>Toggle <strong>Developer mode</strong> in the top-right corner.</li>
-              <li>Click <strong>Load unpacked</strong> and select the <code>extension-chrome</code> directory.</li>
-              <li>Visit any YouTube video with captions to see it in action!</li>
+            <ol style="padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.75;">
+              <li>Open <code>chrome://extensions</code> in your browser.</li>
+              <li>Enable <strong>Developer mode</strong> in the top-right corner.</li>
+              <li>Click <strong>Load unpacked</strong> and select the <code>extension-chrome</code> folder.</li>
+              <li>Open any YouTube video with captions to test.</li>
             </ol>
           </div>
         </div>
@@ -634,23 +602,21 @@
         <div class="faq-list">
           <details class="faq-item">
             <summary class="faq-question">
-              <span>Is Stop the Slop 100% free?</span>
+              <span>Is Stop the Slop free?</span>
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              Yes! Stop the Slop is 100% free, open-source under the MIT license, and contains no ads or paywalls.
+              Yes. Stop the Slop is free and open-source under the MIT license. There are no ads, paywalls, or subscriptions.
             </div>
           </details>
 
           <details class="faq-item">
             <summary class="faq-question">
-              <span>How accurate is the AI detection score?</span>
+              <span>How does the detection score work?</span>
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              Detection is powered by advanced AI linguistic analysis via Sapling AI and heuristic pattern detectors.
-              While it provides strong indicative probabilities of LLM-generated phrasing, results are advisory rather
-              than 100% conclusive.
+              The extension checks video transcripts against linguistic markers typical of large language models. The score represents an estimated probability rather than an absolute proof.
             </div>
           </details>
 
@@ -660,20 +626,17 @@
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              Zero personal data is collected. The extension only reads the video ID and transcript on the YouTube watch
-              page you are currently viewing to perform the analysis. See our <a href="privacy.html"
-                style="color: var(--accent-primary); text-decoration: underline;">Privacy Policy</a> for full details.
+              None. The extension does not collect personal data, search queries, or browsing history. It only accesses the video transcript on the YouTube watch page you inspect. See the <a href="privacy.html" style="color: var(--text-primary); text-decoration: underline;">Privacy Policy</a> for details.
             </div>
           </details>
 
           <details class="faq-item">
             <summary class="faq-question">
-              <span>Does it work on videos without subtitles?</span>
+              <span>What if a video does not have captions?</span>
               <span class="faq-icon">+</span>
             </summary>
             <div class="faq-answer">
-              The extension requires a transcript to analyze. It works seamlessly with both manual creator subtitles and
-              YouTube's auto-generated captions. If a video has all captions disabled, analysis cannot be performed.
+              The extension relies on captions (creator-provided or auto-generated) to analyze the script. Videos with captions completely disabled cannot be analyzed.
             </div>
           </details>
         </div>
@@ -689,11 +652,11 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="brand-link">
-            <img src="icons/icon-48.png" alt="Stop the Slop" class="brand-logo" width="30" height="30">
+            <img src="icons/icon-48.png" alt="Stop the Slop" class="brand-logo" width="28" height="28">
             <span>Stop the Slop</span>
           </a>
           <p>
-            An open-source browser tool protecting your time from low-effort AI generated content farms.
+            An open-source browser extension to detect AI-generated scripts on YouTube.
           </p>
         </div>
 
@@ -701,7 +664,7 @@
           <h4 class="footer-title">Product</h4>
           <ul class="footer-links">
             <li><a href="#features" class="footer-link">Features</a></li>
-            <li><a href="#demo" class="footer-link">Live Demo</a></li>
+            <li><a href="#demo" class="footer-link">Demo</a></li>
             <li><a href="#how-it-works" class="footer-link">How it Works</a></li>
             <li><a href="#install" class="footer-link">Install</a></li>
             <li><a href="#faq" class="footer-link">FAQ</a></li>
@@ -709,7 +672,7 @@
         </div>
 
         <div>
-          <h4 class="footer-title">Ecosystem</h4>
+          <h4 class="footer-title">Community</h4>
           <ul class="footer-links">
             <li><a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer"
                 class="footer-link">Product Hunt</a></li>
@@ -720,7 +683,7 @@
             <li><a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer"
                 class="footer-link">Peerlist</a></li>
             <li><a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer"
-                class="footer-link">DEV.to Article</a></li>
+                class="footer-link">DEV Article</a></li>
           </ul>
         </div>
 
@@ -728,13 +691,13 @@
           <h4 class="footer-title">Resources</h4>
           <ul class="footer-links">
             <li><a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer"
-                class="footer-link">GitHub Repository</a></li>
+                class="footer-link">GitHub</a></li>
             <li><a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer"
                 class="footer-link">Chrome Web Store</a></li>
             <li><a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer"
                 class="footer-link">Firefox Add-on</a></li>
             <li><a href="https://github.com/MauroPello/stop-the-slop/issues" target="_blank" rel="noopener noreferrer"
-                class="footer-link">Report an Issue</a></li>
+                class="footer-link">Issue Tracker</a></li>
           </ul>
         </div>
 
@@ -749,8 +712,8 @@
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; 2026 Stop the Slop · Open Source Project</span>
-        <span>Built for Chrome, Brave, Edge & Firefox</span>
+        <span>&copy; 2026 Stop the Slop. Open Source Project.</span>
+        <span>Chrome, Brave, Edge and Firefox</span>
       </div>
     </div>
   </footer>

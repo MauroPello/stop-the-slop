@@ -1,8 +1,8 @@
 /**
- * Stop the Slop — Service Worker (Background)
+ * Stop the Slop: Service Worker (Background)
  *
  * Handles messages from the content script and manages badge state.
- * Per MV3 rules: no global state — uses chrome.storage for persistence.
+ * Per MV3 rules: no global state, uses chrome.storage for persistence.
  */
 
 // Listen for messages from content script

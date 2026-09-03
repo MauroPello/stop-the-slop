@@ -3,8 +3,8 @@ main = "src/index.js"
 compatibility_date = "2024-12-01"
 
 [vars]
-# Gemini API key — set via `wrangler secret put GEMINI_API_KEY`
-# Sapling AI API key (optional fallback) — set via `wrangler secret put SAPLING_API_KEY`
+# Gemini API key: set via `wrangler secret put GEMINI_API_KEY`
+# Sapling AI API key (optional fallback): set via `wrangler secret put SAPLING_API_KEY`
 
 [[d1_databases]]
 binding = "DB"

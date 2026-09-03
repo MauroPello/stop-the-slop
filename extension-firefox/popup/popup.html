@@ -51,7 +51,12 @@
 
     <!-- State: Not on YouTube -->
     <div id="state-not-youtube" class="state hidden">
-      <div class="state-icon">📺</div>
+      <div class="state-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+          <polyline points="17 2 12 7 7 2"></polyline>
+        </svg>
+      </div>
       <p class="state-message">Navigate to a YouTube video to analyze its transcript.</p>
     </div>
 
@@ -60,13 +65,19 @@
       <div class="spinner-container">
         <div class="spinner"></div>
       </div>
-      <p class="state-message">Analyzing transcript…</p>
-      <p class="state-sub">This may take a few seconds</p>
+      <p class="state-message">Analyzing transcript...</p>
+      <p class="state-sub">Fetching and inspecting captions</p>
     </div>
 
     <!-- State: Error -->
     <div id="state-error" class="state hidden">
-      <div class="state-icon">⚠️</div>
+      <div class="state-icon error-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
       <p class="state-message error-text" id="error-message">Something went wrong</p>
       <button class="btn btn-retry" id="btn-retry">Try Again</button>
     </div>
@@ -75,7 +86,10 @@
     <div id="state-rate-limit" class="state hidden">
       <div class="rate-limit-card">
         <div class="rate-limit-icon-wrap">
-          <span class="rate-limit-icon">⏳</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
         </div>
         <h2 class="rate-limit-title">Rate Limit Reached</h2>
         <p class="state-message" id="rate-limit-message">You have reached the request limit. Please wait a moment before analyzing more videos.</p>
@@ -99,9 +113,9 @@
           <svg viewBox="0 0 200 120" class="gauge-svg">
             <defs>
               <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#34d399"/>
-                <stop offset="50%" stop-color="#fbbf24"/>
-                <stop offset="100%" stop-color="#ef4444"/>
+                <stop offset="0%" stop-color="#16a34a"/>
+                <stop offset="50%" stop-color="#d97706"/>
+                <stop offset="100%" stop-color="#dc2626"/>
               </linearGradient>
             </defs>
             <!-- Background arc -->
@@ -144,21 +158,21 @@
 
       <!-- Verdict -->
       <div class="verdict" id="verdict">
-        <span class="verdict-emoji" id="verdict-emoji">🤔</span>
-        <span class="verdict-text" id="verdict-text">Analyzing…</span>
+        <span class="verdict-dot" id="verdict-dot"></span>
+        <span class="verdict-text" id="verdict-text">Analyzing...</span>
       </div>
 
       <!-- Details -->
       <div class="details">
         <div class="detail-row">
           <span class="detail-label">Transcript Length</span>
-          <span class="detail-value" id="transcript-length">—</span>
+          <span class="detail-value" id="transcript-length">-</span>
         </div>
       </div>
 
       <!-- Top AI-flagged sentences -->
       <div class="sentences-section" id="sentences-section">
-        <h3 class="sentences-title">Most AI-like Sentences</h3>
+        <h3 class="sentences-title">Flagged Sentences</h3>
         <div class="sentences-list" id="sentences-list">
           <!-- Populated by JS -->
         </div>
@@ -167,7 +181,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <span>Powered by Sapling AI · Results are indicative, not conclusive</span>
+      <span>Results are indicative probability scores</span>
     </footer>
   </div>
 

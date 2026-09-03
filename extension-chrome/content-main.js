@@ -1,5 +1,5 @@
 /**
- * Stop the Slop — Main World Content Script
+ * Stop the Slop: Main World Content Script
  *
  * Runs in the webpage's MAIN JavaScript context (world: "MAIN").
  * Safely accesses YouTube DOM and internal objects to extract transcripts.
@@ -107,9 +107,43 @@
     return null;
   }
 
-  // Read transcript segments currently rendered in YouTube's DOM
+  // Inject or ensure stealth style so transcript panel is NEVER visible to user
+  function ensureStealthStyle() {
+    let style = document.getElementById('sts-stealth-transcript-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'sts-stealth-transcript-style';
+      style.textContent = `
+        ytd-engagement-panel-section-list-renderer[target-id*="transcript"],
+        ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"],
+        ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"] {
+          position: fixed !important;
+          top: -9999px !important;
+          left: -9999px !important;
+          width: 1px !important;
+          height: 1px !important;
+          overflow: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          z-index: -99999 !important;
+        }
+      `;
+      (document.head || document.documentElement).appendChild(style);
+    }
+    return style;
+  }
+
+  function removeStealthStyle() {
+    const style = document.getElementById('sts-stealth-transcript-style');
+    if (style) style.remove();
+  }
+
+  // Read transcript segments currently rendered in YouTube's DOM (both modern and legacy structures)
   function getTranscriptFromDom() {
     const segments = document.querySelectorAll(
+      'transcript-segment-view-model .yt-core-attributed-string, ' +
+      'transcript-segment-view-model [class*="segment-text"], ' +
+      'transcript-segment-view-model, ' +
       'ytd-transcript-segment-renderer .segment-text, ' +
       'ytd-transcript-segment-renderer #segment-text, ' +
       'ytd-transcript-segment-renderer yt-formatted-string.segment-text, ' +
@@ -120,62 +154,106 @@
 
     if (segments && segments.length > 0) {
       const texts = Array.from(segments)
-        .map(el => el.textContent.trim())
-        .filter(Boolean);
+        .map(el => (el.textContent || '').trim())
+        .filter(t => t.length > 0 && !/^\d+:\d+$/.test(t)); // Filter out standalone timestamps
       if (texts.length > 0) return texts.join(' ');
     }
     return null;
   }
 
-  // Open YouTube's transcript panel via DOM interaction and read rendered segments
+  // Open YouTube's transcript panel invisibly (offscreen) via DOM interaction and read rendered segments
   async function triggerAndExtractFromDom() {
-    // Check if already open
+    // Check if already open and populated
     let domText = getTranscriptFromDom();
     if (domText && domText.length >= 20) return domText;
 
-    // 1. Expand the video description section to reveal the "Show transcript" button
-    const expandDescBtn = document.querySelector(
-      '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand'
-    );
-    if (expandDescBtn && expandDescBtn.offsetParent !== null) {
-      try { expandDescBtn.click(); } catch (e) {}
-    }
+    // 1. Ensure stealth styles are active before touching any panel or button
+    ensureStealthStyle();
 
-    // 2. Try expanding the transcript engagement panel directly
-    const engagementPanel = document.querySelector(
-      'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
-    );
-    if (engagementPanel) {
-      engagementPanel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
-    }
+    let didExpandDescription = false;
 
-    // 3. Find and click "Show transcript" button in the description or actions
-    const candidateButtons = [
-      ...document.querySelectorAll('ytd-video-description-transcript-section-renderer button'),
-      ...document.querySelectorAll('button[aria-label*="transcript" i], button[aria-label*="trascriz" i]'),
-      ...Array.from(document.querySelectorAll('ytd-button-renderer button, button.yt-spec-button-shape-next')).filter(b => {
-        const t = (b.textContent || '').toLowerCase();
-        return t.includes('transcript') || t.includes('trascriz');
-      })
-    ];
-
-    for (const btn of candidateButtons) {
-      if (btn) {
+    try {
+      // 2. Expand video description if collapsed, so "Show transcript" button is available
+      const expandDescBtn = document.querySelector(
+        '#description #expand, #expand.ytd-text-inline-expander, tp-yt-paper-button#expand, ytd-text-inline-expander #expand, #description-inline-expander #expand'
+      );
+      if (expandDescBtn && expandDescBtn.offsetParent !== null) {
         try {
-          btn.click();
-          break;
+          expandDescBtn.click();
+          didExpandDescription = true;
         } catch (e) {}
       }
-    }
 
-    // 4. Poll for up to 3.5 seconds for transcript segments to load
-    const startTime = Date.now();
-    while (Date.now() - startTime < 3500) {
-      await new Promise(r => setTimeout(r, 200));
-      domText = getTranscriptFromDom();
-      if (domText && domText.length >= 20) {
-        return domText;
+      // 3. Try expanding the transcript engagement panels directly (works for both legacy & modern panels)
+      const engagementPanels = document.querySelectorAll(
+        'ytd-engagement-panel-section-list-renderer[target-id*="transcript"], ' +
+        'ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"], ' +
+        'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
+      );
+      for (const panel of engagementPanels) {
+        try {
+          panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED');
+        } catch (e) {}
       }
+
+      // 4. Find and click "Show transcript" button in description or actions
+      const candidateButtons = [
+        ...document.querySelectorAll('ytd-video-description-transcript-section-renderer button'),
+        ...document.querySelectorAll('button[aria-label*="transcript" i], button[aria-label*="trascriz" i]'),
+        ...Array.from(document.querySelectorAll('ytd-button-renderer button, button.yt-spec-button-shape-next')).filter(b => {
+          const t = (b.textContent || '').toLowerCase();
+          return t.includes('transcript') || t.includes('trascriz');
+        })
+      ];
+
+      for (const btn of candidateButtons) {
+        if (btn) {
+          try {
+            btn.click();
+            break;
+          } catch (e) {}
+        }
+      }
+
+      // 5. Poll for up to 3.5 seconds for transcript segments to load in DOM
+      const startTime = Date.now();
+      while (Date.now() - startTime < 3500) {
+        await new Promise(r => setTimeout(r, 180));
+        domText = getTranscriptFromDom();
+        if (domText && domText.length >= 20) {
+          return domText;
+        }
+      }
+    } finally {
+      // 6. Cleanup: Re-collapse description if we expanded it, and re-hide transcript panels
+      if (didExpandDescription) {
+        try {
+          const collapseDescBtn = document.querySelector(
+            '#description #collapse, #collapse.ytd-text-inline-expander, tp-yt-paper-button#collapse, ytd-text-inline-expander #collapse, #description-inline-expander #collapse'
+          );
+          if (collapseDescBtn && collapseDescBtn.offsetParent !== null) {
+            collapseDescBtn.click();
+          }
+        } catch (e) {}
+      }
+
+      const panelsToHide = document.querySelectorAll(
+        'ytd-engagement-panel-section-list-renderer[target-id*="transcript"], ' +
+        'ytd-engagement-panel-section-list-renderer[target-id="PAmodern_transcript_view"], ' +
+        'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
+      );
+      for (const panel of panelsToHide) {
+        try {
+          panel.setAttribute('visibility', 'ENGAGEMENT_PANEL_VISIBILITY_HIDDEN');
+          const closeBtn = panel.querySelector('#visibility-button button, button[aria-label*="Close" i], button[aria-label*="Chiudi" i]');
+          if (closeBtn) closeBtn.click();
+        } catch (e) {}
+      }
+
+      // Delay removing stealth style briefly so closing transition completes completely offscreen
+      setTimeout(() => {
+        removeStealthStyle();
+      }, 400);
     }
 
     return null;
@@ -185,32 +263,34 @@
   async function extractTranscript(videoId) {
     console.log('[Stop the Slop] Extracting transcript for', videoId);
 
-    // Method 1: Timedtext API fetch if player response is available
+    // Method 1: Timedtext API fetch if player response is available for the requested video
     try {
       const playerResp = getPlayerResponse();
-      const tracks = getCaptionTracks(playerResp);
-
-      if (tracks && tracks.length > 0) {
-        const englishTrack = tracks.find(
-          t => t.languageCode === 'en' || (t.languageCode && t.languageCode.startsWith('en'))
-        );
-        const chosen = englishTrack || tracks[0];
-        const res = await fetchCaptions(chosen);
-        if (res && res.length >= 20) {
-          console.log('[Stop the Slop] Transcript extracted via timedtext fetch');
-          return res;
+      const respVideoId = playerResp?.videoDetails?.videoId;
+      if (!respVideoId || respVideoId === videoId) {
+        const tracks = getCaptionTracks(playerResp);
+        if (tracks && tracks.length > 0) {
+          const englishTrack = tracks.find(
+            t => t.languageCode === 'en' || (t.languageCode && t.languageCode.startsWith('en'))
+          );
+          const chosen = englishTrack || tracks[0];
+          const res = await fetchCaptions(chosen);
+          if (res && res.length >= 20) {
+            console.log('[Stop the Slop] Transcript extracted via timedtext fetch');
+            return res;
+          }
         }
       }
     } catch (e) {
       console.warn('[Stop the Slop] Timedtext fetch method error:', e);
     }
 
-    // Method 2: YouTube DOM transcript panel (handles all videos with captions)
+    // Method 2: YouTube DOM transcript panel (stealth, 100% hidden from user)
     try {
-      console.log('[Stop the Slop] Attempting DOM transcript extraction...');
+      console.log('[Stop the Slop] Attempting stealth DOM transcript extraction...');
       const domResult = await triggerAndExtractFromDom();
       if (domResult && domResult.length >= 20) {
-        console.log('[Stop the Slop] Transcript extracted via DOM transcript panel');
+        console.log('[Stop the Slop] Transcript extracted invisibly via DOM transcript panel');
         return domResult;
       }
     } catch (e) {
