@@ -92,7 +92,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 
 <body>
@@ -155,6 +155,7 @@
 
           <div class="hero-actions">
             <a href="#install" class="btn btn-primary" id="hero-btn-chrome">
+              <img src="icons/chrome.svg" alt="" width="18" height="18" aria-hidden="true">
               <span>Install Extension</span>
             </a>
 
@@ -407,30 +408,52 @@
           <span class="section-pill">Community</span>
           <h2 class="section-title">Project links and directories</h2>
           <p class="section-subtitle">
-            Follow the project on developer platforms and open-source directories.
+            Follow the project on developer platforms, package directories, and open-source hubs.
           </p>
         </div>
 
         <div class="ecosystem-grid">
+          <!-- GitHub -->
+          <a href="https://github.com/MauroPello/stop-the-slop" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-github">
+            <div>
+              <div class="ecosystem-card-header">
+                <div class="ecosystem-icon-wrapper icon-wrap-github">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                  </svg>
+                </div>
+                <span class="ecosystem-badge badge-github">Open Source</span>
+              </div>
+              <h3 class="ecosystem-title">GitHub</h3>
+              <p class="ecosystem-desc">
+                Source code, releases, issue discussions, and contribution guidelines.
+              </p>
+            </div>
+            <div class="ecosystem-link-text">
+              <span>Star on GitHub</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
           <!-- Product Hunt -->
           <a href="https://www.producthunt.com/products/stop-the-slop-2" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-producthunt">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13.6 8.4h-3.4v3.6h3.4c1 0 1.8-.8 1.8-1.8s-.8-1.8-1.8-1.8zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.6 14.4h-3.4V18H7.8V6h5.8c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
+                <div class="ecosystem-icon-wrapper icon-wrap-producthunt">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13.604 8.4h-3.405V12h3.405c.995 0 1.801-.806 1.801-1.801 0-.993-.805-1.799-1.801-1.799zM12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm1.604 14.4h-3.405V18H7.801V6h5.804c2.319 0 4.2 1.88 4.2 4.199 0 2.321-1.881 4.201-4.201 4.201z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge">Product Hunt</span>
+                <span class="ecosystem-badge badge-producthunt">Discussion</span>
               </div>
               <h3 class="ecosystem-title">Product Hunt</h3>
               <p class="ecosystem-desc">
-                Community launch discussion and feedback thread for Stop the Slop.
+                Community launch discussion, feedback thread, and upvotes for Stop the Slop.
               </p>
             </div>
             <div class="ecosystem-link-text">
-              <span>View listing</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <span>View discussion</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
@@ -438,21 +461,21 @@
           <a href="https://alternativeto.net/software/stop-the-slop/about/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-alternativeto">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L1 21h22L12 2zm0 4.5l7.5 13H4.5L12 6.5zm-1.5 5.5v4h3v-4h-3z"/>
+                <div class="ecosystem-icon-wrapper icon-wrap-alternativeto">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 .416C18.398.416 23.584 5.602 23.584 12S18.398 23.584 12 23.584.416 18.397.416 12 5.602.416 12 .416M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.616 0 12 0m6.509 18.136-.056.012q.051.177.094.345l.202.812q.688-.639 1.249-1.394c-.305.036-.618.074-.923.117-.188.026-.372.066-.567.108zm.931-4.295c-3.783-.612-7.762.613-10.989 2.561-.757.457-1.59.91-2.129 1.632-.368.494-.561 1.081-.679 1.68q.464.381.975.704l.002-.099c.013-.41.064-.827.229-1.206.182-.42.478-.679.843-.938.756-.538 1.598-.967 2.412-1.392.055-.03.134-.029.202-.043.015.062.048.125.043.185-.02.283-.014.567-.007.85.022 1.016.088 2.032.157 3.047q.035.525.072 1.049.693.096 1.391.097a9.94 9.94 0 0 0 6.093-2.074l-.425-1.471q-.009-.032-.02-.063l-.064.017c-1.237.343-2.495.826-3.845 1.476l-.036.018c-.059.031-.14.074-.237.074h-.002c-.118 0-.278-.065-.34-.189-.064-.128-.017-.305.064-.398.066-.075.152-.121.22-.158l.038-.02a18.3 18.3 0 0 1 3.913-1.63l-.07-.179c-.101-.26-.205-.53-.32-.789-.148-.333-.317-.666-.48-.988l-.084-.167c-.054-.107-.109-.248-.055-.388a.34.34 0 0 1 .205-.192c.175-.064.436.065.511.214.415.816.77 1.546 1.087 2.23l.029.056.047-.008a9 9 0 0 1 2.342-.229 10 10 0 0 0 .886-1.91c-.545-.699-1.194-1.231-1.98-1.358zm2.428-2.827a8 8 0 0 0-.098-.649q-.046-.24-.096-.478c-.036-.171-.066-.344-.109-.514a9.2 9.2 0 0 0-1.158-2.73 9 9 0 0 0-.867-1.165 10 10 0 0 0-1.026-1.015 10.2 10.2 0 0 0-5.943-2.409 10 10 0 0 0-1.47.013 9.8 9.8 0 0 0-2.922.716 9 9 0 0 0-.709.33q-.164.085-.325.175a10.1 10.1 0 0 0-5.017 7.83c-.05.942.017 1.886.194 2.813h-.001s.191 1.124.298 1.334c.526 1.989 1.443 3.744 2.648 3.419a.167.167 0 0 0 .111-.208q-.003-.011-.008-.021a.95.95 0 0 1-.523-.377c-.666-1.117 2.723-3.509 7.351-5.269 4.252-1.619 8.091-2.144 8.965-1.285.173.141.24.376.168.588a3.03 3.03 0 0 1-.934 1.43.19.19 0 0 0 0 .269.18.18 0 0 0 .244.011 3.54 3.54 0 0 0 1.17-1.682c.028-.085.034-.187.045-.276a3.8 3.8 0 0 0 .011-.851zM6.253 14.668c-.566.402-1.553 1.122-1.967 1.925-.161.31-.312.069-.406-.107a10 10 0 0 1-.541-1.518l-.001-.003c-.066-.241-.282-1.04-.303-1.277l.001-.001a10.8 10.8 0 0 1-.187-2.638 9.35 9.35 0 0 1 4.635-7.227 10 10 0 0 1 .715-.362c.236-.107 1.191-.463.246.375a8.4 8.4 0 0 0-2.727 5.482c-.092 1.076.221 3.091.773 4.57.173.463.031.592-.238.782zM17.46 9.7a.44.44 0 0 1-.296.193c-1.068.149-2.12.398-3.14.745a.45.45 0 0 1-.356-.044.44.44 0 0 1-.203-.295l-.08-.369a.2.2 0 0 1 .114-.227 12.6 12.6 0 0 1 3.736-.863.19.19 0 0 1 .198.157l.084.354c.03.119.01.246-.057.349m2.032-1.876a.166.166 0 0 1-.183.106c-2.948-.438-7.069 1.073-7.069 1.073a17.7 17.7 0 0 0-4.049 1.912.493.493 0 0 1-.754-.319 8 8 0 0 1-.131-1.14 5.8 5.8 0 0 1 .575-3.012q.04-.078.087-.154a.1.1 0 0 1 .018-.037l.015-.025.035-.06.017-.027c1.429-2.34 4.636-3.273 7.197-2.511a7.43 7.43 0 0 1 3.335 2.123c.141.165 1.09 1.485.907 2.071m-1.533-1.599-.002.005a4 4 0 0 0-1.907-1.67 5.84 5.84 0 0 0-2.824-.43 3.8 3.8 0 0 0-1 .22.14.14 0 0 0-.097.148.135.135 0 0 0 .132.117 8.3 8.3 0 0 1 2.177.058c2.651.53 3.5 1.806 3.593 1.856.027.013.058-.013.045-.039a3 3 0 0 0-.117-.265"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge">Directory</span>
+                <span class="ecosystem-badge badge-alternativeto">Directory</span>
               </div>
               <h3 class="ecosystem-title">AlternativeTo</h3>
               <p class="ecosystem-desc">
-                Crowdsourced software directory with user reviews and alternatives.
+                Crowdsourced software directory with user reviews, ratings, and alternatives.
               </p>
             </div>
             <div class="ecosystem-link-text">
               <span>View listing</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
@@ -460,21 +483,21 @@
           <a href="https://sourceforge.net/projects/stop-the-slop/" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-sourceforge">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12.04 0C5.4 0 .02 5.38.02 12.02c0 6.64 5.38 12.02 12.02 12.02 6.64 0 12.02-5.38 12.02-12.02C24.06 5.38 18.68 0 12.04 0zm0 3.7c4.6 0 8.32 3.72 8.32 8.32 0 4.6-3.72 8.32-8.32 8.32-4.6 0-8.32-3.72-8.32-8.32 0-4.6 3.72-8.32 8.32-8.32zm-2.4 4.5v7.6l6.2-3.8-6.2-3.8z"/>
+                <div class="ecosystem-icon-wrapper icon-wrap-sourceforge">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.998 1.4648c-.088 0-.1761.0395-.2402.1036L.1016 11.2148c-.1361.1281-.1361.3444 0 .4805l9.1523 9.1348c.064.072.1522.1054.2402.1054.0881 0 .1743-.0414.2383-.1054l1.3692-1.3848c.136-.128.136-.3444 0-.4805l-7.172-7.1738a.4682.4682 0 010-.664l9.0782-9.0782c.1201-.12.1123-.2728.0723-.377-.04-.096-.1444-.207-.3125-.207H9.998zm4.5313 1.5918c-.088 0-.1762.0415-.2402.1055l-1.3926 1.3926c-.1361.128-.1361.3444 0 .4805l7.1719 7.1816c.088.088.1367.208.1367.3281 0 .1201-.0487.24-.1367.3281l-9.0782 9.0782c-.12.12-.1123.2728-.0722.377.04.096.1443.207.3125.207v-.0079H14c.088 0 .1762-.0316.2402-.0957l9.6563-9.6543c.072-.064.1035-.1521.1035-.2402 0-.088-.0395-.1762-.1035-.2402l-9.127-9.1348c-.064-.072-.1521-.1055-.2402-.1055zM11.4336 6.213c-.1125.005-.2164.1007-.211.2383.1442 2.2176-2.6425 2.7635-2.6425 6.246v.0235c0 2.1216 1.6026 3.8418 3.58 3.8418 1.9775 0 3.5782-1.7202 3.5782-3.8418v-.0234c0-.9848-.3679-1.9225-.7442-2.627-.072-.136-.2896-.087-.2656.041.6725 2.9943-1.0156 4.8507-1.0156 2.545 0-3.931-1.3943-5.7162-2.1309-6.3887a.2072.2072 0 00-.1484-.0547Z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge">Mirror</span>
+                <span class="ecosystem-badge badge-sourceforge">Mirror</span>
               </div>
               <h3 class="ecosystem-title">SourceForge</h3>
               <p class="ecosystem-desc">
-                Open-source software mirror and project statistics.
+                Open-source software mirror, project statistics, and download mirror.
               </p>
             </div>
             <div class="ecosystem-link-text">
-              <span>View listing</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <span>View mirror</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
@@ -482,21 +505,21 @@
           <a href="https://peerlist.io/mpellonara/project/stop-the-slop" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-peerlist">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/>
+                <div class="ecosystem-icon-wrapper icon-wrap-peerlist">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C2.667 0 0 2.667 0 12s2.673 12 12 12 12-2.667 12-12S21.327 0 12 0zm8.892 20.894c-1.57 1.569-4.247 2.249-8.892 2.249s-7.322-.68-8.892-2.25C1.735 19.522 1.041 17.3.89 13.654A39.74 39.74 0 0 1 .857 12c0-1.162.043-2.201.13-3.13.177-1.859.537-3.278 1.106-4.366.284-.544.62-1.006 1.013-1.398s.854-.729 1.398-1.013C5.592 1.524 7.01 1.164 8.87.988 9.799.9 10.838.858 12 .858c4.645 0 7.322.68 8.892 2.248 1.569 1.569 2.25 4.246 2.25 8.894s-.681 7.325-2.25 8.894zM20.538 3.46C19.064 1.986 16.51 1.357 12 1.357c-4.513 0-7.067.629-8.54 2.103C1.986 4.933 1.357 7.487 1.357 12c0 4.511.63 7.065 2.105 8.54C4.936 22.014 7.49 22.643 12 22.643s7.064-.629 8.538-2.103c1.475-1.475 2.105-4.029 2.105-8.54s-.63-7.065-2.105-8.54zM14.25 16.49a6.097 6.097 0 0 1-2.442.59v2.706H10.45v.357H6.429V5.57h.357V4.214h5.676c3.565 0 6.467 2.81 6.467 6.262 0 2.852-1.981 5.26-4.68 6.013zm-1.788-8.728H10.45v5.428h2.011c1.532 0 2.802-1.2 2.802-2.714s-1.27-2.714-2.802-2.714zm.901 4.351c.117-.239.186-.502.186-.78 0-1.01-.855-1.857-1.945-1.857h-.296V8.62h1.154c1.09 0 1.945.847 1.945 1.857 0 .705-.422 1.323-1.044 1.637zm4.104 1.493c.043-.063.083-.129.123-.194a5.653 5.653 0 0 0 .526-1.103 5.56 5.56 0 0 0 .11-.362c.02-.076.042-.15.06-.227a5.58 5.58 0 0 0 .073-.41c.01-.068.025-.134.032-.203.024-.207.038-.417.038-.63 0-3.198-2.687-5.763-5.967-5.763H7.286v14.572h4.022v-3.048h1.154c1.43 0 2.747-.488 3.778-1.303a5.92 5.92 0 0 0 .46-.406c.035-.034.066-.07.1-.105.107-.11.21-.22.308-.337.044-.053.084-.108.126-.162.081-.104.16-.21.233-.319zm-5.005 1.775H10.45v3.048H8.143V5.57h4.319c2.837 0 5.11 2.211 5.11 4.905s-2.273 4.905-5.11 4.905z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge">Spotlight</span>
+                <span class="ecosystem-badge badge-peerlist">Spotlight</span>
               </div>
               <h3 class="ecosystem-title">Peerlist</h3>
               <p class="ecosystem-desc">
-                Developer profile, project updates, and community timeline.
+                Developer profile, launch spotlight, release updates, and project timeline.
               </p>
             </div>
             <div class="ecosystem-link-text">
-              <span>View listing</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <span>View on Peerlist</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
 
@@ -504,21 +527,21 @@
           <a href="https://dev.to/mpellonara/how-i-built-an-open-source-browser-extension-to-detect-ai-slop-on-youtube-2pc1" target="_blank" rel="noopener noreferrer" class="ecosystem-card" id="card-devto">
             <div>
               <div class="ecosystem-card-header">
-                <div class="ecosystem-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7.42 10.05c-.18-.12-.46-.23-.85-.23H5.2v4.36h1.33c.43 0 .73-.1.91-.25.26-.2.39-.58.39-1.14 0-.58-.14-1.54-.41-1.74zm9.32-6.05H7.26C3.25 4 0 7.25 0 11.26v1.48C0 16.75 3.25 20 7.26 20h9.48c4.01 0 7.26-3.25 7.26-7.26v-1.48c0-4.01-3.25-7.26-7.26-7.26zm-7.9 11.66c-.36.31-.9.47-1.63.47H4.03V8.67h3.19c.72 0 1.25.16 1.6.47.46.41.69 1.05.69 1.93 0 .88-.23 1.54-.67 1.96zm4.84-2.83h-2.14v1.51h1.94v1.14h-1.94v1.69h2.24v1.14H8.43V8.67h4.25v1.16zm5.18 5.48h-1.39l-1.63-6.97h1.47l1.01 4.96 1.03-4.96h1.43l-1.92 6.97z"/>
+                <div class="ecosystem-icon-wrapper icon-wrap-devto">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z"/>
                   </svg>
                 </div>
-                <span class="ecosystem-badge">Article</span>
+                <span class="ecosystem-badge badge-devto">Deep Dive</span>
               </div>
               <h3 class="ecosystem-title">DEV Article</h3>
               <p class="ecosystem-desc">
-                Technical writeup on the architecture and transcript extraction mechanism.
+                Technical writeup detailing transcript extraction and heuristic scoring architecture.
               </p>
             </div>
             <div class="ecosystem-link-text">
               <span>Read article</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
         </div>
@@ -533,37 +556,73 @@
         <div class="install-box">
           <span class="section-pill">Installation</span>
           <h2 class="section-title">Install Stop the Slop</h2>
-          <p class="section-subtitle" style="margin-bottom: 1.75rem;">
-            Install from official store listings or load directly from source.
+          <p class="section-subtitle" style="margin-bottom: 2rem;">
+            Install directly from official browser stores or load unpacked from source.
           </p>
 
           <div class="install-tabs">
-            <button class="tab-btn active" data-tab="tab-chrome" id="tab-btn-chrome">Chrome / Chromium</button>
-            <button class="tab-btn" data-tab="tab-firefox" id="tab-btn-firefox">Firefox</button>
-            <button class="tab-btn" data-tab="tab-dev" id="tab-btn-dev">Developer Mode</button>
+            <button class="tab-btn active" data-tab="tab-chrome" id="tab-btn-chrome">
+              <img src="icons/chrome.svg" alt="" width="16" height="16" aria-hidden="true">
+              <span>Chrome / Chromium</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-firefox" id="tab-btn-firefox">
+              <img src="icons/firefox.svg" alt="" width="16" height="16" aria-hidden="true">
+              <span>Firefox</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-dev" id="tab-btn-dev">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <span>Developer Mode</span>
+            </button>
           </div>
 
           <!-- Chrome Tab -->
           <div class="tab-pane active" id="tab-chrome">
-            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; text-align: center; font-size: 0.92rem;">
-              Available on the Chrome Web Store for Chrome, Brave, and Edge:
-            </p>
-            <div style="text-align: center;">
-              <a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-chrome-store">
-                <span>Add to Chrome</span>
-              </a>
+            <div class="store-install-card">
+              <p class="store-install-desc">
+                Available on the <strong>Chrome Web Store</strong> for Google Chrome, Brave, Microsoft Edge, Opera, and Vivaldi.
+              </p>
+              <div class="store-btn-container">
+                <a href="https://chromewebstore.google.com/detail/stop-the-slop-%E2%80%94-ai-script/afifehnicpeokjjhpbicikfoalkemelg" target="_blank" rel="noopener noreferrer" class="btn btn-store" id="btn-chrome-store">
+                  <img src="icons/chrome.svg" alt="Google Chrome Logo" class="btn-store-icon" width="26" height="26">
+                  <div class="btn-store-text">
+                    <span class="btn-store-action">Add to Chrome</span>
+                    <span class="btn-store-sub">Free • Chrome Web Store</span>
+                  </div>
+                  <svg class="btn-store-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+              <div class="store-guarantees">
+                <span>✓ Manifest V3 Verified</span>
+                <span>✓ Zero Tracking</span>
+                <span>✓ Open Source</span>
+              </div>
             </div>
           </div>
 
           <!-- Firefox Tab -->
           <div class="tab-pane" id="tab-firefox">
-            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; text-align: center; font-size: 0.92rem;">
-              Available on Firefox Add-ons:
-            </p>
-            <div style="text-align: center;">
-              <a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-firefox-store">
-                <span>Add to Firefox</span>
-              </a>
+            <div class="store-install-card">
+              <p class="store-install-desc">
+                Available on <strong>Firefox Browser Add-ons (AMO)</strong> for Mozilla Firefox on desktop.
+              </p>
+              <div class="store-btn-container">
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/stop-the-slop-ai-video-detect/" target="_blank" rel="noopener noreferrer" class="btn btn-store" id="btn-firefox-store">
+                  <img src="icons/firefox.svg" alt="Mozilla Firefox Logo" class="btn-store-icon" width="26" height="26">
+                  <div class="btn-store-text">
+                    <span class="btn-store-action">Add to Firefox</span>
+                    <span class="btn-store-sub">Free • Firefox Add-ons</span>
+                  </div>
+                  <svg class="btn-store-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+              <div class="store-guarantees">
+                <span>✓ Mozilla Reviewed</span>
+                <span>✓ No Telemetry</span>
+                <span>✓ Lightweight</span>
+              </div>
             </div>
           </div>
 
