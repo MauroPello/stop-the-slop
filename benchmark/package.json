@@ -1,0 +1,13 @@
+{
+  "name": "stop-the-slop-benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Benchmark harness for calibrating Jev AI detection scores against ground-truth YouTube videos",
+  "scripts": {
+    "run": "node run.js",
+    "run:force": "node run.js --force",
+    "analyze": "node analyze.js"
+  },
+  "dependencies": {}
+}

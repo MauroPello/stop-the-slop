@@ -20,14 +20,13 @@ KEY FEATURES
 - Instant On-Screen Thumbnail Badges: See AI probability ratings directly on video thumbnails before you click across your Home feed, Subscriptions, Search results, and sidebar recommendations.
 - In-Player Controls Badge: Seamlessly displays the AI probability score right inside YouTube's video player control bar (bottom-right alongside subtitles and settings) with a rich metric popover.
 - Probability Gauge: Get an instant, visual probability score from 0% to 100% in the extension popup.
-- Sentence-Level Analysis: Identifies robotic or repetitive sentences with confidence scores.
 - Fast Edge Caching: Caching via Cloudflare Workers and D1 database ensures fast badge loads without rate limits.
 - Adaptive Theme: Clean dark and light modes that match YouTube's design.
 
 HOW TO USE IT
 1. Browse YouTube as normal: videos analyzed by the community will display an AI badge directly on their thumbnail.
 2. Click the extension icon on any YouTube video to run a full transcript detection scan.
-3. Review the AI probability score, verdict, and sentence breakdown.
+3. Review the AI probability score and verdict details.
 
 PRIVACY & PERMISSIONS
 Stop the Slop does not track personal browsing history, require an account, or store private personal data. It only accesses YouTube caption transcripts when you request analysis or display public thumbnail badges.

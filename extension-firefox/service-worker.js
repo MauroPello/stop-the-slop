@@ -9,6 +9,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'VIDEO_CHANGED') {
     handleVideoChange(message.videoId, sender.tab?.id);
+  } else if (message.type === 'ANALYSIS_COMPLETE') {
+    if (sender.tab?.id && typeof message.score === 'number') {
+      updateBadge(sender.tab.id, message.score);
+    }
   }
   return false; // No async response needed
 });
@@ -68,12 +72,12 @@ async function updateBadge(tabId, score) {
   const pct = Math.round(score * 100);
   let bgColor;
 
-  if (score < 0.35) {
-    bgColor = '#34d399'; // green
-  } else if (score < 0.65) {
-    bgColor = '#fbbf24'; // yellow
+  if (score < 0.40) {
+    bgColor = '#34d399'; // green (Likely Human)
+  } else if (score <= 0.70) {
+    bgColor = '#fbbf24'; // yellow (Mixed Signals)
   } else {
-    bgColor = '#ef4444'; // red
+    bgColor = '#ef4444'; // red (Likely AI)
   }
 
   await chrome.action.setBadgeText({ text: `${pct}%`, tabId });

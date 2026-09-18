@@ -10,3 +10,7 @@ compatibility_date = "2024-12-01"
 binding = "DB"
 database_name = "stop-the-slop-cache"
 database_id = "c5a325fd-722c-4b22-b09b-c5f079b2a961"
+
+[ai]
+binding = "AI"
+

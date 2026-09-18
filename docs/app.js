@@ -16,34 +16,17 @@ const SIM_PRESETS = {
   ai: {
     score: 88,
     verdict: 'High AI probability (88%)',
-    verdictClass: 'verdict-ai',
-    transcript: `
-      <p><span class="highlight-ai">In today's fast-paced digital era, the landscape of technology is evolving at an unprecedented pace.</span></p>
-      <p>Many individuals often wonder how these modern innovations can transform our daily routines.</p>
-      <p><span class="highlight-ai">Furthermore, it is important to remember that efficiency and productivity remain key pillars of modern success.</span></p>
-      <p><span class="highlight-ai">In conclusion, by harnessing the full potential of these tools, one can effortlessly maximize their overall output.</span></p>
-    `
+    verdictClass: 'verdict-ai'
   },
   human: {
     score: 14,
     verdict: 'Likely human script (14%)',
-    verdictClass: 'verdict-human',
-    transcript: `
-      <p>I spent three weeks in Tokyo trying to find the best ramen spot that tourists don't know about.</p>
-      <p>On my fourth night, getting caught in the rain near Shinjuku, I stumbled into this tiny four-seat basement bar.</p>
-      <p>The owner didn't speak any English, but made the most incredible rich tonkotsu broth I've ever tasted in my entire life.</p>
-      <p>Here's exactly why mainstream food bloggers got this neighborhood completely wrong.</p>
-    `
+    verdictClass: 'verdict-human'
   },
   custom: {
     score: 62,
     verdict: 'Mixed signals (62%)',
-    verdictClass: 'verdict-mixed',
-    transcript: `
-      <p><span class="highlight-ai">In this comprehensive guide, we will delve deep into the step-by-step nuances of modern web architecture.</span></p>
-      <p>We built our background worker using Cloudflare edge functions for sub-50ms latency across global clusters.</p>
-      <p><span class="highlight-ai">It is crucial to emphasize that scalability cannot be overlooked under any circumstances.</span></p>
-    `
+    verdictClass: 'verdict-mixed'
   }
 };
 
@@ -51,7 +34,6 @@ function initSimulator() {
   const needle = document.getElementById('sim-needle');
   const scoreDisplay = document.getElementById('sim-score');
   const verdictBanner = document.getElementById('sim-verdict');
-  const transcriptBox = document.getElementById('sim-transcript');
   const presetBtns = document.querySelectorAll('.preset-btn');
 
   function applyPreset(presetKey) {
@@ -72,11 +54,6 @@ function initSimulator() {
     if (verdictBanner) {
       verdictBanner.className = `sim-verdict-banner ${data.verdictClass}`;
       verdictBanner.innerHTML = `<span class="verdict-dot"></span> <span>${data.verdict}</span>`;
-    }
-
-    // Update transcript text
-    if (transcriptBox) {
-      transcriptBox.innerHTML = data.transcript;
     }
   }
 

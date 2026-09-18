@@ -83,7 +83,7 @@ export default {
       }
 
       if (url.pathname === '/api/analyze' && request.method === 'POST') {
-        const body = await request.json();
+        const body = await request.json().catch(() => ({}));
         const { videoId, transcript } = body;
 
         if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
@@ -93,9 +93,18 @@ export default {
           return json({ error: 'Transcript too short or missing (min 50 chars)' }, corsHeaders, 422);
         }
 
+        console.log('[Stop the Slop] Analysis request', {
+          videoId,
+          transcriptLength: transcript.length,
+        });
+
         // 1. Check cache first (0 cost if already analyzed)
         const cached = await checkCache(videoId, env);
         if (cached.found) {
+          console.log('[Stop the Slop] Analysis cache hit', {
+            videoId,
+            analyzedAt: cached.analyzedAt,
+          });
           return json(cached, corsHeaders);
         }
 
@@ -304,8 +313,6 @@ async function checkCache(videoId, env) {
       videoId: cached.video_id,
       score: cached.overall_score,
       sentenceScores: JSON.parse(cached.sentence_scores || '[]'),
-      transcriptLength: cached.transcript_length,
-      transcriptPreview: cached.transcript_preview,
       analyzedAt: cached.analyzed_at,
       cached: true,
       found: true,
@@ -353,70 +360,231 @@ async function checkCacheBatch(videoIds, env) {
 }
 
 /**
- * Analyze a transcript: call Gemini AI (with fallback to Sapling if configured) and cache the result.
+ * Analyze a transcript: call AI engine (TypeSafe Jev with fallback to Gemini/Sapling) and cache the result.
  */
 async function analyzeTranscript(videoId, transcript, env) {
   // Check cache first
   const cached = await checkCache(videoId, env);
-  if (cached.found) return cached;
+  if (cached.found) {
+    console.log('[Stop the Slop] Analysis cache hit', { videoId, analyzedAt: cached.analyzedAt });
+    return cached;
+  }
 
   // Take up to 15,000 characters (~3,000 words) for fast, highly accurate analysis
   const textToAnalyze = transcript.slice(0, 15000);
 
   let overallScore = 0.5;
   let sentenceScores = [];
-  const geminiKey = env.GEMINI_API_KEY;
-  const saplingKey = env.SAPLING_API_KEY;
+  let activeEngine = 'typesafe-ai/jev';
 
-  if (geminiKey) {
-    try {
-      overallScore = await detectAIWithGemini(textToAnalyze, geminiKey);
-      sentenceScores = extractHeuristicSentences(textToAnalyze, overallScore);
-    } catch (geminiErr) {
-      console.warn('[Stop the Slop] Gemini detection failed:', geminiErr);
-      if (saplingKey) {
-        console.log('[Stop the Slop] Falling back to Sapling API...');
-        const saplingRes = await detectAIWithSapling(textToAnalyze, saplingKey);
-        overallScore = saplingRes.score;
-        sentenceScores = saplingRes.sentenceScores;
-      } else {
-        throw geminiErr;
+  console.log('[Stop the Slop] Analysis cache miss', {
+    videoId,
+    transcriptLength: transcript.length,
+    analyzedCharacters: textToAnalyze.length,
+  });
+
+  const geminiKey = env.GEMINI_API_KEY;
+
+  try {
+    const jevRes = await detectAIWithJev(textToAnalyze, env);
+    overallScore = jevRes.score;
+    activeEngine = jevRes.model || 'typesafe-ai/jev';
+  } catch (jevErr) {
+    console.warn('[Stop the Slop] Jev detection failed, attempting fallback to Gemini:', jevErr.message);
+    if (geminiKey) {
+      try {
+        overallScore = await detectAIWithGemini(textToAnalyze, geminiKey);
+        activeEngine = 'gemini-3.6-flash (fallback)';
+      } catch (geminiErr) {
+        console.warn('[Stop the Slop] Gemini detection fallback failed:', geminiErr);
+        if (env.SAPLING_API_KEY) {
+          const saplingRes = await detectAIWithSapling(textToAnalyze, env.SAPLING_API_KEY);
+          overallScore = saplingRes.score;
+          activeEngine = 'sapling (fallback)';
+        } else {
+          throw geminiErr;
+        }
       }
+    } else if (env.SAPLING_API_KEY) {
+      const saplingRes = await detectAIWithSapling(textToAnalyze, env.SAPLING_API_KEY);
+      overallScore = saplingRes.score;
+      activeEngine = 'sapling (fallback)';
+    } else {
+      throw jevErr;
     }
-  } else if (saplingKey) {
-    const saplingRes = await detectAIWithSapling(textToAnalyze, saplingKey);
-    overallScore = saplingRes.score;
-    sentenceScores = saplingRes.sentenceScores;
-  } else {
-    throw new Error('No AI detection API key configured on server. Set GEMINI_API_KEY in worker environment.');
   }
+
+  console.log('[Stop the Slop] Analysis provider selected', {
+    videoId,
+    engine: activeEngine,
+    score: overallScore,
+  });
 
   // Cache result in D1
   await env.DB.prepare(
     `INSERT OR REPLACE INTO video_analyses
-       (video_id, overall_score, sentence_scores, transcript_length, transcript_preview, analyzed_at)
-     VALUES (?, ?, ?, ?, ?, datetime('now'))`
+       (video_id, overall_score, sentence_scores, analyzed_at)
+     VALUES (?, ?, ?, datetime('now'))`
   )
     .bind(
       videoId,
       overallScore,
-      JSON.stringify(sentenceScores),
-      transcript.length,
-      transcript.slice(0, 200)
+      JSON.stringify(sentenceScores)
     )
-    .run();
+    .run()
+    .catch((dbErr) => console.warn('[Stop the Slop] DB cache write error:', dbErr));
 
   return {
     videoId,
     score: overallScore,
+    engine: activeEngine,
     sentenceScores,
-    transcriptLength: transcript.length,
-    transcriptPreview: transcript.slice(0, 200),
     analyzedAt: new Date().toISOString(),
     cached: false,
     found: true,
   };
 }
+
+/**
+ * Call TypeSafe Jev model via Vercel AI Gateway (using VERCEL_AI_GATEWAY_KEY)
+ * or fallback to Cloudflare Workers AI binding.
+ * Uses native 'boolean'/'noul' and 'score' primitives to evaluate AI slop probability and confidence.
+ */
+async function detectAIWithJev(text, env) {
+  const promptState = text.slice(0, 15000);
+  const vercelKey = env.VERCEL_AI_GATEWAY_KEY;
+
+  if (vercelKey) {
+    let response;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      response = await fetch('https://ai-gateway.vercel.sh/v4/ai/evaluation-model', {
+        method: 'POST',
+        headers: {
+          'ai-evaluation-model-specification-version': '4',
+          'ai-gateway-auth-method': 'api-key',
+          'ai-gateway-protocol-version': '0.0.1',
+          'ai-model-id': 'typesafe-ai/jev',
+          'Authorization': `Bearer ${vercelKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          state: promptState,
+          questions: {
+            is_ai: {
+              type: 'choice',
+              instructions: 'Is it AI-generated, yes or no?',
+              criteria: {
+                yes: 'Yes, it is AI-generated',
+                no: 'No, it is not AI-generated',
+              },
+            },
+          },
+          providerOptions: {},
+        }),
+      });
+
+      if (response.status === 429 && attempt === 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        continue;
+      }
+      break;
+    }
+
+    if (!response.ok) {
+      const errText = await response.text().catch(() => '');
+      let msg = `Vercel AI Gateway Jev error (${response.status})`;
+      try {
+        const parsed = JSON.parse(errText);
+        if (parsed.error?.message) {
+          msg = parsed.error.message;
+        }
+      } catch {
+        if (errText) msg += `: ${errText.slice(0, 180)}`;
+      }
+      throw new Error(msg);
+    }
+
+    const data = await response.json();
+    const ans = data.answers?.is_ai;
+    const isYes = ans?.choice === 'yes';
+    const isNo = ans?.choice === 'no';
+    const rawConfidence = data.providerMetadata?.typesafe?.confidence?.is_ai ?? ans?.confidence;
+    const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
+
+    // Calibrated score: use probYes directly; fallback to confidence margin conversion if missing
+    let score = 0.5;
+    if (typeof probYes === 'number') {
+      score = probYes;
+    } else if (typeof rawConfidence === 'number') {
+      score = isYes ? 0.5 + (rawConfidence / 2) : 0.5 - (rawConfidence / 2);
+    } else if (isYes) {
+      score = 0.95;
+    } else if (isNo) {
+      score = 0.05;
+    }
+
+    return {
+      score: Math.max(0, Math.min(1, Math.round(score * 100) / 100)),
+      confidence: typeof rawConfidence === 'number' ? Math.round(rawConfidence * 100) / 100 : null,
+      choice: ans?.choice || (score >= 0.5 ? 'yes' : 'no'),
+      probabilities: ans?.probabilities,
+      model: 'typesafe-ai/jev (Vercel Gateway)',
+      answers: data.answers,
+      usage: data.usage,
+      cost: data.providerMetadata?.gateway?.cost,
+    };
+  }
+
+  // Fallback: Cloudflare Workers AI binding
+  if (env.AI) {
+    const response = await env.AI.run('typesafe/jev', {
+      state: promptState,
+      questions: {
+        is_ai: {
+          type: 'choice',
+          instructions: 'Is it AI-generated, yes or no?',
+          criteria: {
+            yes: 'Yes, it is AI-generated',
+            no: 'No, it is not AI-generated',
+          },
+        },
+      },
+    });
+
+    const ans = response?.answers?.is_ai;
+    const isYes = ans?.choice === 'yes' || ans?.noul === 1;
+    const isNo = ans?.choice === 'no' || ans?.noul === 0;
+    const rawConfidence = ans?.confidence;
+    const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
+
+    // Calibrated score: use probYes directly; fallback to confidence margin conversion if missing
+    let score = 0.5;
+    if (typeof probYes === 'number') {
+      score = probYes;
+    } else if (typeof ans?.probability === 'number') {
+      score = ans.probability;
+    } else if (typeof rawConfidence === 'number') {
+      score = isYes ? 0.5 + (rawConfidence / 2) : 0.5 - (rawConfidence / 2);
+    } else if (isYes) {
+      score = 0.95;
+    } else if (isNo) {
+      score = 0.05;
+    }
+
+    return {
+      score: Math.max(0, Math.min(1, Math.round(score * 100) / 100)),
+      confidence: typeof rawConfidence === 'number' ? Math.round(rawConfidence * 100) / 100 : null,
+      choice: ans?.choice || (score >= 0.5 ? 'yes' : 'no'),
+      probabilities: ans?.probabilities,
+      model: response?.model || 'jev (Cloudflare)',
+      answers: response?.answers,
+      usage: response?.usage,
+    };
+  }
+
+  throw new Error('Neither VERCEL_AI_GATEWAY_KEY nor Cloudflare Workers AI is configured for Jev.');
+}
+
 
 /**
  * Call Gemini Flash API for score-only detection (minimal output tokens: ~5-10 tokens)
@@ -494,78 +662,6 @@ Respond ONLY with a JSON object containing the probability score from 0.0 (defin
       await new Promise((r) => setTimeout(r, 1000));
     }
   }
-}
-
-/**
- * Fast, 0-cost JavaScript heuristic sentence extractor for extension popup UI.
- * Extracts and scores key sentences based on AI transitional phrases and overall score.
- */
-function extractHeuristicSentences(text, overallScore) {
-  if (!text || typeof text !== 'string') return [];
-
-  // Split into sentences, or ~18-word chunks if unpunctuated
-  let rawSentences = text
-    .split(/(?<=[.!?])\s+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length >= 15);
-
-  if (rawSentences.length <= 1) {
-    const words = text.split(/\s+/);
-    rawSentences = [];
-    for (let i = 0; i < words.length; i += 18) {
-      const chunk = words.slice(i, i + 18).join(' ').trim();
-      if (chunk.length >= 15) rawSentences.push(chunk);
-    }
-  }
-
-  const aiBuzzwords = [
-    /\bin (?:today'?s|this) video\b/i,
-    /\b(?:let'?s|we will) (?:dive|delve) (?:right )?into\b/i,
-    /\bhave you ever wondered\b/i,
-    /\bfirst and foremost\b/i,
-    /\bwithout further ado\b/i,
-    /\bfurthermore\b/i,
-    /\bmoreover\b/i,
-    /\badditionally\b/i,
-    /\bin conclusion\b/i,
-    /\bit is (?:important|crucial|essential) to (?:remember|note)\b/i,
-    /\bit'?s worth noting\b/i,
-    /\ba testament to\b/i,
-    /\brich tapestry\b/i,
-    /\bpivotal role\b/i,
-    /\bgame changer\b/i,
-    /\bdelve\b/i,
-    /\bmake sure to like and subscribe\b/i,
-  ];
-
-  const scored = rawSentences.map((sentence) => {
-    let matches = 0;
-    for (const pattern of aiBuzzwords) {
-      if (pattern.test(sentence)) matches++;
-    }
-
-    let sentenceScore;
-    if (overallScore >= 0.5) {
-      sentenceScore = matches > 0
-        ? Math.min(0.99, overallScore + 0.05 * matches)
-        : Math.max(0.15, overallScore - 0.08);
-    } else {
-      sentenceScore = matches > 0
-        ? Math.min(0.35, overallScore + 0.1)
-        : Math.max(0.02, overallScore * 0.85);
-    }
-
-    return {
-      sentence: sentence.length > 130 ? sentence.slice(0, 130) + '…' : sentence,
-      score: Math.round(sentenceScore * 100) / 100,
-      matches,
-    };
-  });
-
-  return scored
-    .sort((a, b) => b.score - a.score || b.matches - a.matches)
-    .slice(0, 5)
-    .map(({ sentence, score }) => ({ sentence, score }));
 }
 
 /**

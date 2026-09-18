@@ -12,6 +12,56 @@
 
 const API_BASE = 'https://stop-the-slop-api.maurobum43.workers.dev';
 
+// --- DEBUG LOGGER ---
+// Enable debug mode by running this in the YouTube page console:
+//   localStorage.setItem('__STS_DEBUG__', '1')
+let _debugEnabled = false;
+
+function stsLog(...args) {
+  if (_debugEnabled) console.log('[Stop the Slop]', ...args);
+}
+function stsWarn(...args) {
+  if (_debugEnabled) console.warn('[Stop the Slop]', ...args);
+}
+function stsError(...args) {
+  if (_debugEnabled) console.error('[Stop the Slop]', ...args);
+}
+
+function previewText(text, maxLength = 180) {
+  const preview = String(text || '').replace(/\s+/g, ' ').trim();
+  return preview.length > maxLength ? `${preview.slice(0, maxLength)}...` : preview;
+}
+
+async function fetchWithDebug(url, options = {}, context = {}) {
+  const startedAt = performance.now();
+  stsLog('Backend request', {
+    method: options.method || 'GET',
+    url,
+    ...context,
+  });
+
+  try {
+    const response = await fetch(url, options);
+    stsLog('Backend response', {
+      method: options.method || 'GET',
+      url,
+      status: response.status,
+      ok: response.ok,
+      durationMs: Math.round(performance.now() - startedAt),
+    });
+    return response;
+  } catch (error) {
+    stsError('Backend request failed', {
+      method: options.method || 'GET',
+      url,
+      durationMs: Math.round(performance.now() - startedAt),
+      error: error.message,
+    });
+    throw error;
+  }
+}
+
+
 // --- DOM refs ---
 const states = {
   notYoutube: document.getElementById('state-not-youtube'),
@@ -36,9 +86,6 @@ const els = {
   verdict: document.getElementById('verdict'),
   verdictDot: document.getElementById('verdict-dot'),
   verdictText: document.getElementById('verdict-text'),
-  transcriptLength: document.getElementById('transcript-length'),
-  sentencesSection: document.getElementById('sentences-section'),
-  sentencesList: document.getElementById('sentences-list'),
   themeToggle: document.getElementById('theme-toggle'),
   themeIconSystem: document.getElementById('theme-icon-system'),
   themeIconDark: document.getElementById('theme-icon-dark'),
@@ -75,6 +122,7 @@ async function init() {
   }
 
   currentTabId = tab.id;
+  _debugEnabled = await readPageDebugFlag(currentTabId);
   const videoId = extractVideoId(tab.url);
 
   if (!videoId) {
@@ -84,6 +132,19 @@ async function init() {
 
   currentVideoId = videoId;
   analyzeVideo(videoId);
+}
+
+async function readPageDebugFlag(tabId) {
+  try {
+    const [result] = await chrome.scripting.executeScript({
+      target: { tabId },
+      world: 'MAIN',
+      func: () => localStorage.getItem('__STS_DEBUG__') === '1',
+    });
+    return result?.result === true;
+  } catch (_) {
+    return false;
+  }
 }
 
 // --- Theme Management ---
@@ -145,7 +206,7 @@ function applyTheme(theme, save = true) {
       localStorage.setItem('sts_theme', theme);
       chrome.storage.local.set({ theme_preference: theme });
     } catch (e) {
-      console.warn('[Stop the Slop] Failed to save theme preference', e);
+      stsWarn('Failed to save theme preference', e);
     }
   }
 }
@@ -186,11 +247,14 @@ async function analyzeVideo(videoId, forceRefresh = false) {
   try {
     // Step 1: Check the cache first (unless forcing refresh)
     if (!forceRefresh) {
-      const cacheResp = await fetch(
-        `${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`
-      );
+      const cacheUrl = `${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`;
+      const cacheResp = await fetchWithDebug(cacheUrl, {}, {
+        operation: 'cache-check',
+        videoId,
+      });
       if (cacheResp.status === 429) {
         const cacheData = await cacheResp.json().catch(() => ({}));
+        stsWarn('Cache check rate-limited', { videoId, retryAfter: cacheData.retryAfter });
         const retryAfter =
           Number(cacheResp.headers.get('Retry-After')) ||
           Number(cacheData.retryAfter) ||
@@ -200,17 +264,29 @@ async function analyzeVideo(videoId, forceRefresh = false) {
       }
       if (cacheResp.ok) {
         const cacheData = await cacheResp.json();
+        stsLog('Cache check result', {
+          videoId,
+          found: cacheData.found === true,
+          cached: cacheData.cached === true,
+          engine: cacheData.engine || null,
+          analyzedAt: cacheData.analyzedAt || null,
+        });
         if (cacheData.found) {
           displayResult(cacheData);
           return;
         }
+      } else {
+        stsWarn('Cache check returned a non-success status', { videoId, status: cacheResp.status });
       }
+    } else {
+      stsLog('Cache check skipped', { videoId, reason: 'force-refresh' });
     }
 
     // Step 2: Ask the content script to fetch the transcript
     const transcript = await fetchTranscriptFromTab(currentTabId, videoId);
 
     if (!transcript) {
+      stsWarn('Transcript extraction returned no transcript', { videoId });
       throw new Error(
         'No transcript available. This video may not have captions enabled.'
       );
@@ -220,15 +296,33 @@ async function analyzeVideo(videoId, forceRefresh = false) {
       throw new Error('Transcript is too short for reliable AI detection.');
     }
 
+    stsLog('Transcript ready', {
+      videoId,
+      length: transcript.length,
+      preview: previewText(transcript),
+    });
+
     // Step 3: Send transcript to worker for analysis
-    const analyzeResp = await fetch(`${API_BASE}/api/analyze`, {
+    const analyzeUrl = `${API_BASE}/api/analyze`;
+    const analyzeResp = await fetchWithDebug(analyzeUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ videoId, transcript }),
+    }, {
+      operation: 'analyze',
+      videoId,
+      transcriptLength: transcript.length,
+      transcriptPreview: previewText(transcript),
     });
 
     if (!analyzeResp.ok) {
       const data = await analyzeResp.json().catch(() => ({}));
+      stsWarn('Analysis backend returned an error', {
+        videoId,
+        status: analyzeResp.status,
+        code: data.code || null,
+        error: data.error || null,
+      });
       if (analyzeResp.status === 429 || data.code === 'RATE_LIMITED') {
         const retryAfter =
           Number(analyzeResp.headers.get('Retry-After')) ||
@@ -241,8 +335,17 @@ async function analyzeVideo(videoId, forceRefresh = false) {
     }
 
     const result = await analyzeResp.json();
+    stsLog('Analysis result', {
+      videoId,
+      cached: result.cached === true,
+      engine: result.engine || null,
+      model: result.model || null,
+      score: result.score,
+      analyzedAt: result.analyzedAt || null,
+    });
     displayResult(result);
   } catch (err) {
+    stsError('Analysis flow failed', { videoId, error: err.message });
     showError(err.message);
   }
 }
@@ -489,7 +592,7 @@ async function fetchTranscriptFromTab(tabId, videoId) {
 
     return results?.[0]?.result || null;
   } catch (err) {
-    console.error('[Stop the Slop] executeScript error:', err);
+    stsError('executeScript error:', err);
     return null;
   }
 }
@@ -517,9 +620,9 @@ function displayResult(result) {
   // Score display
   els.scoreValue.textContent = `${pct}%`;
 
-  if (score < 0.35) {
+  if (score < 0.40) {
     els.scoreValue.className = 'score-value score-green';
-  } else if (score < 0.65) {
+  } else if (score <= 0.70) {
     els.scoreValue.className = 'score-value score-yellow';
   } else {
     els.scoreValue.className = 'score-value score-red';
@@ -548,61 +651,15 @@ function displayResult(result) {
   // Verdict
   els.verdict.classList.remove('verdict--human', 'verdict--mixed', 'verdict--ai');
 
-  if (score < 0.35) {
+  if (score < 0.40) {
     els.verdictText.textContent = 'Likely Human-Written';
     els.verdict.classList.add('verdict--human');
-  } else if (score < 0.65) {
+  } else if (score <= 0.70) {
     els.verdictText.textContent = 'Mixed Signals';
     els.verdict.classList.add('verdict--mixed');
   } else {
     els.verdictText.textContent = 'Likely AI-Generated';
     els.verdict.classList.add('verdict--ai');
-  }
-
-  // Details
-  const len = result.transcriptLength;
-  if (len) {
-    const words = Math.round(len / 5);
-    els.transcriptLength.textContent = `~${words.toLocaleString()} words`;
-  }
-
-  // Sentence scores
-  const sentences = result.sentenceScores || [];
-  if (sentences.length > 0) {
-    els.sentencesSection.classList.remove('hidden');
-    els.sentencesList.innerHTML = '';
-
-    const topSentences = sentences.slice(0, 5);
-    for (const s of topSentences) {
-      const item = document.createElement('div');
-      item.className = 'sentence-item';
-
-      const scoreBadge = document.createElement('span');
-      const sPct = Math.round(s.score * 100);
-      scoreBadge.textContent = `${sPct}%`;
-      scoreBadge.className = 'sentence-score';
-
-      if (s.score >= 0.65) {
-        scoreBadge.classList.add('sentence-score--high');
-      } else if (s.score >= 0.35) {
-        scoreBadge.classList.add('sentence-score--medium');
-      } else {
-        scoreBadge.classList.add('sentence-score--low');
-      }
-
-      const textEl = document.createElement('span');
-      textEl.className = 'sentence-text';
-      textEl.textContent =
-        s.sentence.length > 120
-          ? s.sentence.slice(0, 120) + '…'
-          : s.sentence;
-
-      item.appendChild(scoreBadge);
-      item.appendChild(textEl);
-      els.sentencesList.appendChild(item);
-    }
-  } else {
-    els.sentencesSection.classList.add('hidden');
   }
 }
 

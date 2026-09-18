@@ -9,6 +9,26 @@
   if (window.__STOP_THE_SLOP_MAIN_INIT__) return;
   window.__STOP_THE_SLOP_MAIN_INIT__ = true;
 
+  // --- DEBUG LOGGER ---
+  // Enable debug mode by running this in the YouTube page console:
+  //   localStorage.setItem('__STS_DEBUG__', '1')
+  // Disable with:
+  //   localStorage.removeItem('__STS_DEBUG__')
+  function isDebugEnabled() {
+    try {
+      return localStorage.getItem('__STS_DEBUG__') === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function stsLog(...args) {
+    if (isDebugEnabled()) console.log('[Stop the Slop]', ...args);
+  }
+  function stsWarn(...args) {
+    if (isDebugEnabled()) console.warn('[Stop the Slop]', ...args);
+  }
+
   // Helper: decode HTML / XML entities
   function decodeEntities(str) {
     if (!str) return '';
@@ -261,7 +281,7 @@
 
   // Master transcript extraction pipeline
   async function extractTranscript(videoId) {
-    console.log('[Stop the Slop] Extracting transcript for', videoId);
+    stsLog('Extracting transcript for', videoId);
 
     // Method 1: Timedtext API fetch if player response is available for the requested video
     try {
@@ -276,25 +296,25 @@
           const chosen = englishTrack || tracks[0];
           const res = await fetchCaptions(chosen);
           if (res && res.length >= 20) {
-            console.log('[Stop the Slop] Transcript extracted via timedtext fetch');
+            stsLog('Transcript extracted via timedtext fetch');
             return res;
           }
         }
       }
     } catch (e) {
-      console.warn('[Stop the Slop] Timedtext fetch method error:', e);
+      stsWarn('Timedtext fetch method error:', e);
     }
 
     // Method 2: YouTube DOM transcript panel (stealth, 100% hidden from user)
     try {
-      console.log('[Stop the Slop] Attempting stealth DOM transcript extraction...');
+      stsLog('Attempting stealth DOM transcript extraction...');
       const domResult = await triggerAndExtractFromDom();
       if (domResult && domResult.length >= 20) {
-        console.log('[Stop the Slop] Transcript extracted invisibly via DOM transcript panel');
+        stsLog('Transcript extracted invisibly via DOM transcript panel');
         return domResult;
       }
     } catch (e) {
-      console.warn('[Stop the Slop] DOM transcript extraction error:', e);
+      stsWarn('DOM transcript extraction error:', e);
     }
 
     return null;
@@ -324,5 +344,5 @@
     }
   });
 
-  console.log('[Stop the Slop] Main world script initialized');
+  stsLog('Main world script initialized');
 })();

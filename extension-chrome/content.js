@@ -13,6 +13,26 @@
   if (window.__STOP_THE_SLOP_ISO_INIT__) return;
   window.__STOP_THE_SLOP_ISO_INIT__ = true;
 
+  // --- DEBUG LOGGER ---
+  // Enable debug mode by running this in the YouTube page console:
+  //   localStorage.setItem('__STS_DEBUG__', '1')
+  // Disable with:
+  //   localStorage.removeItem('__STS_DEBUG__')
+  function isDebugEnabled() {
+    try {
+      return localStorage.getItem('__STS_DEBUG__') === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function stsLog(...args) {
+    if (isDebugEnabled()) console.log('[Stop the Slop]', ...args);
+  }
+  function stsWarn(...args) {
+    if (isDebugEnabled()) console.warn('[Stop the Slop]', ...args);
+  }
+
   const API_BASE = 'https://stop-the-slop-api.maurobum43.workers.dev';
   let lastActiveVideoId = null;
 
@@ -23,6 +43,38 @@
   let batchCooldownUntil = 0;
   let scanScheduled = false;
   let isScanning = false;
+  let observer = null;
+  let mutationThrottle = null;
+  let scrollThrottle = null;
+
+  // Check if extension runtime context is still valid (becomes invalid when extension reloads/updates)
+  function isExtensionValid() {
+    try {
+      return Boolean(typeof chrome !== 'undefined' && chrome?.runtime?.id);
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Gracefully tear down observers and timers if extension context is invalidated
+  function handleContextInvalidated() {
+    if (observer) {
+      try { observer.disconnect(); } catch (_) { }
+      observer = null;
+    }
+    if (batchTimer) {
+      clearTimeout(batchTimer);
+      batchTimer = null;
+    }
+    if (mutationThrottle) {
+      clearTimeout(mutationThrottle);
+      mutationThrottle = null;
+    }
+    if (scrollThrottle) {
+      clearTimeout(scrollThrottle);
+      scrollThrottle = null;
+    }
+  }
 
   // --- STYLES INJECTION ---
   function injectStyles() {
@@ -353,31 +405,6 @@
         line-height: 1.4 !important;
         margin: 0 0 8px 0 !important;
       }
-
-      .sts-popover-flagged-preview {
-        background: rgba(255, 255, 255, 0.06) !important;
-        border-left: 2.5px solid #ef4444 !important;
-        border-radius: 0 4px 4px 0 !important;
-        padding: 5px 8px !important;
-        margin: 0 0 10px 0 !important;
-      }
-
-      .sts-popover-flagged-label {
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-        color: #fca5a5 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.3px !important;
-        margin-bottom: 2px !important;
-      }
-
-      .sts-popover-flagged-text {
-        font-size: 10.5px !important;
-        color: rgba(255, 255, 255, 0.82) !important;
-        font-style: italic !important;
-        line-height: 1.35 !important;
-      }
-
       .sts-popover-footer {
         font-size: 9.5px !important;
         color: rgba(255, 255, 255, 0.45) !important;
@@ -407,6 +434,7 @@
 
   // --- LOCAL CACHE SYNCHRONIZATION ---
   async function syncLocalCache() {
+    if (!isExtensionValid()) return;
     try {
       const allItems = await chrome.storage.local.get(null);
       for (const [key, val] of Object.entries(allItems)) {
@@ -426,46 +454,54 @@
             found: true,
             score,
             analyzedAt: val.analyzedAt || new Date().toISOString(),
-            transcriptLength: val.transcriptLength,
             sentenceScores: val.sentenceScores,
           });
         }
       }
     } catch (e) {
-      console.warn('[Stop the Slop] Error syncing local cache:', e);
+      if (!isExtensionValid() || (e && typeof e.message === 'string' && e.message.includes('Extension context invalidated'))) {
+        handleContextInvalidated();
+        return;
+      }
+      stsWarn('Error syncing local cache:', e);
     }
   }
 
   // Listen for storage updates (e.g. when popup analyzes a video)
-  chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== 'local') return;
+  try {
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
+      if (areaName !== 'local') return;
 
-    let updated = false;
-    for (const [key, change] of Object.entries(changes)) {
-      if ((key.startsWith('result_') || key.startsWith('sts_cache_')) && change.newValue) {
-        const videoId = key.replace(/^(result_|sts_cache_)/, '');
-        const score = change.newValue.score;
-        if (videoId && typeof score === 'number') {
-          videoCache.set(videoId, {
-            found: true,
-            score,
-            analyzedAt: change.newValue.analyzedAt || new Date().toISOString(),
-            transcriptLength: change.newValue.transcriptLength,
-            sentenceScores: change.newValue.sentenceScores,
-          });
-          updated = true;
+      let updated = false;
+      for (const [key, change] of Object.entries(changes)) {
+        if ((key.startsWith('result_') || key.startsWith('sts_cache_')) && change.newValue) {
+          const videoId = key.replace(/^(result_|sts_cache_)/, '');
+          const score = change.newValue.score;
+          if (videoId && typeof score === 'number') {
+            videoCache.set(videoId, {
+              found: true,
+              score,
+              analyzedAt: change.newValue.analyzedAt || new Date().toISOString(),
+              sentenceScores: change.newValue.sentenceScores,
+            });
+            updated = true;
+          }
         }
       }
-    }
 
-    if (updated) {
-      requestScan();
-      const currentVid = getActiveVideoId();
-      if (currentVid) {
-        checkAndRenderPlayerBadge(currentVid);
+      if (updated) {
+        requestScan();
+        const currentVid = getActiveVideoId();
+        if (currentVid) {
+          checkAndRenderPlayerBadge(currentVid);
+        }
       }
-    }
-  });
+    });
+  } catch (_) { }
 
   // --- VIDEO ID EXTRACTION ---
   function extractVideoId(urlOrStr) {
@@ -499,10 +535,10 @@
     let tierClass = 'sts-thumb-badge--human';
     let tooltip = `Stop the Slop: ${pct}% AI Probability (Likely Human-Written)`;
 
-    if (score >= 0.65) {
+    if (score > 0.70) {
       tierClass = 'sts-thumb-badge--ai';
       tooltip = `Stop the Slop: ${pct}% AI script probability (Likely AI-Generated)`;
-    } else if (score >= 0.35) {
+    } else if (score >= 0.40) {
       tierClass = 'sts-thumb-badge--mixed';
       tooltip = `Stop the Slop: ${pct}% AI script probability (Mixed Signals)`;
     }
@@ -635,20 +671,20 @@
     let verdictTag = 'Human';
     let verdictDesc = 'Language patterns strongly reflect natural, authentic human writing.';
 
-    if (score >= 0.65) {
+    if (score > 0.70) {
       tierClass = 'sts-player-badge--ai';
       tagClass = 'sts-popover-tag--ai';
       meterClass = 'sts-popover-meter-fill--ai';
       verdictTitle = 'Likely AI-Generated';
       verdictTag = 'AI Script';
       verdictDesc = 'Repetitive structures and predictable syntactic patterns detected.';
-    } else if (score >= 0.35) {
+    } else if (score >= 0.40) {
       tierClass = 'sts-player-badge--mixed';
       tagClass = 'sts-popover-tag--mixed';
       meterClass = 'sts-popover-meter-fill--mixed';
       verdictTitle = 'Mixed Signals';
       verdictTag = 'Mixed';
-      verdictDesc = 'Shows a combination of human-like and machine-assisted phrasing.';
+      verdictDesc = 'Shows a combination of human-like and structured or machine-assisted phrasing.';
     }
 
     const wrapper = document.createElement('div');
@@ -683,28 +719,6 @@
       } catch (e) { }
     }
 
-    let wordCountText = '';
-    if (details?.transcriptLength) {
-      const words = Math.round(details.transcriptLength / 5);
-      wordCountText = `~${words.toLocaleString()} words`;
-    }
-
-    let flaggedSentenceHtml = '';
-    if (details?.sentenceScores && Array.isArray(details.sentenceScores) && details.sentenceScores.length > 0) {
-      const topSentence = details.sentenceScores[0];
-      if (topSentence && topSentence.sentence && topSentence.score >= 0.5) {
-        const excerpt = topSentence.sentence.length > 80
-          ? topSentence.sentence.slice(0, 80) + '…'
-          : topSentence.sentence;
-        flaggedSentenceHtml = `
-          <div class="sts-popover-flagged-preview">
-            <div class="sts-popover-flagged-label">Flagged excerpt (${Math.round(topSentence.score * 100)}% AI):</div>
-            <div class="sts-popover-flagged-text">“${excerpt}”</div>
-          </div>
-        `;
-      }
-    }
-
     popover.innerHTML = `
       <div class="sts-popover-header">
         <div class="sts-popover-brand">
@@ -726,11 +740,10 @@
         </div>
 
         <p class="sts-popover-info">${verdictDesc}</p>
-        ${flaggedSentenceHtml}
       </div>
 
       <div class="sts-popover-footer">
-        <span>${wordCountText ? wordCountText : 'Transcript analyzed'}</span>
+        <span>Transcript analyzed</span>
         <span>${analyzedDateText ? `Scanned ${analyzedDateText}` : 'Edge verified'}</span>
       </div>
     `;
@@ -822,6 +835,10 @@
     }
   }
 
+  // In-flight tracking to prevent duplicate concurrent checks & auto-analyses
+  const inFlightChecks = new Set();
+  const inFlightAutoAnalyses = new Set();
+
   async function checkAndRenderPlayerBadge(videoId) {
     if (!videoId) {
       removePlayerBadge();
@@ -834,14 +851,23 @@
       if (entry.found && typeof entry.score === 'number') {
         renderPlayerBadge(videoId, entry.score, entry);
         return;
-      } else if (entry.found === false) {
+      } else if (entry.found === false && entry.noTranscript) {
         removePlayerBadge();
         return;
       }
     }
 
-    // 2. Check local storage (result_${videoId} or sts_cache_${videoId})
+    // Guard against firing duplicate concurrent checks for the same video
+    if (inFlightChecks.has(videoId)) return;
+    inFlightChecks.add(videoId);
+
     try {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
+
+      // 2. Check local storage (result_${videoId} or sts_cache_${videoId})
       const resultKey = `result_${videoId}`;
       const cacheKey = `sts_cache_${videoId}`;
       const stored = await chrome.storage.local.get([resultKey, cacheKey]);
@@ -853,6 +879,9 @@
         if (entry.found && typeof entry.score === 'number') {
           renderPlayerBadge(videoId, entry.score, entry);
           return;
+        } else if (entry.found === false && entry.noTranscript) {
+          removePlayerBadge();
+          return;
         }
       }
 
@@ -862,62 +891,227 @@
           found: true,
           score: data.score,
           analyzedAt: data.analyzedAt,
-          transcriptLength: data.transcriptLength,
           sentenceScores: data.sentenceScores,
         });
         renderPlayerBadge(videoId, data.score, data);
         return;
       }
-    } catch (e) { }
 
-    // 3. Fallback: check worker edge cache if on watch/shorts page
-    try {
-      const resp = await fetch(`${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`);
-      if (getActiveVideoId() !== videoId) return;
+      // 3. Fallback: check worker edge cache if on watch/shorts page
+      try {
+        const resp = await fetch(`${API_BASE}/api/check?videoId=${encodeURIComponent(videoId)}`);
+        if (getActiveVideoId() !== videoId) return;
 
-      if (videoCache.has(videoId)) {
-        const entry = videoCache.get(videoId);
-        if (entry.found && typeof entry.score === 'number') {
-          renderPlayerBadge(videoId, entry.score, entry);
-          return;
+        if (videoCache.has(videoId)) {
+          const entry = videoCache.get(videoId);
+          if (entry.found && typeof entry.score === 'number') {
+            renderPlayerBadge(videoId, entry.score, entry);
+            return;
+          } else if (entry.found === false && entry.noTranscript) {
+            removePlayerBadge();
+            return;
+          }
         }
-      }
 
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.found && typeof data.score === 'number') {
-          videoCache.set(videoId, {
-            found: true,
-            score: data.score,
-            analyzedAt: data.analyzedAt,
-            transcriptLength: data.transcriptLength,
-            sentenceScores: data.sentenceScores,
-          });
-          chrome.storage.local.set({
-            [`sts_cache_${videoId}`]: {
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.found && typeof data.score === 'number') {
+            videoCache.set(videoId, {
+              found: true,
               score: data.score,
               analyzedAt: data.analyzedAt,
-            },
-          }).catch(() => { });
-          renderPlayerBadge(videoId, data.score, data);
-          return;
-        } else {
-          videoCache.set(videoId, { found: false });
-          removePlayerBadge();
-          return;
+              sentenceScores: data.sentenceScores,
+            });
+            if (isExtensionValid()) {
+              try {
+                chrome.storage.local.set({
+                  [`sts_cache_${videoId}`]: {
+                    score: data.score,
+                    analyzedAt: data.analyzedAt,
+                  },
+                }).catch(() => { });
+              } catch (_) { }
+            }
+            renderPlayerBadge(videoId, data.score, data);
+            return;
+          }
         }
-      }
-    } catch (e) { }
+      } catch (e) { }
 
-    // If unanalyzed and not in cache, do not display badge
-    if (getActiveVideoId() === videoId && (!videoCache.has(videoId) || !videoCache.get(videoId).found)) {
+      if (getActiveVideoId() !== videoId) return;
+
+      // 4. Video is unanalyzed: automatically analyze it now as soon as it opens!
+      await autoAnalyzeVideo(videoId);
+    } catch (e) {
+      if (!isExtensionValid() || (e && typeof e.message === 'string' && e.message.includes('Extension context invalidated'))) {
+        handleContextInvalidated();
+        return;
+      }
+      stsWarn('Error checking player badge:', e);
+    } finally {
+      inFlightChecks.delete(videoId);
+    }
+  }
+
+  /**
+   * Automatically extracts the video transcript and analyzes it with Jev
+   * as soon as a YouTube video is opened.
+   */
+  async function autoAnalyzeVideo(videoId) {
+    if (!videoId || inFlightAutoAnalyses.has(videoId)) return;
+    if (getActiveVideoId() !== videoId) return;
+
+    // Skip if we already checked and found no score / no captions
+    if (
+      videoCache.has(videoId) &&
+      videoCache.get(videoId).found === false &&
+      videoCache.get(videoId).noTranscript
+    ) {
+      removePlayerBadge();
+      return;
+    }
+
+    inFlightAutoAnalyses.add(videoId);
+
+    try {
+      // Allow YouTube player/DOM a brief moment (600ms) to initialize captions
+      await new Promise((r) => setTimeout(r, 600));
+      if (getActiveVideoId() !== videoId) return;
+
+      // Extract transcript from main world
+      let res = await requestTranscriptFromMainWorld(videoId);
+      if ((!res || !res.transcript) && getActiveVideoId() === videoId) {
+        // Retry once after 1s in case captions were still loading
+        await new Promise((r) => setTimeout(r, 1000));
+        if (getActiveVideoId() !== videoId) return;
+        res = await requestTranscriptFromMainWorld(videoId);
+      }
+
+      const transcript = res?.transcript;
+      if (!transcript || transcript.length < 50) {
+        videoCache.set(videoId, { found: false, noTranscript: true });
+        removePlayerBadge();
+        return;
+      }
+
+      if (getActiveVideoId() !== videoId) return;
+
+      stsLog('Transcript ready for automatic analysis', {
+        videoId,
+        length: transcript.length,
+        preview: transcript.replace(/\s+/g, ' ').trim().slice(0, 180),
+      });
+
+      // Send to worker for instant analysis (defaults to TypeSafe Jev and caches to D1)
+      const analyzeUrl = `${API_BASE}/api/analyze`;
+      const startedAt = performance.now();
+      stsLog('Backend request', {
+        method: 'POST',
+        url: analyzeUrl,
+        operation: 'automatic-analyze',
+        videoId,
+        transcriptLength: transcript.length,
+      });
+      const analyzeResp = await fetch(analyzeUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          videoId,
+          transcript,
+        }),
+      });
+      stsLog('Backend response', {
+        method: 'POST',
+        url: analyzeUrl,
+        operation: 'automatic-analyze',
+        videoId,
+        status: analyzeResp.status,
+        ok: analyzeResp.ok,
+        durationMs: Math.round(performance.now() - startedAt),
+      });
+
+      if (!analyzeResp.ok) {
+        stsWarn('Automatic analysis returned an error', { videoId, status: analyzeResp.status });
+        videoCache.set(videoId, { found: false });
+        removePlayerBadge();
+        return;
+      }
+
+      const data = await analyzeResp.json();
+      if (!data || typeof data.score !== 'number') {
+        videoCache.set(videoId, { found: false });
+        removePlayerBadge();
+        return;
+      }
+
+      stsLog('Automatic analysis result', {
+        videoId,
+        cached: data.cached === true,
+        engine: data.engine || null,
+        model: data.model || null,
+        score: data.score,
+        analyzedAt: data.analyzedAt || null,
+      });
+
+      // Update in-memory cache
+      videoCache.set(videoId, {
+        found: true,
+        score: data.score,
+        analyzedAt: data.analyzedAt || new Date().toISOString(),
+        sentenceScores: data.sentenceScores,
+        engine: data.engine,
+      });
+
+      // Persist to local storage for popup and subsequent visits
+      if (isExtensionValid()) {
+        try {
+          chrome.storage.local
+            .set({
+              [`result_${videoId}`]: data,
+              [`sts_cache_${videoId}`]: {
+                score: data.score,
+                analyzedAt: data.analyzedAt || new Date().toISOString(),
+              },
+            })
+            .catch(() => {});
+        } catch (_) {}
+
+        // Notify service worker to update toolbar action badge
+        try {
+          chrome.runtime.sendMessage({
+            type: 'ANALYSIS_COMPLETE',
+            videoId,
+            score: data.score,
+          });
+        } catch (_) {}
+      }
+
+      // If user is still on this video, render the in-player badge immediately!
+      if (getActiveVideoId() === videoId) {
+        renderPlayerBadge(videoId, data.score, data);
+      }
+
+      // Re-scan feed thumbnail badges
+      requestScan();
+    } catch (err) {
+      if (!isExtensionValid() || (err && typeof err.message === 'string' && err.message.includes('Extension context invalidated'))) {
+        handleContextInvalidated();
+        return;
+      }
+      stsWarn('Auto-analysis error:', err);
       videoCache.set(videoId, { found: false });
       removePlayerBadge();
+    } finally {
+      inFlightAutoAnalyses.delete(videoId);
     }
   }
 
   // --- BATCH QUERY ENGINE ---
   async function flushBatch() {
+    if (!isExtensionValid()) {
+      handleContextInvalidated();
+      return;
+    }
     if (pendingBatch.size === 0) return;
     if (Date.now() < batchCooldownUntil) return;
 
@@ -927,10 +1121,26 @@
     }
 
     try {
-      const response = await fetch(`${API_BASE}/api/check-batch`, {
+      const batchUrl = `${API_BASE}/api/check-batch`;
+      const startedAt = performance.now();
+      stsLog('Backend request', {
+        method: 'POST',
+        url: batchUrl,
+        operation: 'cache-batch-check',
+        videoCount: videoIdsToQuery.length,
+      });
+      const response = await fetch(batchUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ videoIds: videoIdsToQuery }),
+      });
+      stsLog('Backend response', {
+        method: 'POST',
+        url: batchUrl,
+        status: response.status,
+        ok: response.ok,
+        durationMs: Math.round(performance.now() - startedAt),
+        videoCount: videoIdsToQuery.length,
       });
 
       if (response.status === 429) {
@@ -940,7 +1150,7 @@
           Number(data.retryAfter) ||
           30;
         batchCooldownUntil = Date.now() + retrySecs * 1000;
-        console.warn(`[Stop the Slop] Batch check rate-limited. Cooling down for ${retrySecs}s.`);
+        stsWarn(`Batch check rate-limited. Cooling down for ${retrySecs}s.`);
         // Re-queue IDs so they can be processed once cooldown ends
         for (const id of videoIdsToQuery) {
           pendingBatch.add(id);
@@ -954,6 +1164,10 @@
 
       const data = await response.json();
       const cachedResults = data.cached || {};
+      stsLog('Cache batch result', {
+        requested: videoIdsToQuery.length,
+        cached: Object.keys(cachedResults).length,
+      });
       const storageToSave = {};
 
       for (const videoId of videoIdsToQuery) {
@@ -975,14 +1189,20 @@
       }
 
       // Persist found items to local storage asynchronously
-      if (Object.keys(storageToSave).length > 0) {
-        chrome.storage.local.set(storageToSave).catch(() => { });
+      if (Object.keys(storageToSave).length > 0 && isExtensionValid()) {
+        try {
+          chrome.storage.local.set(storageToSave).catch(() => { });
+        } catch (_) { }
       }
 
       // Re-scan to apply newly fetched badges to DOM
       requestScan();
     } catch (err) {
-      console.warn('[Stop the Slop] Batch check error:', err);
+      if (!isExtensionValid() || (err && typeof err.message === 'string' && err.message.includes('Extension context invalidated'))) {
+        handleContextInvalidated();
+        return;
+      }
+      stsWarn('Batch check error:', err);
       // Mark as not found for now to prevent infinite retry loops
       for (const videoId of videoIdsToQuery) {
         if (!videoCache.has(videoId)) {
@@ -993,6 +1213,10 @@
   }
 
   function queueVideoForBatch(videoId) {
+    if (!isExtensionValid()) {
+      handleContextInvalidated();
+      return;
+    }
     if (!videoId || videoCache.has(videoId)) return;
 
     pendingBatch.add(videoId);
@@ -1009,6 +1233,10 @@
 
   // --- THUMBNAIL SCANNER ---
   function scanThumbnails() {
+    if (!isExtensionValid()) {
+      handleContextInvalidated();
+      return;
+    }
     if (isScanning) return;
     isScanning = true;
 
@@ -1079,6 +1307,10 @@
   }
 
   function requestScan() {
+    if (!isExtensionValid()) {
+      handleContextInvalidated();
+      return;
+    }
     if (scanScheduled) return;
     scanScheduled = true;
 
@@ -1127,6 +1359,10 @@
   }
 
   function handleActiveVideoChange(videoId) {
+    if (!isExtensionValid()) {
+      handleContextInvalidated();
+      return;
+    }
     if (!videoId) {
       lastActiveVideoId = null;
       removePlayerBadge();
@@ -1140,7 +1376,7 @@
         type: 'VIDEO_CHANGED',
         videoId,
       });
-    } catch (e) { }
+    } catch (_) { }
 
     checkAndRenderPlayerBadge(videoId);
     requestScan();
@@ -1170,8 +1406,11 @@
     await syncLocalCache();
 
     // Observe DOM mutations to dynamically scan new thumbnails during infinite scroll
-    let mutationThrottle = null;
-    const observer = new MutationObserver(() => {
+    observer = new MutationObserver(() => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
       if (mutationThrottle) return;
       mutationThrottle = setTimeout(() => {
         mutationThrottle = null;
@@ -1185,8 +1424,11 @@
     });
 
     // Capture scrolling inside playlist panel container and window to continuously update recycled items
-    let scrollThrottle = null;
     window.addEventListener('scroll', () => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
       if (scrollThrottle) return;
       scrollThrottle = setTimeout(() => {
         scrollThrottle = null;
@@ -1196,6 +1438,10 @@
 
     // YouTube SPA navigation events
     document.addEventListener('yt-navigate-finish', () => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
       const videoId = getActiveVideoId();
       if (videoId) {
         handleActiveVideoChange(videoId);
@@ -1206,6 +1452,10 @@
     });
 
     document.addEventListener('yt-page-data-updated', () => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
       const videoId = getActiveVideoId();
       if (videoId) checkAndRenderPlayerBadge(videoId);
       requestScan();

@@ -431,7 +431,7 @@ img, svg {
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.85rem;
-  margin-bottom: 1.15rem;
+  margin-bottom: 0;
   transition: all var(--transition-fast);
 }
 
@@ -468,26 +468,6 @@ img, svg {
 }
 .verdict-mixed .verdict-dot {
   background-color: #d97706;
-}
-
-.sim-transcript-box {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 0.9rem 1rem;
-  max-height: 140px;
-  overflow-y: auto;
-  font-size: 0.83rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-
-.highlight-ai {
-  background: #fee2e2;
-  color: #991b1b;
-  padding: 0.1rem 0.25rem;
-  border-radius: 3px;
-  border-bottom: 1.5px solid #ef4444;
 }
 
 /* ==========================================================================

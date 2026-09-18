@@ -380,120 +380,6 @@ body {
   background-color: var(--accent-red);
 }
 
-/* --- Details --- */
-.details {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-card);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-  overflow: hidden;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-}
-
-.detail-label {
-  font-size: 11px;
-  color: var(--text-secondary);
-}
-
-.detail-value {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-/* --- Sentences --- */
-.sentences-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.sentences-title {
-  font-size: 11px;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-}
-
-.sentences-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  max-height: 180px;
-  overflow-y: auto;
-}
-
-.sentence-item {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  padding: 8px 10px;
-  background: var(--bg-card);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-  transition: background-color 0.15s ease;
-}
-
-.sentence-item:hover {
-  background: var(--bg-card-hover);
-}
-
-.sentence-score {
-  flex-shrink: 0;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 3px;
-  font-variant-numeric: tabular-nums;
-  min-width: 36px;
-  text-align: center;
-}
-
-.sentence-score--high {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--accent-red);
-}
-
-.sentence-score--medium {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--accent-yellow);
-}
-
-.sentence-score--low {
-  background: rgba(34, 197, 94, 0.15);
-  color: var(--accent-green);
-}
-
-.sentence-text {
-  font-size: 11px;
-  color: var(--text-secondary);
-  line-height: 1.45;
-  word-break: break-word;
-}
-
-/* Scrollbars */
-.sentences-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sentences-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sentences-list::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 2px;
-}
-
 /* --- Buttons --- */
 .btn {
   display: inline-flex;
@@ -597,3 +483,5 @@ body {
 .score-green { color: var(--accent-green); }
 .score-yellow { color: var(--accent-yellow); }
 .score-red { color: var(--accent-red); }
+
+

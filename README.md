@@ -34,9 +34,8 @@
 
 ## Features
 - **Thumbnail AI Badges:** Displays AI probability ratings directly on video thumbnails across YouTube feeds before clicking.
-- **In-Player Controls Badge:** Shows a native AI probability pill alongside the bottom-right video player controls (subtitles, settings, fullscreen) with an interactive verdict popover.
-- **In-Player Detection:** Probability score gauge and sentence breakdown in the extension popup.
-- **Sentence Breakdown:** Highlights specific sentences that triggered repetitive phrasing or AI markers.
+- **In-Player Controls Badge:** Shows a native AI probability pill alongside the bottom-right video player controls with an interactive verdict popover.
+- **Instant Script Analysis:** Probability score gauge and verdict details in the extension popup.
 - **Local & Edge Caching:** Caches evaluated videos to deliver fast verdicts without redundant network requests.
 - **Privacy-First:** Zero personal data tracking, no analytics cookies, and no account required.
 - **Adaptive Dark / Light Theme:** Matches YouTube's theme automatically.

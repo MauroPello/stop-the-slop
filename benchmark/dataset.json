@@ -1,0 +1,244 @@
+[
+  {
+    "videoId": "dQw4w9WgXcQ",
+    "label": "human",
+    "category": "music_video",
+    "note": "Rick Astley – Never Gonna Give You Up (live performance/music)"
+  },
+  {
+    "videoId": "YbJOTdZBX1g",
+    "label": "human",
+    "category": "interview",
+    "note": "Hot Ones – celebrity interview (spontaneous reactions, ad-lib)"
+  },
+  {
+    "videoId": "arj7oStGLkU",
+    "label": "human",
+    "category": "ted_talk",
+    "note": "TED Talk – Tim Urban: Inside the mind of a master procrastinator"
+  },
+  {
+    "videoId": "8S0FDjFBj8o",
+    "label": "human",
+    "category": "ted_talk",
+    "note": "TED Talk – Simon Sinek: How great leaders inspire action"
+  },
+  {
+    "videoId": "UF8uR6Z6KLc",
+    "label": "human",
+    "category": "lecture",
+    "note": "Steve Jobs Stanford commencement speech 2005"
+  },
+  {
+    "videoId": "hY7m5jjJ9mM",
+    "label": "human",
+    "category": "cooking",
+    "note": "Gordon Ramsay – scrambled eggs tutorial (conversational, ad-lib)"
+  },
+  {
+    "videoId": "PUP7U5vTMM0",
+    "label": "human",
+    "category": "gaming",
+    "note": "Markiplier – Five Nights at Freddy's (live reaction gameplay)"
+  },
+  {
+    "videoId": "SqcY0GlETPk",
+    "label": "human",
+    "category": "music_performance",
+    "note": "React video – classical musicians react (live, unscripted)"
+  },
+  {
+    "videoId": "rUWxSEwctFU",
+    "label": "human",
+    "category": "vlog",
+    "note": "Casey Neistat – vlog style (personal, spontaneous)"
+  },
+  {
+    "videoId": "o_XVt5rdpFY",
+    "label": "human",
+    "category": "podcast",
+    "note": "Joe Rogan clip – conversational podcast excerpt"
+  },
+  {
+    "videoId": "zWPe_CUR4yU",
+    "label": "human",
+    "category": "comedy",
+    "note": "John Mulaney – comedy clip (stand-up, personal stories)"
+  },
+  {
+    "videoId": "r1WlME4MTnw",
+    "label": "human",
+    "category": "documentary",
+    "note": "Johnny Harris – human-researched documentary explainer"
+  },
+  {
+    "videoId": "gR_Qm0pMlJE",
+    "label": "human",
+    "category": "education",
+    "note": "3Blue1Brown – math explainer (Grant Sanderson, personally scripted)"
+  },
+  {
+    "videoId": "zORUUqJd81M",
+    "label": "human",
+    "category": "vlog",
+    "note": "MrBeast – challenge video (live, team interaction)"
+  },
+  {
+    "videoId": "XqZsoesa55w",
+    "label": "human",
+    "category": "music_performance",
+    "note": "Baby Shark – children's song (simple human production)"
+  },
+  {
+    "videoId": "jNQXAC9IVRw",
+    "label": "human",
+    "category": "vlog",
+    "note": "Me at the zoo – first YouTube video ever (raw, authentic)"
+  },
+  {
+    "videoId": "aircAruvnKk",
+    "label": "human",
+    "category": "news",
+    "note": "CNBC news report – live anchors, natural delivery"
+  },
+  {
+    "videoId": "5MgBikgcWnY",
+    "label": "human",
+    "category": "tutorial",
+    "note": "Tech tutorial – casual human walkthrough (ad-lib coding)"
+  },
+  {
+    "videoId": "kJQP7kiw5Fk",
+    "label": "human",
+    "category": "music_video",
+    "note": "Luis Fonsi – Despacito (music, human performance)"
+  },
+  {
+    "videoId": "JGwWNGJdvx8",
+    "label": "human",
+    "category": "music_video",
+    "note": "Ed Sheeran – Shape of You (music video)"
+  },
+
+  {
+    "videoId": "3OCNhNEJcZk",
+    "label": "ai",
+    "category": "infographics",
+    "note": "The Infographics Show – formulaic script, content-farm style"
+  },
+  {
+    "videoId": "3q9ozADRGuQ",
+    "label": "ai",
+    "category": "infographics",
+    "note": "The Infographics Show – listicle compilation"
+  },
+  {
+    "videoId": "Hk-U7KjJk8k",
+    "label": "ai",
+    "category": "self_help_listicle",
+    "note": "TopThink – 15 Habits of Highly Successful People (formulaic AI script)"
+  },
+  {
+    "videoId": "9_Kk3jL8zYk",
+    "label": "ai",
+    "category": "self_help_listicle",
+    "note": "TopThink – How to Stop Caring (robotic, templated script)"
+  },
+  {
+    "videoId": "G_s3x3G8t3k",
+    "label": "ai",
+    "category": "science_explainer",
+    "note": "Ridddle – dimensions explained (AI-assisted narrated explainer)"
+  },
+  {
+    "videoId": "eH6_W0Z4Z3I",
+    "label": "ai",
+    "category": "science_explainer",
+    "note": "Ridddle – space explainer (templated, formulaic)"
+  },
+  {
+    "videoId": "ojejxVBhVBg",
+    "label": "ai",
+    "category": "science_explainer",
+    "note": "Aperture – quantum theory clickbait explainer"
+  },
+  {
+    "videoId": "Xk4_mZ8vL3k",
+    "label": "ai",
+    "category": "science_explainer",
+    "note": "Aperture – dreams and consciousness (formulaic AI script)"
+  },
+  {
+    "videoId": "bv_sHTajKd0",
+    "label": "ai",
+    "category": "facts_listicle",
+    "note": "Bright Side / TheSoul Publishing – facts listicle (content farm)"
+  },
+  {
+    "videoId": "uD4izuDMUQA",
+    "label": "ai",
+    "category": "facts_listicle",
+    "note": "Bright Side – What If scenario (formulaic AI-style script)"
+  },
+  {
+    "videoId": "2OmABKFGjCE",
+    "label": "ai",
+    "category": "facts_listicle",
+    "note": "Bright Side – space/science listicle (generic, templated)"
+  },
+  {
+    "videoId": "r7l0Rq9E8MY",
+    "label": "ai",
+    "category": "motivation",
+    "note": "Motivation / self-improvement compilation (generic AI narration)"
+  },
+  {
+    "videoId": "x7X7fQgV7BY",
+    "label": "ai",
+    "category": "ai_story",
+    "note": "AI-narrated story / mystery channel (TTS voiceover, templated)"
+  },
+  {
+    "videoId": "Sddb0Khx0yA",
+    "label": "ai",
+    "category": "facts_listicle",
+    "note": "Facts / did-you-know channel (formulaic, robotic delivery)"
+  },
+  {
+    "videoId": "J---aiyznGQ",
+    "label": "ai",
+    "category": "compilation",
+    "note": "Generic compilation/listicle channel (minimal human input)"
+  },
+
+  {
+    "videoId": "ZbZSe6N_BXs",
+    "label": "mixed",
+    "category": "explainer",
+    "note": "CGP Grey – polished explainer (human-written but formulaic structure)"
+  },
+  {
+    "videoId": "rStL7niR7gs",
+    "label": "mixed",
+    "category": "documentary",
+    "note": "Kurzgesagt – heavily scripted, polished narration (human team, AI-like structure)"
+  },
+  {
+    "videoId": "YnQCOykbKSI",
+    "label": "mixed",
+    "category": "explainer",
+    "note": "Oversimplified – scripted explainer with personality (borderline)"
+  },
+  {
+    "videoId": "GDm_MfRzX3c",
+    "label": "mixed",
+    "category": "education",
+    "note": "Veritasium – polished science explainer (human research, tight script)"
+  },
+  {
+    "videoId": "wvYXoyaFGkY",
+    "label": "mixed",
+    "category": "education",
+    "note": "Economics Explained – highly structured narrated explainer"
+  }
+]
