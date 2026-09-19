@@ -383,17 +383,28 @@ async function fetchTranscriptFromTab(tabId, videoId) {
         // Helper: decode HTML / XML entities
         function decodeEntities(str) {
           if (!str) return '';
-          const txt = document.createElement('textarea');
-          txt.innerHTML = str;
-          return txt.value
-            .replace(/&amp;/g, '&')
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/&apos;/g, "'")
-            .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
-            .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));
+          try {
+            const doc = new DOMParser().parseFromString(str, 'text/html');
+            return (doc.body.textContent || '')
+              .replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/&apos;/g, "'")
+              .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+              .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));
+          } catch (_) {
+            return str
+              .replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/&apos;/g, "'")
+              .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+              .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));
+          }
         }
 
         // Stealth style injection so transcript panel is NEVER visible to user

@@ -719,34 +719,63 @@
       } catch (e) { }
     }
 
-    popover.innerHTML = `
-      <div class="sts-popover-header">
-        <div class="sts-popover-brand">
-          <span>Stop the Slop</span>
-        </div>
-        <span class="sts-popover-tag ${tagClass}">${verdictTag}</span>
-      </div>
+    const header = document.createElement('div');
+    header.className = 'sts-popover-header';
+    const brand = document.createElement('div');
+    brand.className = 'sts-popover-brand';
+    const brandTitle = document.createElement('span');
+    brandTitle.textContent = 'Stop the Slop';
+    brand.appendChild(brandTitle);
+    const tag = document.createElement('span');
+    tag.className = `sts-popover-tag ${tagClass}`;
+    tag.textContent = verdictTag;
+    header.appendChild(brand);
+    header.appendChild(tag);
 
-      <div class="sts-popover-body">
-        <div class="sts-popover-score-row">
-          <span class="sts-popover-score-number">${pct}%</span>
-          <div class="sts-popover-score-meta">
-            <div class="sts-popover-score-title">Script ${verdictTitle}</div>
-          </div>
-        </div>
+    const body = document.createElement('div');
+    body.className = 'sts-popover-body';
 
-        <div class="sts-popover-meter">
-          <div class="sts-popover-meter-fill ${meterClass}" style="width: ${Math.max(4, Math.min(100, pct))}%;"></div>
-        </div>
+    const scoreRow = document.createElement('div');
+    scoreRow.className = 'sts-popover-score-row';
+    const scoreNum = document.createElement('span');
+    scoreNum.className = 'sts-popover-score-number';
+    scoreNum.textContent = `${pct}%`;
+    const scoreMeta = document.createElement('div');
+    scoreMeta.className = 'sts-popover-score-meta';
+    const scoreTitle = document.createElement('div');
+    scoreTitle.className = 'sts-popover-score-title';
+    scoreTitle.textContent = `Script ${verdictTitle}`;
+    scoreMeta.appendChild(scoreTitle);
+    scoreRow.appendChild(scoreNum);
+    scoreRow.appendChild(scoreMeta);
 
-        <p class="sts-popover-info">${verdictDesc}</p>
-      </div>
+    const meter = document.createElement('div');
+    meter.className = 'sts-popover-meter';
+    const meterFill = document.createElement('div');
+    meterFill.className = `sts-popover-meter-fill ${meterClass}`;
+    meterFill.style.width = `${Math.max(4, Math.min(100, pct))}%`;
+    meter.appendChild(meterFill);
 
-      <div class="sts-popover-footer">
-        <span>Transcript analyzed</span>
-        <span>${analyzedDateText ? `Scanned ${analyzedDateText}` : 'Edge verified'}</span>
-      </div>
-    `;
+    const info = document.createElement('p');
+    info.className = 'sts-popover-info';
+    info.textContent = verdictDesc;
+
+    body.appendChild(scoreRow);
+    body.appendChild(meter);
+    body.appendChild(info);
+
+    const footer = document.createElement('div');
+    footer.className = 'sts-popover-footer';
+    const footerSpan1 = document.createElement('span');
+    footerSpan1.textContent = 'Transcript analyzed';
+    const footerSpan2 = document.createElement('span');
+    footerSpan2.textContent = analyzedDateText ? `Scanned ${analyzedDateText}` : 'Edge verified';
+    footer.appendChild(footerSpan1);
+    footer.appendChild(footerSpan2);
+
+    popover.appendChild(header);
+    popover.appendChild(body);
+    popover.appendChild(footer);
 
     wrapper.appendChild(popover);
 
