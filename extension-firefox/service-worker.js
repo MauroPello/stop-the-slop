@@ -38,6 +38,9 @@ async function handleVideoChange(videoId, tabId) {
     return;
   }
 
+  // Clear badge immediately for unanalyzed videos so previous video's score doesn't linger
+  await chrome.action.setBadgeText({ text: '', tabId });
+
   // 2. Check Cloudflare Worker edge cache
   try {
     const resp = await fetch(

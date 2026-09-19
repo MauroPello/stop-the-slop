@@ -835,6 +835,23 @@
     }
   }
 
+  function removeStalePlayerBadge(currentVideoId) {
+    if (!currentVideoId) {
+      removePlayerBadge();
+      return;
+    }
+    if (playerBadgeRetryTimer) {
+      clearTimeout(playerBadgeRetryTimer);
+      playerBadgeRetryTimer = null;
+    }
+    const existing = document.querySelectorAll('.sts-player-badge-wrapper');
+    for (const el of existing) {
+      if (el.dataset.stsVid !== currentVideoId) {
+        el.remove();
+      }
+    }
+  }
+
   // In-flight tracking to prevent duplicate concurrent checks & auto-analyses
   const inFlightChecks = new Set();
   const inFlightAutoAnalyses = new Set();
@@ -845,6 +862,9 @@
       return;
     }
 
+    // Immediately remove any badge belonging to a different video
+    removeStalePlayerBadge(videoId);
+
     // 1. Check in-memory videoCache
     if (videoCache.has(videoId)) {
       const entry = videoCache.get(videoId);
@@ -852,7 +872,9 @@
         renderPlayerBadge(videoId, entry.score, entry);
         return;
       } else if (entry.found === false && entry.noTranscript) {
-        removePlayerBadge();
+        if (getActiveVideoId() === videoId) {
+          removePlayerBadge();
+        }
         return;
       }
     }
@@ -880,7 +902,9 @@
           renderPlayerBadge(videoId, entry.score, entry);
           return;
         } else if (entry.found === false && entry.noTranscript) {
-          removePlayerBadge();
+          if (getActiveVideoId() === videoId) {
+            removePlayerBadge();
+          }
           return;
         }
       }
@@ -908,7 +932,9 @@
             renderPlayerBadge(videoId, entry.score, entry);
             return;
           } else if (entry.found === false && entry.noTranscript) {
-            removePlayerBadge();
+            if (getActiveVideoId() === videoId) {
+              removePlayerBadge();
+            }
             return;
           }
         }
@@ -967,7 +993,9 @@
       videoCache.get(videoId).found === false &&
       videoCache.get(videoId).noTranscript
     ) {
-      removePlayerBadge();
+      if (getActiveVideoId() === videoId) {
+        removePlayerBadge();
+      }
       return;
     }
 
@@ -990,7 +1018,9 @@
       const transcript = res?.transcript;
       if (!transcript || transcript.length < 50) {
         videoCache.set(videoId, { found: false, noTranscript: true });
-        removePlayerBadge();
+        if (getActiveVideoId() === videoId) {
+          removePlayerBadge();
+        }
         return;
       }
 
@@ -1033,14 +1063,18 @@
       if (!analyzeResp.ok) {
         stsWarn('Automatic analysis returned an error', { videoId, status: analyzeResp.status });
         videoCache.set(videoId, { found: false });
-        removePlayerBadge();
+        if (getActiveVideoId() === videoId) {
+          removePlayerBadge();
+        }
         return;
       }
 
       const data = await analyzeResp.json();
       if (!data || typeof data.score !== 'number') {
         videoCache.set(videoId, { found: false });
-        removePlayerBadge();
+        if (getActiveVideoId() === videoId) {
+          removePlayerBadge();
+        }
         return;
       }
 
@@ -1292,12 +1326,18 @@
 
       // Ensure active video player badge is present in right controls if analyzed
       const activeVid = getActiveVideoId();
-      if (activeVid && videoCache.has(activeVid)) {
-        const entry = videoCache.get(activeVid);
-        if (entry.found && typeof entry.score === 'number') {
-          const rightControls = getPlayerRightControls();
-          if (rightControls && !rightControls.querySelector('.sts-player-badge-wrapper')) {
-            renderPlayerBadge(activeVid, entry.score, entry);
+      if (activeVid) {
+        const rightControls = getPlayerRightControls();
+        if (rightControls) {
+          const existingBadge = rightControls.querySelector('.sts-player-badge-wrapper');
+          if (existingBadge && existingBadge.dataset.stsVid !== activeVid) {
+            existingBadge.remove();
+          }
+          if (videoCache.has(activeVid)) {
+            const entry = videoCache.get(activeVid);
+            if (entry.found && typeof entry.score === 'number' && !rightControls.querySelector('.sts-player-badge-wrapper')) {
+              renderPlayerBadge(activeVid, entry.score, entry);
+            }
           }
         }
       }
@@ -1371,6 +1411,9 @@
     if (videoId === lastActiveVideoId) return;
     lastActiveVideoId = videoId;
 
+    // Immediately remove any badge from the previous video
+    removeStalePlayerBadge(videoId);
+
     try {
       chrome.runtime.sendMessage({
         type: 'VIDEO_CHANGED',
@@ -1436,6 +1479,15 @@
       }, 120);
     }, { passive: true, capture: true });
 
+    // YouTube navigation starts: purge old badge immediately upon link click
+    document.addEventListener('yt-navigate-start', () => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
+      removePlayerBadge();
+    });
+
     // YouTube SPA navigation events
     document.addEventListener('yt-navigate-finish', () => {
       if (!isExtensionValid()) {
@@ -1457,8 +1509,25 @@
         return;
       }
       const videoId = getActiveVideoId();
-      if (videoId) checkAndRenderPlayerBadge(videoId);
+      if (videoId) {
+        handleActiveVideoChange(videoId);
+      } else {
+        removePlayerBadge();
+      }
       requestScan();
+    });
+
+    window.addEventListener('popstate', () => {
+      if (!isExtensionValid()) {
+        handleContextInvalidated();
+        return;
+      }
+      const videoId = getActiveVideoId();
+      if (videoId) {
+        handleActiveVideoChange(videoId);
+      } else {
+        removePlayerBadge();
+      }
     });
 
     // Initial page scan and player badge check

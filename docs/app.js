@@ -35,6 +35,15 @@ function initSimulator() {
   const scoreDisplay = document.getElementById('sim-score');
   const verdictBanner = document.getElementById('sim-verdict');
   const presetBtns = document.querySelectorAll('.preset-btn');
+  const previewCard = document.querySelector('.simulator-card') || document.getElementById('demo');
+
+  const PRESET_KEYS = ['ai', 'human', 'custom'];
+  let currentPresetIndex = 0;
+  const ROTATE_INTERVAL = 5000;
+  let autoTimer = null;
+  let isHovered = false;
+  let isFocused = false;
+  let touchResumeTimeout = null;
 
   function applyPreset(presetKey) {
     const data = SIM_PRESETS[presetKey] || SIM_PRESETS.ai;
@@ -57,18 +66,107 @@ function initSimulator() {
     }
   }
 
+  function selectPreset(presetKey) {
+    const idx = PRESET_KEYS.indexOf(presetKey);
+    if (idx !== -1) {
+      currentPresetIndex = idx;
+    }
+    presetBtns.forEach(b => {
+      const isCurrent = b.getAttribute('data-preset') === presetKey;
+      b.classList.toggle('active', isCurrent);
+    });
+    applyPreset(presetKey);
+  }
+
+  function startAutoSwitch() {
+    stopAutoSwitch();
+    autoTimer = setInterval(() => {
+      currentPresetIndex = (currentPresetIndex + 1) % PRESET_KEYS.length;
+      selectPreset(PRESET_KEYS[currentPresetIndex]);
+    }, ROTATE_INTERVAL);
+  }
+
+  function stopAutoSwitch() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function pauseInteraction() {
+    stopAutoSwitch();
+    if (touchResumeTimeout) {
+      clearTimeout(touchResumeTimeout);
+      touchResumeTimeout = null;
+    }
+  }
+
+  function resumeInteraction() {
+    if (!isHovered && !isFocused && !document.hidden) {
+      startAutoSwitch();
+    }
+  }
+
   presetBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      presetBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       const preset = btn.getAttribute('data-preset');
-      applyPreset(preset);
+      selectPreset(preset);
+      pauseInteraction();
+      if (!isHovered && !isFocused) {
+        touchResumeTimeout = setTimeout(() => {
+          resumeInteraction();
+        }, ROTATE_INTERVAL);
+      }
     });
   });
 
-  // Run initial AI preset on page load
+  if (previewCard) {
+    previewCard.addEventListener('mouseenter', () => {
+      isHovered = true;
+      pauseInteraction();
+    });
+
+    previewCard.addEventListener('mouseleave', () => {
+      isHovered = false;
+      resumeInteraction();
+    });
+
+    previewCard.addEventListener('focusin', () => {
+      isFocused = true;
+      pauseInteraction();
+    });
+
+    previewCard.addEventListener('focusout', (e) => {
+      if (!previewCard.contains(e.relatedTarget)) {
+        isFocused = false;
+        resumeInteraction();
+      }
+    });
+
+    previewCard.addEventListener('touchstart', () => {
+      pauseInteraction();
+    }, { passive: true });
+
+    previewCard.addEventListener('touchend', () => {
+      if (touchResumeTimeout) clearTimeout(touchResumeTimeout);
+      touchResumeTimeout = setTimeout(() => {
+        resumeInteraction();
+      }, ROTATE_INTERVAL);
+    }, { passive: true });
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoSwitch();
+    } else {
+      resumeInteraction();
+    }
+  });
+
+  // Run initial AI preset on page load and start timer
   setTimeout(() => {
     applyPreset('ai');
+    startAutoSwitch();
   }, 200);
 }
 
