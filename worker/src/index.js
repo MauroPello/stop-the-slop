@@ -37,12 +37,12 @@ export default {
       }
 
       if (url.pathname === '/api/check' && request.method === 'GET') {
-        // Rate limit cache checks (120 req / min per IP)
+        // Rate limit cache checks (300 req / min per IP)
         const rateLimitRes = await enforceRateLimit(
           env,
           request,
           'check',
-          120,
+          300,
           60,
           corsHeaders,
           'Too many video status checks. Please slow down.'
@@ -58,12 +58,12 @@ export default {
       }
 
       if (url.pathname === '/api/check-batch') {
-        // Rate limit batch checks (60 req / min per IP)
+        // Rate limit batch checks (240 req / min per IP)
         const rateLimitRes = await enforceRateLimit(
           env,
           request,
           'check_batch',
-          60,
+          240,
           60,
           corsHeaders,
           'Too many batch checks. Please wait a moment.'
@@ -108,28 +108,28 @@ export default {
           return json(cached, corsHeaders);
         }
 
-        // 2. Enforce strict rate limits on expensive AI detections
-        // - 10 analyses per minute per IP
+        // 2. Rate limits on AI detections
+        // - 30 analyses per minute per IP
         const minuteLimitRes = await enforceRateLimit(
           env,
           request,
           'analyze_min',
-          10,
+          30,
           60,
           corsHeaders,
-          'Rate limit exceeded (max 10 analyses/min). Please wait a moment before analyzing more videos.'
+          'Rate limit exceeded (max 30 analyses/min). Please wait a moment before analyzing more videos.'
         );
         if (minuteLimitRes) return minuteLimitRes;
 
-        // - 60 analyses per hour per IP
+        // - 300 analyses per hour per IP
         const hourLimitRes = await enforceRateLimit(
           env,
           request,
           'analyze_hr',
-          60,
+          300,
           3600,
           corsHeaders,
-          'Hourly rate limit exceeded (max 60 analyses/hr). Please try again later.'
+          'Hourly rate limit exceeded (max 300 analyses/hr). Please try again later.'
         );
         if (hourLimitRes) return hourLimitRes;
 
@@ -446,143 +446,96 @@ async function analyzeTranscript(videoId, transcript, env) {
 }
 
 /**
- * Call TypeSafe Jev model via Vercel AI Gateway (using VERCEL_AI_GATEWAY_KEY)
- * or fallback to Cloudflare Workers AI binding.
- * Uses native 'boolean'/'noul' and 'score' primitives to evaluate AI slop probability and confidence.
+ * Call TypeSafe Jev model directly via TypeSafe AI API (https://api.typesafe.ai/v1/systemone)
+ * Uses native 'choice' primitive to evaluate AI slop probability and confidence.
  */
 async function detectAIWithJev(text, env) {
   const promptState = text.slice(0, 15000);
-  const vercelKey = env.VERCEL_AI_GATEWAY_KEY;
+  const typesafeKey = env.TYPESAFE_API_KEY || env.TYPESAFE_AI_KEY || env.JEV_API_KEY;
 
-  if (vercelKey) {
-    let response;
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      response = await fetch('https://ai-gateway.vercel.sh/v4/ai/evaluation-model', {
-        method: 'POST',
-        headers: {
-          'ai-evaluation-model-specification-version': '4',
-          'ai-gateway-auth-method': 'api-key',
-          'ai-gateway-protocol-version': '0.0.1',
-          'ai-model-id': 'typesafe-ai/jev',
-          'Authorization': `Bearer ${vercelKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          state: promptState,
-          questions: {
-            is_ai: {
-              type: 'choice',
-              instructions: 'Is it AI-generated, yes or no?',
-              criteria: {
-                yes: 'Yes, it is AI-generated',
-                no: 'No, it is not AI-generated',
-              },
+  if (!typesafeKey) {
+    throw new Error('TYPESAFE_API_KEY is not configured for Jev.');
+  }
+
+  let response;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    response = await fetch('https://api.typesafe.ai/v1/systemone', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${typesafeKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'jev-latest',
+        state: promptState,
+        questions: {
+          is_ai: {
+            type: 'choice',
+            instructions: 'Is it AI-generated, yes or no?',
+            criteria: {
+              yes: 'Yes, it is AI-generated',
+              no: 'No, it is not AI-generated',
             },
           },
-          providerOptions: {},
-        }),
-      });
-
-      if (response.status === 429 && attempt === 1) {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        continue;
-      }
-      break;
-    }
-
-    if (!response.ok) {
-      const errText = await response.text().catch(() => '');
-      let msg = `Vercel AI Gateway Jev error (${response.status})`;
-      try {
-        const parsed = JSON.parse(errText);
-        if (parsed.error?.message) {
-          msg = parsed.error.message;
-        }
-      } catch {
-        if (errText) msg += `: ${errText.slice(0, 180)}`;
-      }
-      throw new Error(msg);
-    }
-
-    const data = await response.json();
-    const ans = data.answers?.is_ai;
-    const isYes = ans?.choice === 'yes';
-    const isNo = ans?.choice === 'no';
-    const rawConfidence = data.providerMetadata?.typesafe?.confidence?.is_ai ?? ans?.confidence;
-    const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
-
-    // Calibrated score: use probYes directly; fallback to confidence margin conversion if missing
-    let score = 0.5;
-    if (typeof probYes === 'number') {
-      score = probYes;
-    } else if (typeof rawConfidence === 'number') {
-      score = isYes ? 0.5 + (rawConfidence / 2) : 0.5 - (rawConfidence / 2);
-    } else if (isYes) {
-      score = 0.95;
-    } else if (isNo) {
-      score = 0.05;
-    }
-
-    return {
-      score: Math.max(0, Math.min(1, Math.round(score * 100) / 100)),
-      confidence: typeof rawConfidence === 'number' ? Math.round(rawConfidence * 100) / 100 : null,
-      choice: ans?.choice || (score >= 0.5 ? 'yes' : 'no'),
-      probabilities: ans?.probabilities,
-      model: 'typesafe-ai/jev (Vercel Gateway)',
-      answers: data.answers,
-      usage: data.usage,
-      cost: data.providerMetadata?.gateway?.cost,
-    };
-  }
-
-  // Fallback: Cloudflare Workers AI binding
-  if (env.AI) {
-    const response = await env.AI.run('typesafe/jev', {
-      state: promptState,
-      questions: {
-        is_ai: {
-          type: 'choice',
-          instructions: 'Is it AI-generated, yes or no?',
-          criteria: {
-            yes: 'Yes, it is AI-generated',
-            no: 'No, it is not AI-generated',
-          },
         },
-      },
+      }),
     });
 
-    const ans = response?.answers?.is_ai;
-    const isYes = ans?.choice === 'yes' || ans?.noul === 1;
-    const isNo = ans?.choice === 'no' || ans?.noul === 0;
-    const rawConfidence = ans?.confidence;
-    const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
-
-    // Calibrated score: use probYes directly; fallback to confidence margin conversion if missing
-    let score = 0.5;
-    if (typeof probYes === 'number') {
-      score = probYes;
-    } else if (typeof ans?.probability === 'number') {
-      score = ans.probability;
-    } else if (typeof rawConfidence === 'number') {
-      score = isYes ? 0.5 + (rawConfidence / 2) : 0.5 - (rawConfidence / 2);
-    } else if (isYes) {
-      score = 0.95;
-    } else if (isNo) {
-      score = 0.05;
+    if (response.status === 429 && attempt === 1) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      continue;
     }
-
-    return {
-      score: Math.max(0, Math.min(1, Math.round(score * 100) / 100)),
-      confidence: typeof rawConfidence === 'number' ? Math.round(rawConfidence * 100) / 100 : null,
-      choice: ans?.choice || (score >= 0.5 ? 'yes' : 'no'),
-      probabilities: ans?.probabilities,
-      model: response?.model || 'jev (Cloudflare)',
-      answers: response?.answers,
-      usage: response?.usage,
-    };
+    break;
   }
 
-  throw new Error('Neither VERCEL_AI_GATEWAY_KEY nor Cloudflare Workers AI is configured for Jev.');
+  if (!response.ok) {
+    const errText = await response.text().catch(() => '');
+    let msg = `TypeSafe Jev API error (${response.status})`;
+    try {
+      const parsed = JSON.parse(errText);
+      if (parsed.detail?.message) {
+        msg = parsed.detail.message;
+      } else if (typeof parsed.detail === 'string') {
+        msg = parsed.detail;
+      } else if (parsed.error?.message) {
+        msg = parsed.error.message;
+      } else if (parsed.message) {
+        msg = parsed.message;
+      }
+    } catch {
+      if (errText) msg += `: ${errText.slice(0, 180)}`;
+    }
+    throw new Error(msg);
+  }
+
+  const data = await response.json();
+  const ans = data.answers?.is_ai;
+  const isYes = ans?.choice === 'yes';
+  const isNo = ans?.choice === 'no';
+  const rawConfidence = ans?.confidence;
+  const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
+
+  // Calibrated score: use probYes directly; fallback to confidence margin conversion if missing
+  let score = 0.5;
+  if (typeof probYes === 'number') {
+    score = probYes;
+  } else if (typeof rawConfidence === 'number') {
+    score = isYes ? 0.5 + (rawConfidence / 2) : 0.5 - (rawConfidence / 2);
+  } else if (isYes) {
+    score = 0.95;
+  } else if (isNo) {
+    score = 0.05;
+  }
+
+  return {
+    score: Math.max(0, Math.min(1, Math.round(score * 100) / 100)),
+    confidence: typeof rawConfidence === 'number' ? Math.round(rawConfidence * 100) / 100 : null,
+    choice: ans?.choice || (score >= 0.5 ? 'yes' : 'no'),
+    probabilities: ans?.probabilities,
+    model: data.model ? `typesafe-ai/${data.model}` : 'typesafe-ai/jev',
+    answers: data.answers,
+    usage: data.usage,
+  };
 }
 
 

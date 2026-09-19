@@ -2,12 +2,12 @@
 /**
  * Jev Benchmark Runner
  *
- * Fetches YouTube transcripts and runs them through TypeSafe Jev (via Vercel AI Gateway)
+ * Fetches YouTube transcripts and runs them through TypeSafe Jev (via TypeSafe AI API)
  * to collect raw detection outputs for score calibration.
  *
  * Usage:
- *   VERCEL_AI_GATEWAY_KEY=sk-... node run.js          # Normal run (skips already-completed)
- *   VERCEL_AI_GATEWAY_KEY=sk-... node run.js --force   # Re-run everything
+ *   TYPESAFE_API_KEY=apikey_... node run.js          # Normal run (skips already-completed)
+ *   TYPESAFE_API_KEY=apikey_... node run.js --force   # Re-run everything
  *
  * Or use .env file in this directory (loaded manually below).
  *
@@ -24,7 +24,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // ── Config ──────────────────────────────────────────────────────────────────────
 const DATASET_PATH = resolve(__dirname, 'dataset.json');
 const RESULTS_PATH = resolve(__dirname, 'results.json');
-const DELAY_MS = 30_000; // 30s delay between API calls to stay within free-tier rate limits
+const DELAY_MS = 1_000; // 1s polite delay between API calls (TypeSafe has no tight free-tier rate limit)
 const TRANSCRIPT_MAX_CHARS = 15_000;
 const FORCE = process.argv.includes('--force');
 
@@ -51,9 +51,9 @@ function loadEnvFile() {
 }
 loadEnvFile();
 
-const VERCEL_KEY = process.env.VERCEL_AI_GATEWAY_KEY;
-if (!VERCEL_KEY) {
-  console.error('❌ VERCEL_AI_GATEWAY_KEY is required. Set it as env var or in benchmark/.env');
+const TYPESAFE_KEY = process.env.TYPESAFE_API_KEY || process.env.VERCEL_AI_GATEWAY_KEY;
+if (!TYPESAFE_KEY) {
+  console.error('❌ TYPESAFE_API_KEY is required. Set it as env var or in benchmark/.env');
   process.exit(1);
 }
 
@@ -142,24 +142,21 @@ async function fetchTranscript(videoId) {
   }
 }
 
-// ── Jev Detection (Direct Vercel AI Gateway) ────────────────────────────────────
+// ── Jev Detection (Direct TypeSafe AI API) ──────────────────────────────────
 
 async function callJev(text) {
   const promptState = text.slice(0, TRANSCRIPT_MAX_CHARS);
 
   let response;
   for (let attempt = 1; attempt <= 3; attempt++) {
-    response = await fetch('https://ai-gateway.vercel.sh/v4/ai/evaluation-model', {
+    response = await fetch('https://api.typesafe.ai/v1/systemone', {
       method: 'POST',
       headers: {
-        'ai-evaluation-model-specification-version': '4',
-        'ai-gateway-auth-method': 'api-key',
-        'ai-gateway-protocol-version': '0.0.1',
-        'ai-model-id': 'typesafe-ai/jev',
-        'Authorization': `Bearer ${VERCEL_KEY}`,
+        'Authorization': `Bearer ${TYPESAFE_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        model: 'jev-latest',
         state: promptState,
         questions: {
           is_ai: {
@@ -171,12 +168,11 @@ async function callJev(text) {
             },
           },
         },
-        providerOptions: {},
       }),
     });
 
     if (response.status === 429 && attempt < 3) {
-      const wait = attempt * 30_000;
+      const wait = attempt * 2000;
       console.log(`    ⏳ Rate limited, waiting ${wait / 1000}s...`);
       await new Promise((r) => setTimeout(r, wait));
       continue;
@@ -186,7 +182,20 @@ async function callJev(text) {
 
   if (!response.ok) {
     const errText = await response.text().catch(() => '');
-    throw new Error(`Jev API error (${response.status}): ${errText.slice(0, 300)}`);
+    let msg = `TypeSafe Jev API error (${response.status})`;
+    try {
+      const parsed = JSON.parse(errText);
+      if (parsed.detail?.message) {
+        msg = parsed.detail.message;
+      } else if (typeof parsed.detail === 'string') {
+        msg = parsed.detail;
+      } else if (parsed.error?.message) {
+        msg = parsed.error.message;
+      }
+    } catch {
+      if (errText) msg += `: ${errText.slice(0, 180)}`;
+    }
+    throw new Error(msg);
   }
 
   const data = await response.json();
@@ -197,18 +206,18 @@ async function callJev(text) {
     // The raw answer
     choice: ans?.choice || null,
     // Confidence in the answer (not the same as AI probability!)
-    confidence: data.providerMetadata?.typesafe?.confidence?.is_ai ?? ans?.confidence ?? null,
+    confidence: ans?.confidence ?? null,
     // Probabilities for each choice
     probabilities: ans?.probabilities || null,
     probYes: ans?.probabilities?.yes ?? null,
     probNo: ans?.probabilities?.no ?? null,
     // Other metadata
-    model: data.model || 'typesafe-ai/jev',
+    model: data.model ? `typesafe-ai/${data.model}` : 'typesafe-ai/jev',
     usage: data.usage || null,
-    cost: data.providerMetadata?.gateway?.cost ?? null,
+    cost: null,
     // The full raw response for later analysis
     rawAnswers: data.answers,
-    rawProviderMetadata: data.providerMetadata || null,
+    rawProviderMetadata: null,
   };
 }
 
