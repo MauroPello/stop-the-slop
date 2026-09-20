@@ -67,9 +67,10 @@ def sentence_chunks(text, tokenizer):
 def main():
     token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_HUB_TOKEN")
     load_kwargs = {"token": token} if token else {}
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, **load_kwargs)
-    model = AIDetectionModel.from_pretrained(MODEL_ID, **load_kwargs).eval()
-    print(json.dumps({"ready": True}), flush=True)
+    model = AIDetectionModel.from_pretrained(MODEL_ID, **load_kwargs).eval().to(device)
+    print(json.dumps({"ready": True, "device": str(device)}), flush=True)
 
     for line in sys.stdin:
         try:
@@ -77,17 +78,18 @@ def main():
             chunks = sentence_chunks(payload.get("text", ""), tokenizer)
             if not chunks:
                 raise ValueError("Text is empty after normalization")
-            weighted_probs = torch.zeros(len(LABELS))
+            weighted_probs = torch.zeros(len(LABELS), device=device)
             total_weight = 0
             with torch.inference_mode():
                 for chunk in chunks:
                     encoded = tokenizer(chunk, truncation=True, max_length=MAX_TOKENS, return_tensors="pt")
+                    encoded = {key: value.to(device) for key, value in encoded.items()}
                     probabilities = torch.softmax(model(**encoded), dim=-1)[0].cpu()
                     weight = int(encoded["attention_mask"].sum().item())
-                    weighted_probs += probabilities * weight
+                    weighted_probs += probabilities.to(device) * weight
                     total_weight += weight
             probabilities = weighted_probs / total_weight
-            class_probabilities = {label: float(probability) for label, probability in zip(LABELS, probabilities)}
+            class_probabilities = {label: float(probability) for label, probability in zip(LABELS, probabilities.cpu())}
             print(json.dumps({
                 "provider": "wasitaigenerated",
                 "model": MODEL_ID,
@@ -95,6 +97,7 @@ def main():
                 "classProbabilities": class_probabilities,
                 "chunkCount": len(chunks),
                 "decisionThreshold": 0.976,
+                "device": str(device),
             }), flush=True)
         except Exception as error:
             print(json.dumps({"error": str(error)}), flush=True)

@@ -47,6 +47,7 @@ const PROVIDER_DELAYS = {
   wasitaigenerated: 0,
   radar: 0,
 };
+const PROVIDER_CONCURRENCY = 2;
 
 const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', wasitaigenerated: '🌱', radar: '📡' };
 
@@ -171,7 +172,7 @@ function getTranscript(videoId) {
   }
 
   // Fetch and cache the promise
-  const promise = fetchTranscript(videoId).then((t) => {
+  const promise = fetchTranscriptWithRetry(videoId).then((t) => {
     // Store in results for future reuse
     if (!results[videoId]) results[videoId] = {};
     results[videoId].transcript = {
@@ -193,15 +194,31 @@ function getTranscript(videoId) {
   return promise;
 }
 
+async function fetchTranscriptWithRetry(videoId) {
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      return await fetchTranscript(videoId);
+    } catch (error) {
+      lastError = error;
+      if (!/\b429\b|too many requests/i.test(error.message) || attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, attempt * 5_000));
+    }
+  }
+  throw lastError;
+}
+
 // ── YouTube Transcript Fetcher (via yt-dlp) ─────────────────────────────────────
 
-// Semaphore to prevent concurrent yt-dlp calls (they share cookies/browser state)
-let ytdlpBusy = false;
+// Keep subtitle retrieval bounded while allowing enough parallelism to avoid a
+// single-file bottleneck. HTTP 429 responses are retried by the wrapper above.
+const YTDLP_CONCURRENCY = 3;
+let ytdlpActive = 0;
 const ytdlpQueue = [];
 
 async function acquireYtdlp() {
-  if (!ytdlpBusy) {
-    ytdlpBusy = true;
+  if (ytdlpActive < YTDLP_CONCURRENCY) {
+    ytdlpActive++;
     return;
   }
   return new Promise((resolve) => ytdlpQueue.push(resolve));
@@ -212,7 +229,7 @@ function releaseYtdlp() {
     const next = ytdlpQueue.shift();
     next();
   } else {
-    ytdlpBusy = false;
+    ytdlpActive--;
   }
 }
 
@@ -624,7 +641,10 @@ async function runProviderQueue(providerName, dataset, forceProvider) {
 
   console.log(`\n${emoji} [${providerName}] Starting queue (${dataset.length} videos, ${delay}ms delay)\n`);
 
-  for (let i = 0; i < dataset.length; i++) {
+  let next = 0;
+  async function worker() {
+    while (next < dataset.length) {
+      const i = next++;
     const entry = dataset[i];
     const { videoId, label, category, note } = entry;
     const idx = `[${i + 1}/${dataset.length}]`;
@@ -643,7 +663,12 @@ async function runProviderQueue(providerName, dataset, forceProvider) {
       Object.assign(results[videoId], entry);
     }
 
-    // Check if transcript previously failed
+    // Retry transient YouTube throttling instead of preserving it as a
+    // permanent no-transcript result.
+    if (/\b429\b|too many requests/i.test(results[videoId]?.transcriptError || '')) {
+      delete results[videoId].transcriptError;
+    }
+    // Check if transcript previously failed permanently.
     if (results[videoId]?.transcriptError) {
       stats.noTranscript++;
       continue;
@@ -681,7 +706,9 @@ async function runProviderQueue(providerName, dataset, forceProvider) {
     if (i < dataset.length - 1) {
       await new Promise((r) => setTimeout(r, delay));
     }
+    }
   }
+  await Promise.all(Array.from({ length: PROVIDER_CONCURRENCY }, worker));
 
   console.log(`\n${emoji} [${providerName}] DONE — ${stats.success} success, ${stats.skipped} skipped, ${stats.noTranscript} no transcript, ${stats.error} errors`);
   return stats;

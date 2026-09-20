@@ -34,7 +34,7 @@ package-lock.json
 *.pem
 
 # Benchmark outputs (keep dataset.json and scripts tracked)
-benchmark/results.json
+# benchmark/results.json
 benchmark/.env
 benchmark/.venv/
 benchmark/__pycache__/
