@@ -1,0 +1,69 @@
+<section id="benchmark-figures" aria-label="Benchmark decision figure">
+  <style>
+    #benchmark-figures { --foreground:light-dark(#0f172a,#f8fafc); --muted:light-dark(#475569,#cbd5e1); --border:light-dark(#d8e1ee,#475569); --surface:#f8fafc; --viz-series-1:#2563eb; --viz-series-2:#f97316; --good:#15803d; color:var(--foreground); font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif; max-width:980px; margin:0 auto; }
+    #benchmark-figures .eyebrow { color:var(--viz-series-1); font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin:0 0 8px; }
+    #benchmark-figures h2 { font-size:clamp(26px,4vw,40px); line-height:1.05; letter-spacing:-.035em; margin:0; max-width:760px; }
+    #benchmark-figures .lede { font-size:17px; line-height:1.45; color:var(--muted); margin:14px 0 28px; max-width:760px; }
+    #benchmark-figures .lede strong { color:var(--foreground); }
+    #benchmark-figures .hero { display:grid; grid-template-columns:1.2fr .8fr; border:1px solid var(--border); background:var(--surface); margin:0 0 28px; }
+    #benchmark-figures .hero-main,#benchmark-figures .hero-side { color:#0f172a; padding:27px 28px 25px; }
+    #benchmark-figures .hero-side { border-left:1px solid var(--border); }
+    #benchmark-figures .hero-label { color:#475569; font-size:13px; font-weight:700; margin:0 0 7px; }
+    #benchmark-figures .hero-number { color:var(--viz-series-1); font-size:clamp(48px,8vw,74px); font-weight:850; letter-spacing:-.06em; line-height:.92; }
+    #benchmark-figures .hero-text { font-size:16px; line-height:1.35; margin:10px 0 0; max-width:410px; }
+    #benchmark-figures .hero-side strong { display:block; color:var(--good); font-size:18px; margin-bottom:7px; }
+    #benchmark-figures .hero-side p { color:#475569; font-size:14px; line-height:1.45; margin:0; }
+    #benchmark-figures .hero-main .hero-label { color:#475569 !important; }
+    #benchmark-figures .hero-main .hero-number { color:#2563eb !important; }
+    #benchmark-figures .hero-main .hero-text { color:#0f172a !important; }
+    #benchmark-figures .hero-side strong { color:#15803d !important; }
+    #benchmark-figures figure { margin:0; }
+    #benchmark-figures figcaption { font-size:18px; font-weight:800; margin-bottom:4px; }
+    #benchmark-figures .caption { color:var(--muted); font-size:14px; margin:0 0 17px; }
+    #benchmark-figures svg { display:block; width:100%; height:auto; overflow:visible; }
+    #benchmark-figures .axis { font-size:13px; fill:var(--muted); font-weight:800; letter-spacing:.08em; }
+    #benchmark-figures .value { font-size:17px; fill:white; font-weight:800; }
+    #benchmark-figures .row-label { font-size:16px; fill:var(--foreground); font-weight:750; }
+    #benchmark-figures .note { font-size:13px; fill:var(--muted); }
+    #benchmark-figures .bottom { margin-top:26px; padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    #benchmark-figures .bottom h3 { margin:0 0 5px; font-size:15px; }
+    #benchmark-figures .bottom p { margin:0; color:var(--muted); line-height:1.45; font-size:14px; }
+    @media (max-width:640px) { #benchmark-figures .hero,#benchmark-figures .bottom { grid-template-columns:1fr; } #benchmark-figures .hero-side { border-left:0; border-top:1px solid var(--border); } }
+  </style>
+
+  <h2>Jev is the clear choice for the score behind your badge.</h2>
+  <p class="lede">Across <strong>250 human</strong> and <strong>250 explicitly AI-generated</strong> videos, Jev separates the two groups more reliably than Gemini—and catches substantially more AI content without becoming overly noisy.</p>
+
+  <!-- <div class="hero">
+    <div class="hero-main">
+      <p class="hero-label">Jev’s best raw-score result</p>
+      <div class="hero-number">89%</div>
+      <p class="hero-text">F1 score at an 85% AI threshold—the strongest single-detector result in the benchmark.</p>
+    </div>
+    <div class="hero-side">
+      <strong>Use Jev’s raw %.</strong>
+      <p>For a high-confidence AI badge, start at <b>80–85%</b>. Lower it toward 60–70% only when catching more borderline cases matters more than avoiding false alerts.</p>
+    </div>
+  </div> -->
+
+  <figure>
+    <svg viewBox="0 0 940 365" role="img" aria-label="Comparison showing Jev ahead of Gemini on ranking quality, balanced accuracy, and recall">
+      <text x="260" y="28" class="axis">JEV</text><text x="610" y="28" class="axis">GEMINI</text>
+      <line x1="230" y1="42" x2="230" y2="333" stroke="var(--border)" /><line x1="580" y1="42" x2="580" y2="333" stroke="var(--border)" />
+      <text x="0" y="83" class="row-label">Ranks AI above human</text><text x="0" y="104" class="note">Raw-score separation (ROC-AUC)</text>
+      <rect x="230" y="60" width="330" height="32" fill="#e7edf6" /><rect x="230" y="60" width="315" height="32" fill="var(--viz-series-1)" /><text x="540" y="83" text-anchor="end" class="value">95.5%</text>
+      <rect x="580" y="60" width="330" height="32" fill="#e7edf6" /><rect x="580" y="60" width="280" height="32" fill="var(--viz-series-2)" /><text x="855" y="83" text-anchor="end" class="value">84.9%</text>
+      <text x="0" y="181" class="row-label">Balanced decision quality</text><text x="0" y="202" class="note">Best F1 score</text>
+      <rect x="230" y="158" width="330" height="32" fill="#e7edf6" /><rect x="230" y="158" width="294" height="32" fill="var(--viz-series-1)" /><text x="517" y="181" text-anchor="end" class="value">89%</text>
+      <rect x="580" y="158" width="330" height="32" fill="#e7edf6" /><rect x="580" y="158" width="244" height="32" fill="var(--viz-series-2)" /><text x="817" y="181" text-anchor="end" class="value">74%</text>
+      <text x="0" y="279" class="row-label">AI videos correctly caught</text><text x="0" y="300" class="note">Recall at the best-F1 threshold</text>
+      <rect x="230" y="256" width="330" height="32" fill="#e7edf6" /><rect x="230" y="256" width="274" height="32" fill="var(--viz-series-1)" /><text x="500" y="279" text-anchor="end" class="value">83%</text>
+      <rect x="580" y="256" width="330" height="32" fill="#e7edf6" /><rect x="580" y="256" width="195" height="32" fill="var(--viz-series-2)" /><text x="770" y="279" text-anchor="end" class="value">59%</text>
+    </svg>
+  </figure>
+
+  <div class="bottom">
+    <div><h3>Why not Gemini?</h3><p>Gemini is exceptionally cautious: it produced no false positives at its best threshold, but missed 41% of known AI examples.</p></div>
+    <div><h3>What this confirms</h3><p>Your current approach—showing a continuous raw AI score rather than a hard claim—fits the evidence.</p></div>
+  </div>
+</section>

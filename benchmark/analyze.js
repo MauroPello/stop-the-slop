@@ -1,9 +1,15 @@
 #!/usr/bin/env node
 /**
- * Jev Benchmark Analyzer
+ * Multi-Provider Benchmark Analyzer
  *
- * Reads results.json and produces distribution analysis to help decide
- * how to map Jev's raw output into a meaningful AI probability score.
+ * Reads results.json (with jev, gemini, sapling per video) and produces:
+ *   1. Per-provider distribution stats
+ *   2. Head-to-head comparison table
+ *   3. Per-provider confusion matrices at multiple thresholds
+ *   4. Provider agreement analysis
+ *   5. Consensus (ensemble) scoring
+ *   6. Per-category breakdown
+ *   7. Recommendations
  *
  * Usage:
  *   node analyze.js
@@ -15,6 +21,10 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RESULTS_PATH = resolve(__dirname, 'results.json');
+const DATASET_PATH = resolve(__dirname, 'dataset.json');
+
+const PROVIDER_NAMES = ['jev', 'gemini', 'sapling'];
+const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', sapling: '🌿' };
 
 // ── Stats helpers ───────────────────────────────────────────────────────────────
 
@@ -36,30 +46,43 @@ function stddev(arr) {
   return Math.sqrt(arr.reduce((s, v) => s + (v - m) ** 2, 0) / (arr.length - 1));
 }
 
-function min(arr) {
-  return arr.length ? Math.min(...arr) : null;
-}
-function max(arr) {
-  return arr.length ? Math.max(...arr) : null;
+function min(arr) { return arr.length ? Math.min(...arr) : null; }
+function max(arr) { return arr.length ? Math.max(...arr) : null; }
+function fmt(v, decimals = 3) { return v === null || v === undefined ? '—' : v.toFixed(decimals); }
+function pct(v) { return v === null || v === undefined ? '—' : `${Math.round(v * 100)}%`; }
+
+// ── Score extraction ────────────────────────────────────────────────────────────
+
+function getProviderScore(entry, provider) {
+  const data = entry[provider];
+  if (!data) return null;
+  if (typeof data.score === 'number') return data.score;
+  // Jev fallback: compute from probYes/confidence
+  if (provider === 'jev') {
+    if (typeof data.probYes === 'number') return data.probYes;
+    if (typeof data.confidence === 'number') {
+      return data.choice === 'yes' ? 0.5 + (data.confidence / 2) : 0.5 - (data.confidence / 2);
+    }
+    return data.choice === 'yes' ? 0.95 : data.choice === 'no' ? 0.05 : null;
+  }
+  return null;
 }
 
-function fmt(v, decimals = 3) {
-  if (v === null || v === undefined) return '—';
-  return v.toFixed(decimals);
-}
+// ── Consensus score (median of available providers) ─────────────────────────────
 
-function pct(v) {
-  if (v === null || v === undefined) return '—';
-  return `${Math.round(v * 100)}%`;
+function consensusScore(entry) {
+  const scores = PROVIDER_NAMES.map((p) => getProviderScore(entry, p)).filter((v) => typeof v === 'number');
+  if (scores.length === 0) return null;
+  return median(scores);
 }
 
 // ── Confusion Matrix ────────────────────────────────────────────────────────────
 
-function confusionAtThreshold(entries, threshold, scoreField) {
+function confusionAtThreshold(entries, threshold, scoreFn) {
   let tp = 0, fp = 0, tn = 0, fn = 0;
 
   for (const e of entries) {
-    const score = e[scoreField];
+    const score = scoreFn(e);
     if (score === null || score === undefined) continue;
 
     const predicted = score >= threshold ? 'ai' : 'human';
@@ -69,32 +92,44 @@ function confusionAtThreshold(entries, threshold, scoreField) {
     else if (actual === 'ai' && predicted === 'human') fn++;
     else if (actual === 'human' && predicted === 'ai') fp++;
     else if (actual === 'human' && predicted === 'human') tn++;
-    // Skip 'mixed' for confusion matrix
   }
 
-  const accuracy = (tp + tn) / (tp + tn + fp + fn) || 0;
-  const precision = tp / (tp + fp) || 0;
-  const recall = tp / (tp + fn) || 0;
+  const total = tp + tn + fp + fn;
+  const accuracy = total > 0 ? (tp + tn) / total : 0;
+  const precision = (tp + fp) > 0 ? tp / (tp + fp) : 0;
+  const recall = (tp + fn) > 0 ? tp / (tp + fn) : 0;
   const f1 = precision + recall > 0 ? (2 * precision * recall) / (precision + recall) : 0;
 
-  return { threshold, tp, fp, tn, fn, accuracy, precision, recall, f1 };
+  return { threshold, tp, fp, tn, fn, accuracy, precision, recall, f1, total };
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────────
 
 async function main() {
   const raw = JSON.parse(await readFile(RESULTS_PATH, 'utf-8'));
-  const allEntries = Object.values(raw).filter((e) => e.jev && !e.error);
+  const dataset = JSON.parse(await readFile(DATASET_PATH, 'utf-8'));
+  // results.json is intentionally resumable and can retain rows from older
+  // corpora.  Analyze only today's dataset and use its current ground-truth
+  // metadata rather than a stale label cached alongside a previous run.
+  const allEntries = dataset
+    .map((source) => raw[source.videoId] ? { ...raw[source.videoId], ...source } : null)
+    .filter((e) => e && !e.error && e.label);
 
   if (allEntries.length === 0) {
-    console.error('❌ No successful results found in results.json. Run benchmark first.');
+    console.error('❌ No results found. Run the benchmark first.');
     process.exit(1);
   }
 
-  console.log('═'.repeat(70));
-  console.log('  JEV BENCHMARK ANALYSIS');
-  console.log('═'.repeat(70));
-  console.log(`\n  Total entries with Jev results: ${allEntries.length}`);
+  // Detect which providers have data
+  const providersWithData = PROVIDER_NAMES.filter((p) =>
+    allEntries.some((e) => e[p] && typeof getProviderScore(e, p) === 'number')
+  );
+
+  console.log('═'.repeat(80));
+  console.log('  MULTI-PROVIDER AI DETECTION BENCHMARK ANALYSIS');
+  console.log('═'.repeat(80));
+  console.log(`\n  Total entries: ${allEntries.length}`);
+  console.log(`  Providers with data: ${providersWithData.map((p) => `${PROVIDER_EMOJI[p]} ${p}`).join('  |  ')}`);
 
   // Group by label
   const groups = { human: [], ai: [], mixed: [] };
@@ -103,200 +138,311 @@ async function main() {
     if (!groups[label]) groups[label] = [];
     groups[label].push(e);
   }
-
   console.log(`  Human: ${groups.human.length} | AI: ${groups.ai.length} | Mixed: ${groups.mixed.length}\n`);
 
-  // ── Section 1: Raw Jev Output Distribution ──────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 1: Per-Provider Distribution Stats
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  console.log('─'.repeat(70));
-  console.log('  1. RAW JEV OUTPUT DISTRIBUTION');
-  console.log('─'.repeat(70));
+  console.log('─'.repeat(80));
+  console.log('  1. PER-PROVIDER SCORE DISTRIBUTION');
+  console.log('─'.repeat(80));
 
-  for (const [label, entries] of Object.entries(groups)) {
-    if (entries.length === 0) continue;
+  for (const provider of providersWithData) {
+    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${provider.toUpperCase()}`);
 
-    const choices = entries.map((e) => e.jev.choice);
-    const yesCount = choices.filter((c) => c === 'yes').length;
-    const noCount = choices.filter((c) => c === 'no').length;
-
-    const confidences = entries.map((e) => e.jev.confidence).filter((v) => typeof v === 'number');
-    const probYeses = entries.map((e) => e.jev.probYes).filter((v) => typeof v === 'number');
-    const currentScores = entries.map((e) => e.currentMappedScore).filter((v) => typeof v === 'number');
-
-    console.log(`\n  ▸ ${label.toUpperCase()} videos (n=${entries.length}):`);
-    console.log(`    Choice distribution:  yes=${yesCount}  no=${noCount}`);
-
-    if (confidences.length > 0) {
-      console.log(`    confidence:  min=${fmt(min(confidences))}  max=${fmt(max(confidences))}  mean=${fmt(mean(confidences))}  median=${fmt(median(confidences))}  stddev=${fmt(stddev(confidences))}`);
-    } else {
-      console.log(`    confidence:  (no data)`);
+    for (const [label, entries] of Object.entries(groups)) {
+      if (entries.length === 0) continue;
+      const scores = entries.map((e) => getProviderScore(e, provider)).filter((v) => typeof v === 'number');
+      if (scores.length === 0) {
+        console.log(`    ${label.padEnd(6)}: (no data)`);
+        continue;
+      }
+      console.log(
+        `    ${label.padEnd(6)} (n=${String(scores.length).padEnd(3)}): ` +
+        `min=${fmt(min(scores))}  max=${fmt(max(scores))}  mean=${fmt(mean(scores))}  median=${fmt(median(scores))}  stddev=${fmt(stddev(scores))}`
+      );
     }
-
-    if (probYeses.length > 0) {
-      console.log(`    probYes:     min=${fmt(min(probYeses))}  max=${fmt(max(probYeses))}  mean=${fmt(mean(probYeses))}  median=${fmt(median(probYeses))}  stddev=${fmt(stddev(probYeses))}`);
-    } else {
-      console.log(`    probYes:     (no data)`);
-    }
-
-    console.log(`    currentScore: min=${fmt(min(currentScores))}  max=${fmt(max(currentScores))}  mean=${fmt(mean(currentScores))}  median=${fmt(median(currentScores))}  stddev=${fmt(stddev(currentScores))}`);
   }
 
-  // ── Section 2: Per-Video Detail ─────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 2: Head-to-Head Comparison Table
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  console.log('\n' + '─'.repeat(70));
-  console.log('  2. PER-VIDEO DETAIL');
-  console.log('─'.repeat(70));
+  console.log('\n' + '─'.repeat(80));
+  console.log('  2. HEAD-TO-HEAD PER-VIDEO COMPARISON');
+  console.log('─'.repeat(80));
 
-  const colW = { vid: 13, label: 7, choice: 8, conf: 8, probY: 8, score: 8, note: 40 };
+  // Build header
+  const providerCols = providersWithData.map((p) => p.padEnd(8)).join(' ');
+  console.log(`\n  ${'VideoId'.padEnd(13)} ${'Label'.padEnd(7)} ${providerCols} ${'Consns'.padEnd(8)} Note`);
+  console.log(`  ${'─'.repeat(13)} ${'─'.repeat(7)} ${providersWithData.map(() => '─'.repeat(8)).join(' ')} ${'─'.repeat(8)} ${'─'.repeat(35)}`);
 
-  console.log(
-    `\n  ${'VideoId'.padEnd(colW.vid)} ${'Label'.padEnd(colW.label)} ${'Choice'.padEnd(colW.choice)} ${'Conf'.padEnd(colW.conf)} ${'ProbYes'.padEnd(colW.probY)} ${'Score'.padEnd(colW.score)} Note`
-  );
-  console.log(`  ${'─'.repeat(colW.vid)} ${'─'.repeat(colW.label)} ${'─'.repeat(colW.choice)} ${'─'.repeat(colW.conf)} ${'─'.repeat(colW.probY)} ${'─'.repeat(colW.score)} ${'─'.repeat(colW.note)}`);
-
-  // Sort: AI first, then mixed, then human; within each group sort by currentMappedScore desc
+  // Sort: AI first, then mixed, then human
   const labelOrder = { ai: 0, mixed: 1, human: 2 };
   const sorted = [...allEntries].sort((a, b) => {
     const lo = (labelOrder[a.label] ?? 9) - (labelOrder[b.label] ?? 9);
     if (lo !== 0) return lo;
-    return (b.currentMappedScore ?? 0) - (a.currentMappedScore ?? 0);
+    const cs = (consensusScore(b) ?? 0) - (consensusScore(a) ?? 0);
+    return cs;
   });
 
   for (const e of sorted) {
-    const flag =
-      (e.label === 'human' && e.currentMappedScore >= 0.5) ? '⚠️ FP' :
-      (e.label === 'ai' && e.currentMappedScore < 0.5) ? '⚠️ FN' : '';
+    const scores = providersWithData.map((p) => {
+      const s = getProviderScore(e, p);
+      return s !== null ? pct(s).padEnd(8) : '—'.padEnd(8);
+    }).join(' ');
 
-    const noteTrunc = (e.note || '').slice(0, colW.note);
-    console.log(
-      `  ${e.videoId.padEnd(colW.vid)} ${e.label.padEnd(colW.label)} ${(e.jev.choice || '?').padEnd(colW.choice)} ${fmt(e.jev.confidence).padEnd(colW.conf)} ${fmt(e.jev.probYes).padEnd(colW.probY)} ${pct(e.currentMappedScore).padEnd(colW.score)} ${noteTrunc} ${flag}`
-    );
+    const cs = consensusScore(e);
+    const csStr = cs !== null ? pct(cs).padEnd(8) : '—'.padEnd(8);
+
+    // Flag disagreements
+    const provScores = providersWithData.map((p) => getProviderScore(e, p)).filter((v) => v !== null);
+    const allAgree = provScores.length > 1 &&
+      provScores.every((s) => (s >= 0.5) === (provScores[0] >= 0.5));
+    const flag = provScores.length > 1 && !allAgree ? '⚡' : '';
+
+    const noteTrunc = (e.note || '').slice(0, 35);
+    console.log(`  ${e.videoId.padEnd(13)} ${e.label.padEnd(7)} ${scores} ${csStr} ${noteTrunc} ${flag}`);
   }
 
-  // ── Section 3: Confusion Matrix at Various Thresholds ───────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 3: Per-Provider Confusion Matrices
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  console.log('\n' + '─'.repeat(70));
-  console.log('  3. CONFUSION MATRIX (current score mapping, excludes "mixed")');
-  console.log('─'.repeat(70));
+  console.log('\n' + '─'.repeat(80));
+  console.log('  3. PER-PROVIDER CONFUSION MATRICES (excludes "mixed")');
+  console.log('─'.repeat(80));
 
-  const binaryEntries = allEntries
-    .filter((e) => e.label === 'human' || e.label === 'ai')
-    .map((e) => ({ label: e.label, currentMappedScore: e.currentMappedScore }));
-
+  const binaryEntries = allEntries.filter((e) => e.label === 'human' || e.label === 'ai');
   const thresholds = [0.2, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.8];
 
-  console.log(`\n  ${'Thresh'.padEnd(8)} ${'TP'.padEnd(5)} ${'FP'.padEnd(5)} ${'TN'.padEnd(5)} ${'FN'.padEnd(5)} ${'Acc'.padEnd(8)} ${'Prec'.padEnd(8)} ${'Recall'.padEnd(8)} ${'F1'.padEnd(8)}`);
-  console.log(`  ${'─'.repeat(8)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)}`);
+  for (const provider of providersWithData) {
+    const dataCount = binaryEntries.filter((e) => typeof getProviderScore(e, provider) === 'number').length;
+    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${provider.toUpperCase()} (${dataCount} entries with scores)`);
 
-  for (const t of thresholds) {
-    const cm = confusionAtThreshold(binaryEntries, t, 'currentMappedScore');
-    console.log(
-      `  ${t.toFixed(2).padEnd(8)} ${String(cm.tp).padEnd(5)} ${String(cm.fp).padEnd(5)} ${String(cm.tn).padEnd(5)} ${String(cm.fn).padEnd(5)} ${pct(cm.accuracy).padEnd(8)} ${pct(cm.precision).padEnd(8)} ${pct(cm.recall).padEnd(8)} ${pct(cm.f1).padEnd(8)}`
-    );
-  }
-
-  // ── Section 4: Alternative Score Mappings ──────────────────────────────────
-
-  console.log('\n' + '─'.repeat(70));
-  console.log('  4. ALTERNATIVE SCORE MAPPINGS');
-  console.log('─'.repeat(70));
-
-  // Mapping A: probYes directly (if available)
-  // Mapping B: confidence as-is (don't flip for "no")
-  // Mapping C: confidence flipped for "no" (current)
-  // Mapping D: probYes with fallback to flipped confidence
-
-  const mappings = {
-    'A: probYes raw': (e) => e.jev.probYes,
-    'B: confidence raw': (e) => e.jev.confidence,
-    'C: current (flip for no)': (e) => e.currentMappedScore,
-    'D: probYes ?? flip conf': (e) => {
-      if (typeof e.jev.probYes === 'number') return e.jev.probYes;
-      if (typeof e.jev.confidence === 'number') {
-        return e.jev.choice === 'no'
-          ? Math.max(0, 1 - e.jev.confidence)
-          : e.jev.confidence;
-      }
-      return e.jev.choice === 'yes' ? 0.95 : 0.05;
-    },
-  };
-
-  for (const [name, mapFn] of Object.entries(mappings)) {
-    console.log(`\n  ▸ Mapping "${name}":`);
-
-    const mapped = binaryEntries.map((e) => {
-      const fullEntry = allEntries.find((a) => a.videoId === e.label); // won't work, need original
-      return e;
-    });
-
-    // We need the full entries for alternative mappings
-    const fullBinary = allEntries.filter((e) => e.label === 'human' || e.label === 'ai');
-
-    const aiScores = fullBinary.filter((e) => e.label === 'ai').map(mapFn).filter((v) => typeof v === 'number');
-    const humanScores = fullBinary.filter((e) => e.label === 'human').map(mapFn).filter((v) => typeof v === 'number');
-
-    if (aiScores.length === 0 && humanScores.length === 0) {
-      console.log(`    (no data for this mapping)`);
+    if (dataCount === 0) {
+      console.log('    (no data)');
       continue;
     }
 
-    console.log(`    AI scores:    min=${fmt(min(aiScores))}  max=${fmt(max(aiScores))}  mean=${fmt(mean(aiScores))}  median=${fmt(median(aiScores))}`);
-    console.log(`    Human scores: min=${fmt(min(humanScores))}  max=${fmt(max(humanScores))}  mean=${fmt(mean(humanScores))}  median=${fmt(median(humanScores))}`);
+    console.log(`  ${'Thresh'.padEnd(8)} ${'TP'.padEnd(5)} ${'FP'.padEnd(5)} ${'TN'.padEnd(5)} ${'FN'.padEnd(5)} ${'Acc'.padEnd(8)} ${'Prec'.padEnd(8)} ${'Recall'.padEnd(8)} ${'F1'.padEnd(8)}`);
+    console.log(`  ${'─'.repeat(8)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)}`);
 
-    // Separation gap
-    const aiMin = min(aiScores);
-    const humanMax = max(humanScores);
-    if (aiMin !== null && humanMax !== null) {
-      const gap = aiMin - humanMax;
-      if (gap > 0) {
-        console.log(`    ✅ Clean separation! Gap: ${fmt(gap)} (AI min ${fmt(aiMin)} > Human max ${fmt(humanMax)})`);
+    let bestF1 = 0, bestThresh = 0.5;
+    for (const t of thresholds) {
+      const cm = confusionAtThreshold(binaryEntries, t, (e) => getProviderScore(e, provider));
+      if (cm.f1 > bestF1) { bestF1 = cm.f1; bestThresh = t; }
+      console.log(
+        `  ${t.toFixed(2).padEnd(8)} ${String(cm.tp).padEnd(5)} ${String(cm.fp).padEnd(5)} ${String(cm.tn).padEnd(5)} ${String(cm.fn).padEnd(5)} ${pct(cm.accuracy).padEnd(8)} ${pct(cm.precision).padEnd(8)} ${pct(cm.recall).padEnd(8)} ${pct(cm.f1).padEnd(8)}`
+      );
+    }
+    console.log(`  ★ Best F1: ${pct(bestF1)} at threshold ${bestThresh.toFixed(2)}`);
+  }
+
+  // Consensus confusion matrix
+  console.log(`\n  🏆 CONSENSUS (median of available providers)`);
+  const consensusDataCount = binaryEntries.filter((e) => consensusScore(e) !== null).length;
+  if (consensusDataCount > 0) {
+    console.log(`  ${'Thresh'.padEnd(8)} ${'TP'.padEnd(5)} ${'FP'.padEnd(5)} ${'TN'.padEnd(5)} ${'FN'.padEnd(5)} ${'Acc'.padEnd(8)} ${'Prec'.padEnd(8)} ${'Recall'.padEnd(8)} ${'F1'.padEnd(8)}`);
+    console.log(`  ${'─'.repeat(8)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(5)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)} ${'─'.repeat(8)}`);
+
+    let bestF1 = 0, bestThresh = 0.5;
+    for (const t of thresholds) {
+      const cm = confusionAtThreshold(binaryEntries, t, consensusScore);
+      if (cm.f1 > bestF1) { bestF1 = cm.f1; bestThresh = t; }
+      console.log(
+        `  ${t.toFixed(2).padEnd(8)} ${String(cm.tp).padEnd(5)} ${String(cm.fp).padEnd(5)} ${String(cm.tn).padEnd(5)} ${String(cm.fn).padEnd(5)} ${pct(cm.accuracy).padEnd(8)} ${pct(cm.precision).padEnd(8)} ${pct(cm.recall).padEnd(8)} ${pct(cm.f1).padEnd(8)}`
+      );
+    }
+    console.log(`  ★ Best F1: ${pct(bestF1)} at threshold ${bestThresh.toFixed(2)}`);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 4: Provider Agreement Analysis
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  console.log('\n' + '─'.repeat(80));
+  console.log('  4. PROVIDER AGREEMENT ANALYSIS');
+  console.log('─'.repeat(80));
+
+  if (providersWithData.length >= 2) {
+    let allAgree = 0, majorityAgree = 0, disagree = 0, insufficient = 0;
+    const outlierCount = {};
+    for (const p of providersWithData) outlierCount[p] = 0;
+
+    for (const e of binaryEntries) {
+      const scores = {};
+      for (const p of providersWithData) {
+        const s = getProviderScore(e, p);
+        if (s !== null) scores[p] = s >= 0.5 ? 'ai' : 'human';
+      }
+
+      const providers = Object.keys(scores);
+      if (providers.length < 2) { insufficient++; continue; }
+
+      const predictions = Object.values(scores);
+      const aiCount = predictions.filter((p) => p === 'ai').length;
+      const humanCount = predictions.filter((p) => p === 'human').length;
+
+      if (aiCount === predictions.length || humanCount === predictions.length) {
+        allAgree++;
+      } else if (providers.length >= 3 && (aiCount >= 2 || humanCount >= 2)) {
+        majorityAgree++;
+        // Find the outlier
+        const majorityPrediction = aiCount > humanCount ? 'ai' : 'human';
+        for (const [p, pred] of Object.entries(scores)) {
+          if (pred !== majorityPrediction) outlierCount[p]++;
+        }
       } else {
-        console.log(`    ⚠️  Overlap: ${fmt(Math.abs(gap))} (AI min ${fmt(aiMin)}, Human max ${fmt(humanMax)})`);
+        disagree++;
       }
     }
 
-    // Best threshold for this mapping
-    let bestF1 = 0;
-    let bestThresh = 0.5;
+    const total = allAgree + majorityAgree + disagree;
+    console.log(`\n  Binary entries with ≥2 providers: ${total}`);
+    console.log(`  All agree:       ${allAgree} (${total > 0 ? pct(allAgree / total) : '—'})`);
+    console.log(`  Majority agree:  ${majorityAgree} (${total > 0 ? pct(majorityAgree / total) : '—'})`);
+    console.log(`  Split/disagree:  ${disagree} (${total > 0 ? pct(disagree / total) : '—'})`);
+    if (insufficient > 0) console.log(`  Insufficient data: ${insufficient}`);
+
+    if (providersWithData.length >= 3 && majorityAgree > 0) {
+      console.log(`\n  Outlier frequency (when majority agrees):`);
+      for (const [p, count] of Object.entries(outlierCount)) {
+        console.log(`    ${PROVIDER_EMOJI[p]} ${p}: ${count} times outlier`);
+      }
+    }
+
+    // Pairwise correlation
+    console.log(`\n  Pairwise score correlation (Pearson r):`);
+    for (let i = 0; i < providersWithData.length; i++) {
+      for (let j = i + 1; j < providersWithData.length; j++) {
+        const p1 = providersWithData[i];
+        const p2 = providersWithData[j];
+        const pairs = binaryEntries
+          .map((e) => [getProviderScore(e, p1), getProviderScore(e, p2)])
+          .filter(([a, b]) => a !== null && b !== null);
+
+        if (pairs.length < 3) {
+          console.log(`    ${p1} ↔ ${p2}: insufficient data (${pairs.length} pairs)`);
+          continue;
+        }
+
+        const xs = pairs.map(([a]) => a);
+        const ys = pairs.map(([, b]) => b);
+        const r = pearsonR(xs, ys);
+        console.log(`    ${p1} ↔ ${p2}: r=${fmt(r, 4)} (${pairs.length} pairs)`);
+      }
+    }
+  } else {
+    console.log('\n  (Need ≥2 providers with data for agreement analysis)');
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 5: Per-Category Breakdown
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  console.log('\n' + '─'.repeat(80));
+  console.log('  5. PER-CATEGORY ACCURACY (threshold=0.5, excludes mixed)');
+  console.log('─'.repeat(80));
+
+  const categories = [...new Set(binaryEntries.map((e) => e.category))].sort();
+
+  // Header
+  const catProvCols = providersWithData.map((p) => p.padEnd(12)).join(' ');
+  console.log(`\n  ${'Category'.padEnd(22)} ${'n'.padEnd(4)} ${catProvCols} ${'Consns'.padEnd(12)}`);
+  console.log(`  ${'─'.repeat(22)} ${'─'.repeat(4)} ${providersWithData.map(() => '─'.repeat(12)).join(' ')} ${'─'.repeat(12)}`);
+
+  for (const cat of categories) {
+    const catEntries = binaryEntries.filter((e) => e.category === cat);
+    const cols = providersWithData.map((p) => {
+      const cm = confusionAtThreshold(catEntries, 0.5, (e) => getProviderScore(e, p));
+      return cm.total > 0 ? `${pct(cm.accuracy)} (F1=${pct(cm.f1)})`.padEnd(12) : '—'.padEnd(12);
+    }).join(' ');
+
+    const consCm = confusionAtThreshold(catEntries, 0.5, consensusScore);
+    const consCol = consCm.total > 0 ? `${pct(consCm.accuracy)} (F1=${pct(consCm.f1)})`.padEnd(12) : '—'.padEnd(12);
+
+    console.log(`  ${cat.padEnd(22)} ${String(catEntries.length).padEnd(4)} ${cols} ${consCol}`);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTION 6: Recommendations
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  console.log('\n' + '─'.repeat(80));
+  console.log('  6. RECOMMENDATIONS');
+  console.log('─'.repeat(80));
+
+  console.log('\n  Provider coverage:');
+  for (const p of providersWithData) {
+    const coverage = binaryEntries.filter((e) => typeof getProviderScore(e, p) === 'number').length;
+    console.log(`    ${PROVIDER_EMOJI[p]} ${p}: ${coverage}/${binaryEntries.length} binary entries`);
+  }
+
+  // Find best single provider
+  let bestProvider = null, bestProviderF1 = 0, bestProviderThresh = 0.5;
+  for (const p of providersWithData) {
     for (let t = 0.1; t <= 0.9; t += 0.05) {
-      const testEntries = fullBinary.map((e) => ({ label: e.label, score: mapFn(e) }));
-      const cm = confusionAtThreshold(testEntries, t, 'score');
-      if (cm.f1 > bestF1) {
-        bestF1 = cm.f1;
-        bestThresh = t;
+      const cm = confusionAtThreshold(binaryEntries, t, (e) => getProviderScore(e, p));
+      if (cm.f1 > bestProviderF1) {
+        bestProviderF1 = cm.f1;
+        bestProvider = p;
+        bestProviderThresh = t;
       }
     }
-    console.log(`    Best F1 threshold: ${fmt(bestThresh)} → F1=${pct(bestF1)}`);
   }
 
-  // ── Section 5: Recommendations ────────────────────────────────────────────
-
-  console.log('\n' + '─'.repeat(70));
-  console.log('  5. RECOMMENDATIONS');
-  console.log('─'.repeat(70));
-
-  // Check if probYes is available
-  const probYesAvailable = allEntries.filter((e) => typeof e.jev.probYes === 'number').length;
-  const confAvailable = allEntries.filter((e) => typeof e.jev.confidence === 'number').length;
-
-  console.log(`\n  Data availability:`);
-  console.log(`    - probYes available: ${probYesAvailable}/${allEntries.length} entries`);
-  console.log(`    - confidence available: ${confAvailable}/${allEntries.length} entries`);
-
-  if (probYesAvailable > allEntries.length * 0.8) {
-    console.log(`\n  💡 probYes is widely available — consider using it directly as the score.`);
-    console.log(`     It represents P(AI-generated) which is exactly what you want to show.`);
-  } else if (confAvailable > allEntries.length * 0.8) {
-    console.log(`\n  💡 Only confidence is widely available. The choice+confidence mapping`);
-    console.log(`     needs careful calibration based on the distributions above.`);
+  // Best consensus
+  let bestConsensusF1 = 0, bestConsensusThresh = 0.5;
+  for (let t = 0.1; t <= 0.9; t += 0.05) {
+    const cm = confusionAtThreshold(binaryEntries, t, consensusScore);
+    if (cm.f1 > bestConsensusF1) {
+      bestConsensusF1 = cm.f1;
+      bestConsensusThresh = t;
+    }
   }
 
-  console.log(`\n  Review the per-video detail and confusion matrices above.`);
-  console.log(`  Look for:`);
-  console.log(`    1. False positives (⚠️ FP): human videos scored as AI — these hurt creators`);
-  console.log(`    2. False negatives (⚠️ FN): AI videos scored as human — these miss slop`);
-  console.log(`    3. The threshold with best F1 and lowest FP rate`);
-  console.log(`    4. Whether probYes or confidence+choice gives better separation\n`);
+  console.log(`\n  Best single provider:  ${PROVIDER_EMOJI[bestProvider]} ${bestProvider} → F1=${pct(bestProviderF1)} at threshold ${bestProviderThresh.toFixed(2)}`);
+  console.log(`  Best consensus:        🏆 median → F1=${pct(bestConsensusF1)} at threshold ${bestConsensusThresh.toFixed(2)}`);
+
+  if (bestConsensusF1 > bestProviderF1) {
+    console.log(`\n  💡 Consensus (ensemble) outperforms any single provider. Consider using median-of-providers in production.`);
+  } else {
+    console.log(`\n  💡 ${bestProvider} alone matches or beats the ensemble. The other providers may not add value at the cost of latency/complexity.`);
+  }
+
+  // False positive analysis
+  console.log(`\n  🎯 False positive analysis (threshold=0.5, most important for creator fairness):`);
+  for (const p of providersWithData) {
+    const fps = groups.human.filter((e) => {
+      const s = getProviderScore(e, p);
+      return s !== null && s >= 0.5;
+    });
+    console.log(`    ${PROVIDER_EMOJI[p]} ${p}: ${fps.length} FPs out of ${groups.human.length} human videos`);
+    for (const fp of fps) {
+      console.log(`      → ${fp.videoId} (${fp.note?.slice(0, 50)}) = ${pct(getProviderScore(fp, p))}`);
+    }
+  }
+
+  console.log('\n');
+}
+
+// ── Pearson correlation ─────────────────────────────────────────────────────────
+
+function pearsonR(xs, ys) {
+  const n = xs.length;
+  if (n < 2) return null;
+  const mx = mean(xs), my = mean(ys);
+  let num = 0, dx2 = 0, dy2 = 0;
+  for (let i = 0; i < n; i++) {
+    const dx = xs[i] - mx, dy = ys[i] - my;
+    num += dx * dy;
+    dx2 += dx * dx;
+    dy2 += dy * dy;
+  }
+  const denom = Math.sqrt(dx2 * dy2);
+  return denom > 0 ? num / denom : 0;
 }
 
 main().catch((err) => {

@@ -1,32 +1,71 @@
 #!/usr/bin/env node
 /**
- * Jev Benchmark Runner
+ * Multi-Provider AI Detection Benchmark Runner
  *
- * Fetches YouTube transcripts and runs them through TypeSafe Jev (via TypeSafe AI API)
- * to collect raw detection outputs for score calibration.
+ * Runs YouTube transcripts through up to THREE AI detection engines
+ * as INDEPENDENT CONCURRENT QUEUES:
+ *   1. TypeSafe Jev  (fast queue, ~500ms delay)
+ *   2. Google Gemini  (fast queue, ~200ms delay)
+ *   3. Sapling AI     (slow queue, ~3s delay)
+ *
+ * Each provider runs its own loop through all videos independently.
+ * Jev and Gemini will finish early while Sapling is still working.
+ * Transcripts are fetched once and shared across all queues.
  *
  * Usage:
- *   TYPESAFE_API_KEY=apikey_... node run.js          # Normal run (skips already-completed)
- *   TYPESAFE_API_KEY=apikey_... node run.js --force   # Re-run everything
+ *   node run.js                           # Run all available providers
+ *   node run.js --force                   # Re-run everything
+ *   node run.js --providers jev,gemini    # Only run specific providers
+ *   node run.js --force-provider gemini   # Re-run only Gemini for all videos
  *
- * Or use .env file in this directory (loaded manually below).
- *
- * Results are saved to results.json (one entry per video with full Jev output).
+ * Results are saved to results.json (resumable — one entry per video with per-provider outputs).
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { promisify } from 'node:util';
+import { unlink } from 'node:fs/promises';
 
+const execFileAsync = promisify(execFile);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ── Config ──────────────────────────────────────────────────────────────────────
 const DATASET_PATH = resolve(__dirname, 'dataset.json');
 const RESULTS_PATH = resolve(__dirname, 'results.json');
-const DELAY_MS = 1_000; // 1s polite delay between API calls (TypeSafe has no tight free-tier rate limit)
 const TRANSCRIPT_MAX_CHARS = 15_000;
 const FORCE = process.argv.includes('--force');
+
+// Per-provider delay (ms) between sequential calls
+const PROVIDER_DELAYS = {
+  jev: 0,
+  gemini: 0,
+  sapling: 60_000, // it's very very limited, almost to the point of no use
+};
+
+const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', sapling: '🌿' };
+
+// ── CLI Parsing ─────────────────────────────────────────────────────────────────
+
+function parseProviderFlags() {
+  const providersIdx = process.argv.indexOf('--providers');
+  const forceProviderIdx = process.argv.indexOf('--force-provider');
+
+  let requestedProviders = null;
+  let forceProvider = null;
+
+  if (providersIdx !== -1 && process.argv[providersIdx + 1]) {
+    requestedProviders = process.argv[providersIdx + 1].split(',').map((s) => s.trim().toLowerCase());
+  }
+  if (forceProviderIdx !== -1 && process.argv[forceProviderIdx + 1]) {
+    forceProvider = process.argv[forceProviderIdx + 1].trim().toLowerCase();
+  }
+
+  return { requestedProviders, forceProvider };
+}
 
 // ── Load .env manually (no dependencies) ────────────────────────────────────────
 function loadEnvFile() {
@@ -41,7 +80,6 @@ function loadEnvFile() {
       if (eqIdx === -1) continue;
       const key = trimmed.slice(0, eqIdx).trim();
       let val = trimmed.slice(eqIdx + 1).trim();
-      // Strip surrounding quotes
       if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
         val = val.slice(1, -1);
       }
@@ -51,32 +89,122 @@ function loadEnvFile() {
 }
 loadEnvFile();
 
+// ── Determine available providers ───────────────────────────────────────────────
+
 const TYPESAFE_KEY = process.env.TYPESAFE_API_KEY || process.env.VERCEL_AI_GATEWAY_KEY;
-if (!TYPESAFE_KEY) {
-  console.error('❌ TYPESAFE_API_KEY is required. Set it as env var or in benchmark/.env');
+const GEMINI_KEY = process.env.GEMINI_API_KEY;
+const SAPLING_KEY = process.env.SAPLING_API_KEY;
+
+const AVAILABLE_PROVIDERS = {};
+if (TYPESAFE_KEY) AVAILABLE_PROVIDERS.jev = true;
+if (GEMINI_KEY) AVAILABLE_PROVIDERS.gemini = true;
+if (SAPLING_KEY) AVAILABLE_PROVIDERS.sapling = true;
+
+if (Object.keys(AVAILABLE_PROVIDERS).length === 0) {
+  console.error('❌ No API keys found. Set at least one of: TYPESAFE_API_KEY, GEMINI_API_KEY, SAPLING_API_KEY');
   process.exit(1);
+}
+
+// ── Shared results + write lock ─────────────────────────────────────────────────
+
+let results = {};
+let writePending = false;
+let writeQueued = false;
+
+/**
+ * Debounced results writer — prevents concurrent writes and batches rapid updates.
+ */
+async function saveResults() {
+  if (writePending) {
+    writeQueued = true;
+    return;
+  }
+  writePending = true;
+  try {
+    await writeFile(RESULTS_PATH, JSON.stringify(results, null, 2));
+  } finally {
+    writePending = false;
+    if (writeQueued) {
+      writeQueued = false;
+      await saveResults();
+    }
+  }
+}
+
+// ── Shared transcript cache ─────────────────────────────────────────────────────
+// Each transcript is fetched at most once. Multiple provider queues
+// awaiting the same video will share the same fetch promise.
+
+const transcriptCache = new Map(); // videoId → Promise<{text, charCount, ...} | null>
+
+function getTranscript(videoId) {
+  if (transcriptCache.has(videoId)) return transcriptCache.get(videoId);
+
+  // Check if we already have the transcript in results from a previous run
+  if (results[videoId]?.transcript?.fullText) {
+    const cached = results[videoId].transcript;
+    const promise = Promise.resolve({
+      text: cached.fullText,
+      charCount: cached.charCount,
+      language: cached.language,
+      isAutoGenerated: cached.isAutoGenerated,
+    });
+    transcriptCache.set(videoId, promise);
+    return promise;
+  }
+
+  // Fetch and cache the promise
+  const promise = fetchTranscript(videoId).then((t) => {
+    // Store in results for future reuse
+    if (!results[videoId]) results[videoId] = {};
+    results[videoId].transcript = {
+      charCount: t.charCount,
+      language: t.language,
+      isAutoGenerated: t.isAutoGenerated,
+      preview: t.text.slice(0, 200),
+      fullText: t.text,
+    };
+    return t;
+  }).catch((err) => {
+    // Store the error so other queues don't retry
+    if (!results[videoId]) results[videoId] = {};
+    results[videoId].transcriptError = err.message;
+    return null;
+  });
+
+  transcriptCache.set(videoId, promise);
+  return promise;
 }
 
 // ── YouTube Transcript Fetcher (via yt-dlp) ─────────────────────────────────────
 
-import { execFile } from 'node:child_process';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { promisify } from 'node:util';
-import { unlink } from 'node:fs/promises';
+// Semaphore to prevent concurrent yt-dlp calls (they share cookies/browser state)
+let ytdlpBusy = false;
+const ytdlpQueue = [];
 
-const execFileAsync = promisify(execFile);
+async function acquireYtdlp() {
+  if (!ytdlpBusy) {
+    ytdlpBusy = true;
+    return;
+  }
+  return new Promise((resolve) => ytdlpQueue.push(resolve));
+}
 
-/**
- * Fetch a YouTube video transcript using yt-dlp with browser cookies.
- * This is the most reliable approach as yt-dlp handles YouTube's anti-bot measures.
- */
+function releaseYtdlp() {
+  if (ytdlpQueue.length > 0) {
+    const next = ytdlpQueue.shift();
+    next();
+  } else {
+    ytdlpBusy = false;
+  }
+}
+
 async function fetchTranscript(videoId) {
+  await acquireYtdlp();
   const tmpFile = join(tmpdir(), `sts_bench_${videoId}`);
   const subFile = `${tmpFile}.en.json3`;
 
   try {
-    // Download subtitles only (no video) using Chrome cookies for auth
     await execFileAsync('yt-dlp', [
       '--cookies-from-browser', 'chrome',
       '--write-auto-sub',
@@ -90,21 +218,17 @@ async function fetchTranscript(videoId) {
       `https://www.youtube.com/watch?v=${videoId}`,
     ], { timeout: 30_000 });
 
-    // Read and parse the json3 subtitle file
     let captionData;
     try {
       const raw = readFileSync(subFile, 'utf-8');
       captionData = JSON.parse(raw);
     } catch {
-      throw new Error('No English subtitles available (file not created by yt-dlp)');
+      throw new Error('No English subtitles available');
     }
 
     const events = captionData?.events;
-    if (!events || events.length === 0) {
-      throw new Error('Caption data is empty');
-    }
+    if (!events || events.length === 0) throw new Error('Caption data is empty');
 
-    // Extract text segments
     const textParts = [];
     for (const event of events) {
       if (event.segs) {
@@ -117,22 +241,13 @@ async function fetchTranscript(videoId) {
     }
 
     const fullText = textParts.join(' ').replace(/\s+/g, ' ').trim();
-    if (fullText.length < 50) {
-      throw new Error(`Transcript too short (${fullText.length} chars)`);
-    }
+    if (fullText.length < 50) throw new Error(`Transcript too short (${fullText.length} chars)`);
 
-    return {
-      text: fullText,
-      language: 'en',
-      isAutoGenerated: true, // json3 from yt-dlp doesn't distinguish, assume auto
-      charCount: fullText.length,
-    };
+    return { text: fullText, language: 'en', isAutoGenerated: true, charCount: fullText.length };
   } finally {
-    // Cleanup temp files
+    releaseYtdlp();
     try { await unlink(subFile); } catch { }
-    // yt-dlp may also create .en-orig.json3 or similar
     try {
-      const { readdirSync } = await import('node:fs');
       for (const f of readdirSync(tmpdir())) {
         if (f.startsWith(`sts_bench_${videoId}`)) {
           try { await unlink(join(tmpdir(), f)); } catch { }
@@ -142,7 +257,7 @@ async function fetchTranscript(videoId) {
   }
 }
 
-// ── Jev Detection (Direct TypeSafe AI API) ──────────────────────────────────
+// ── Provider: Jev (TypeSafe AI API) ─────────────────────────────────────────────
 
 async function callJev(text) {
   const promptState = text.slice(0, TRANSCRIPT_MAX_CHARS);
@@ -173,7 +288,6 @@ async function callJev(text) {
 
     if (response.status === 429 && attempt < 3) {
       const wait = attempt * 2000;
-      console.log(`    ⏳ Rate limited, waiting ${wait / 1000}s...`);
       await new Promise((r) => setTimeout(r, wait));
       continue;
     }
@@ -182,16 +296,12 @@ async function callJev(text) {
 
   if (!response.ok) {
     const errText = await response.text().catch(() => '');
-    let msg = `TypeSafe Jev API error (${response.status})`;
+    let msg = `Jev API error (${response.status})`;
     try {
       const parsed = JSON.parse(errText);
-      if (parsed.detail?.message) {
-        msg = parsed.detail.message;
-      } else if (typeof parsed.detail === 'string') {
-        msg = parsed.detail;
-      } else if (parsed.error?.message) {
-        msg = parsed.error.message;
-      }
+      if (parsed.detail?.message) msg = parsed.detail.message;
+      else if (typeof parsed.detail === 'string') msg = parsed.detail;
+      else if (parsed.error?.message) msg = parsed.error.message;
     } catch {
       if (errText) msg += `: ${errText.slice(0, 180)}`;
     }
@@ -201,42 +311,32 @@ async function callJev(text) {
   const data = await response.json();
   const ans = data.answers?.is_ai;
 
-  // Extract ALL raw fields — this is what we're benchmarking
   return {
-    // The raw answer
+    provider: 'jev',
     choice: ans?.choice || null,
-    // Confidence in the answer (not the same as AI probability!)
     confidence: ans?.confidence ?? null,
-    // Probabilities for each choice
     probabilities: ans?.probabilities || null,
     probYes: ans?.probabilities?.yes ?? null,
     probNo: ans?.probabilities?.no ?? null,
-    // Other metadata
+    score: computeJevScore(ans),
     model: data.model ? `typesafe-ai/${data.model}` : 'typesafe-ai/jev',
     usage: data.usage || null,
-    cost: null,
-    // The full raw response for later analysis
     rawAnswers: data.answers,
-    rawProviderMetadata: null,
   };
 }
 
-// ── Current score mapping (for comparison) ──────────────────────────────────────
-
-function computeCurrentScore(jevResult) {
-  const { choice, confidence, probYes } = jevResult;
+function computeJevScore(ans) {
+  const choice = ans?.choice;
+  const confidence = ans?.confidence;
+  const probYes = typeof ans?.probabilities?.yes === 'number' ? ans.probabilities.yes : null;
   const isYes = choice === 'yes';
   const isNo = choice === 'no';
 
   let score = 0.5;
-  if (typeof confidence === 'number') {
-    if (isNo) {
-      score = Math.max(0.02, Math.min(0.48, 1 - confidence));
-    } else {
-      score = confidence;
-    }
-  } else if (typeof probYes === 'number') {
+  if (typeof probYes === 'number') {
     score = probYes;
+  } else if (typeof confidence === 'number') {
+    score = isYes ? 0.5 + (confidence / 2) : 0.5 - (confidence / 2);
   } else if (isYes) {
     score = 0.95;
   } else if (isNo) {
@@ -246,17 +346,240 @@ function computeCurrentScore(jevResult) {
   return Math.max(0, Math.min(1, Math.round(score * 100) / 100));
 }
 
+// ── Provider: Gemini (Google AI API) ────────────────────────────────────────────
+
+async function callGemini(text) {
+  const model = 'gemini-3.6-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(GEMINI_KEY)}`;
+
+  const systemPrompt = `You are a specialized AI script detector for YouTube video transcripts.
+Analyze whether the transcript was generated by an AI language model (ChatGPT, Claude, Gemini, etc.) or naturally spoken/written by a human creator.
+
+Key AI Slop Signals: Formulaic intros/outros ("In today's video", "Have you ever wondered", "In conclusion"), robotic listicle transitions ("Furthermore", "Moreover", "Additionally", "It is important to remember"), uniform cadence, buzzword padding.
+Key Human Signals: Natural conversational flow, colloquial speech, casual humor, spontaneous tangents, personal anecdotes, authentic cadence.
+
+Respond ONLY with a JSON object containing the probability score from 0.0 (definitely human) to 1.0 (definitely AI):
+{"score": <number>}`;
+
+  const prompt = `Evaluate AI likelihood for this transcript:\n"""\n${text.slice(0, TRANSCRIPT_MAX_CHARS)}\n"""`;
+
+  for (let attempt = 0; attempt <= 2; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          generationConfig: {
+            responseMimeType: 'application/json',
+            temperature: 0.1,
+          },
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
+      });
+
+      if (response.status === 429) {
+        if (attempt < 2) {
+          const wait = (attempt + 1) * 2000;
+          await new Promise((r) => setTimeout(r, wait));
+          continue;
+        }
+        throw new Error('Gemini rate limited after retries');
+      }
+
+      if (!response.ok) {
+        const errText = await response.text().catch(() => '');
+        throw new Error(`Gemini API error (${response.status}): ${errText.slice(0, 200)}`);
+      }
+
+      const data = await response.json();
+      const rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawOutput) throw new Error('Empty response from Gemini');
+
+      const cleanJson = rawOutput.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+      const parsed = JSON.parse(cleanJson);
+      const score = typeof parsed.score === 'number' ? Math.max(0, Math.min(1, parsed.score)) : 0.5;
+
+      return {
+        provider: 'gemini',
+        score,
+        model: `google/${model}`,
+        usage: {
+          inputTokens: data.usageMetadata?.promptTokenCount || null,
+          outputTokens: data.usageMetadata?.candidatesTokenCount || null,
+        },
+        rawOutput: cleanJson,
+      };
+    } catch (e) {
+      if (attempt >= 2) throw e;
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+  }
+}
+
+// ── Provider: Sapling AI ────────────────────────────────────────────────────────
+
+async function callSapling(text) {
+  for (let attempt = 0; attempt <= 2; attempt++) {
+    try {
+      const response = await fetch('https://api.sapling.ai/api/v1/aidetect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          key: SAPLING_KEY,
+          text: text.slice(0, TRANSCRIPT_MAX_CHARS),
+          sent_scores: true,
+        }),
+      });
+
+      if (response.status === 429) {
+        if (attempt < 2) {
+          const wait = (attempt + 1) * 5000;
+          await new Promise((r) => setTimeout(r, wait));
+          continue;
+        }
+        throw new Error('Sapling rate limited after retries');
+      }
+
+      if (!response.ok) {
+        const errText = await response.text().catch(() => '');
+        throw new Error(`Sapling API error (${response.status}): ${errText.slice(0, 200)}`);
+      }
+
+      const data = await response.json();
+      return {
+        provider: 'sapling',
+        score: typeof data.score === 'number' ? data.score : 0.5,
+        model: 'sapling/ai-detect',
+        sentenceScores: (data.sentence_scores || []).map((s) => ({
+          sentence: s.sentence,
+          score: s.score,
+        })),
+        rawResponse: { score: data.score, sentence_count: data.sentence_scores?.length || 0 },
+      };
+    } catch (e) {
+      if (attempt >= 2) throw e;
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
+}
+
+// ── Provider Registry ───────────────────────────────────────────────────────────
+
+const PROVIDERS = {
+  jev: { call: callJev },
+  gemini: { call: callGemini },
+  sapling: { call: callSapling },
+};
+
+// ── Independent Provider Queue ──────────────────────────────────────────────────
+
+/**
+ * Run a single provider through ALL videos independently.
+ * Each provider has its own loop and pace.
+ */
+async function runProviderQueue(providerName, dataset, forceProvider) {
+  const emoji = PROVIDER_EMOJI[providerName];
+  const delay = PROVIDER_DELAYS[providerName] || 1000;
+  const callFn = PROVIDERS[providerName].call;
+  const stats = { success: 0, skipped: 0, noTranscript: 0, error: 0 };
+
+  console.log(`\n${emoji} [${providerName}] Starting queue (${dataset.length} videos, ${delay}ms delay)\n`);
+
+  for (let i = 0; i < dataset.length; i++) {
+    const entry = dataset[i];
+    const { videoId, label, category, note } = entry;
+    const idx = `[${i + 1}/${dataset.length}]`;
+
+    // Skip if already done (unless forcing)
+    const shouldRun = FORCE || forceProvider === providerName || !results[videoId]?.[providerName];
+    if (!shouldRun) {
+      stats.skipped++;
+      continue;
+    }
+
+    // Ensure entry exists in results
+    if (!results[videoId]) {
+      results[videoId] = { ...entry };
+    } else if (!results[videoId].label) {
+      Object.assign(results[videoId], entry);
+    }
+
+    // Check if transcript previously failed
+    if (results[videoId]?.transcriptError) {
+      stats.noTranscript++;
+      continue;
+    }
+
+    // Get transcript (shared cache — fetched only once across all queues)
+    const transcript = await getTranscript(videoId);
+    if (!transcript) {
+      console.log(`${emoji} ${idx} ⏭️  ${videoId} — no transcript`);
+      stats.noTranscript++;
+      continue;
+    }
+
+    // Call the provider
+    try {
+      const result = await callFn(transcript.text);
+      results[videoId][providerName] = {
+        ...result,
+        timestamp: new Date().toISOString(),
+      };
+
+      const scoreStr = typeof result.score === 'number' ? `${Math.round(result.score * 100)}%` : '?';
+      const extra = result.choice ? ` choice=${result.choice}` : '';
+      console.log(`${emoji} ${idx} ${videoId} (${label}) → ${scoreStr}${extra}`);
+      stats.success++;
+    } catch (err) {
+      console.log(`${emoji} ${idx} ❌ ${videoId}: ${err.message}`);
+      stats.error++;
+    }
+
+    // Save incrementally
+    await saveResults();
+
+    // Provider-specific delay
+    if (i < dataset.length - 1) {
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+
+  console.log(`\n${emoji} [${providerName}] DONE — ${stats.success} success, ${stats.skipped} skipped, ${stats.noTranscript} no transcript, ${stats.error} errors`);
+  return stats;
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('🧪 Jev Benchmark Runner\n');
+  const { requestedProviders, forceProvider } = parseProviderFlags();
+
+  // Determine active providers
+  let activeProviders = Object.keys(AVAILABLE_PROVIDERS);
+  if (requestedProviders) {
+    activeProviders = requestedProviders.filter((p) => AVAILABLE_PROVIDERS[p]);
+    const unavailable = requestedProviders.filter((p) => !AVAILABLE_PROVIDERS[p]);
+    if (unavailable.length > 0) {
+      console.warn(`⚠️  Providers unavailable (no API key): ${unavailable.join(', ')}`);
+    }
+  }
+
+  if (activeProviders.length === 0) {
+    console.error('❌ No providers available. Check your API keys.');
+    process.exit(1);
+  }
+
+  console.log('🧪 Multi-Provider AI Detection Benchmark\n');
+  console.log(`📡 Active providers: ${activeProviders.map((p) => `${PROVIDER_EMOJI[p]} ${p}`).join('  |  ')}`);
+  console.log(`⚡ Mode: Independent concurrent queues (each provider runs at its own pace)`);
+  if (FORCE) console.log('🔄 Force mode: re-running all entries');
+  if (forceProvider) console.log(`🔄 Force-provider: re-running ${forceProvider} for all videos`);
 
   // Load dataset
   const dataset = JSON.parse(await readFile(DATASET_PATH, 'utf-8'));
-  console.log(`📋 Dataset: ${dataset.length} videos\n`);
+  console.log(`📋 Dataset: ${dataset.length} videos`);
 
   // Load existing results
-  let results = {};
   if (!FORCE && existsSync(RESULTS_PATH)) {
     try {
       const existing = JSON.parse(await readFile(RESULTS_PATH, 'utf-8'));
@@ -266,91 +589,47 @@ async function main() {
     } catch { }
   }
 
-  const stats = { success: 0, skipped: 0, noTranscript: 0, error: 0 };
-
-  for (let i = 0; i < dataset.length; i++) {
-    const entry = dataset[i];
-    const { videoId, label, category, note } = entry;
-    const idx = `[${i + 1}/${dataset.length}]`;
-
-    // Skip if already done
-    if (!FORCE && results[videoId]?.jev) {
-      console.log(`${idx} ⏭️  ${videoId} (${label}) — already done, skipping`);
-      stats.skipped++;
-      continue;
-    }
-
-    console.log(`${idx} 🔍 ${videoId} (${label}: ${category})`);
-    console.log(`    📝 ${note}`);
-
-    // Step 1: Fetch transcript
-    let transcript;
-    try {
-      transcript = await fetchTranscript(videoId);
-      console.log(`    📄 Transcript: ${transcript.charCount} chars (${transcript.language}, auto=${transcript.isAutoGenerated})`);
-    } catch (err) {
-      console.log(`    ❌ Transcript failed: ${err.message}`);
-      results[videoId] = {
-        ...entry,
-        error: `Transcript: ${err.message}`,
-        timestamp: new Date().toISOString(),
-      };
-      stats.noTranscript++;
-      await writeFile(RESULTS_PATH, JSON.stringify(results, null, 2));
-      continue;
-    }
-
-    // Step 2: Call Jev
-    try {
-      const jevResult = await callJev(transcript.text);
-      const currentScore = computeCurrentScore(jevResult);
-
-      results[videoId] = {
-        ...entry,
-        transcript: {
-          charCount: transcript.charCount,
-          language: transcript.language,
-          isAutoGenerated: transcript.isAutoGenerated,
-          preview: transcript.text.slice(0, 200),
-        },
-        jev: jevResult,
-        currentMappedScore: currentScore,
-        timestamp: new Date().toISOString(),
-      };
-
-      const choiceEmoji = jevResult.choice === 'yes' ? '🤖' : '👤';
-      console.log(`    ${choiceEmoji} Jev: choice=${jevResult.choice}, confidence=${jevResult.confidence}, probYes=${jevResult.probYes}`);
-      console.log(`    📊 Current mapped score: ${currentScore} (${Math.round(currentScore * 100)}%)`);
-
-      stats.success++;
-    } catch (err) {
-      console.log(`    ❌ Jev failed: ${err.message}`);
-      results[videoId] = {
-        ...entry,
-        transcript: {
-          charCount: transcript.charCount,
-          language: transcript.language,
-          isAutoGenerated: transcript.isAutoGenerated,
-        },
-        error: `Jev: ${err.message}`,
-        timestamp: new Date().toISOString(),
-      };
-      stats.error++;
-    }
-
-    // Save after each video (resumable)
-    await writeFile(RESULTS_PATH, JSON.stringify(results, null, 2));
-
-    // Rate limit delay
-    if (i < dataset.length - 1) {
-      await new Promise((r) => setTimeout(r, DELAY_MS));
+  // Pre-populate transcript cache from existing results
+  for (const [videoId, entry] of Object.entries(results)) {
+    if (entry?.transcript?.fullText) {
+      transcriptCache.set(videoId, Promise.resolve({
+        text: entry.transcript.fullText,
+        charCount: entry.transcript.charCount,
+        language: entry.transcript.language,
+        isAutoGenerated: entry.transcript.isAutoGenerated,
+      }));
     }
   }
 
-  console.log('\n' + '═'.repeat(60));
-  console.log(`✅ Done! ${stats.success} success, ${stats.skipped} skipped, ${stats.noTranscript} no transcript, ${stats.error} errors`);
-  console.log(`📁 Results saved to ${RESULTS_PATH}`);
-  console.log('\nRun `node analyze.js` to see the distribution analysis.');
+  const cachedCount = transcriptCache.size;
+  if (cachedCount > 0) {
+    console.log(`📦 ${cachedCount} transcripts cached from previous runs`);
+  }
+
+  console.log('\n' + '═'.repeat(70));
+
+  // Launch all provider queues concurrently — they each run independently
+  const queuePromises = activeProviders.map((p) =>
+    runProviderQueue(p, dataset, forceProvider)
+  );
+
+  const allStats = await Promise.all(queuePromises);
+
+  // Final summary
+  console.log('\n' + '═'.repeat(70));
+  console.log('  BENCHMARK RUN COMPLETE');
+  console.log('═'.repeat(70) + '\n');
+
+  for (let i = 0; i < activeProviders.length; i++) {
+    const p = activeProviders[i];
+    const s = allStats[i];
+    console.log(`  ${PROVIDER_EMOJI[p]} ${p}: ${s.success} success, ${s.skipped} skipped, ${s.noTranscript} no transcript, ${s.error} errors`);
+  }
+
+  // Final save
+  await saveResults();
+  console.log(`\n  📁 Results saved to ${RESULTS_PATH}`);
+  console.log('  Run `node analyze.js` to see multi-provider comparison.\n');
 }
 
 main().catch((err) => {

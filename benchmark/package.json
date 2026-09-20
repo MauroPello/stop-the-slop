@@ -1,12 +1,19 @@
 {
   "name": "stop-the-slop-benchmark",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Benchmark harness for calibrating Jev AI detection scores against ground-truth YouTube videos",
+  "description": "Multi-provider benchmark for AI detection: Jev, Gemini, and Sapling AI against ground-truth YouTube transcripts",
   "scripts": {
     "run": "node run.js",
     "run:force": "node run.js --force",
+    "run:jev": "node run.js --providers jev",
+    "run:gemini": "node run.js --providers gemini",
+    "run:sapling": "node run.js --providers sapling",
+    "run:jev-gemini": "node run.js --providers jev,gemini",
+    "rerun:jev": "node run.js --force-provider jev",
+    "rerun:gemini": "node run.js --force-provider gemini",
+    "rerun:sapling": "node run.js --force-provider sapling",
     "analyze": "node analyze.js"
   },
   "dependencies": {}
