@@ -31,39 +31,31 @@
     @media (max-width:640px) { #benchmark-figures .hero,#benchmark-figures .bottom { grid-template-columns:1fr; } #benchmark-figures .hero-side { border-left:0; border-top:1px solid var(--border); } }
   </style>
 
-  <h2>Jev is the clear choice for fast AI text detection on YouTube videos.</h2>
-  <p class="lede">Across <strong>250 human</strong> and <strong>250 explicitly AI-generated</strong> videos, Jev separates the two groups more reliably than Gemini—and catches substantially more AI content without becoming overly noisy.</p>
-
-  <!-- <div class="hero">
-    <div class="hero-main">
-      <p class="hero-label">Jev’s best raw-score result</p>
-      <div class="hero-number">89%</div>
-      <p class="hero-text">F1 score at an 85% AI threshold—the strongest single-detector result in the benchmark.</p>
-    </div>
-    <div class="hero-side">
-      <strong>Use Jev’s raw %.</strong>
-      <p>For a high-confidence AI badge, start at <b>80–85%</b>. Lower it toward 60–70% only when catching more borderline cases matters more than avoiding false alerts.</p>
-    </div>
-  </div> -->
+  <h2>Jev is the strongest single AI detector for YouTube transcript.</h2>
+  <p class="lede">Across <strong>250 human</strong>, <strong>125 declared-AI</strong>, and <strong>125 mixed</strong> videos, Jev has the best balanced result. Gemini, WasItAiGenerated.com, and RADAR provide useful comparison signals, but do not improve on Jev alone in this corpus.</p>
 
   <figure>
-    <svg viewBox="0 0 940 365" role="img" aria-label="Comparison showing Jev ahead of Gemini on ranking quality, balanced accuracy, and recall">
-      <text x="260" y="28" class="axis">JEV</text><text x="610" y="28" class="axis">GEMINI</text>
-      <line x1="240" y1="42" x2="240" y2="333" stroke="var(--border)" /><line x1="590" y1="42" x2="590" y2="333" stroke="var(--border)" />
-      <text x="0" y="83" class="row-label">AI videos are ranked high</text><text x="0" y="104" class="note">AI videos score > human videos score</text>
-      <rect x="240" y="60" width="330" height="32" fill="#e7edf6" /><rect x="240" y="60" width="315" height="32" fill="var(--viz-series-1)" /><text x="540" y="83" text-anchor="end" class="value">95.5%</text>
-      <rect x="590" y="60" width="330" height="32" fill="#e7edf6" /><rect x="590" y="60" width="280" height="32" fill="var(--viz-series-2)" /><text x="855" y="83" text-anchor="end" class="value">84.9%</text>
-      <text x="0" y="181" class="row-label">Balanced decision quality</text><text x="0" y="202" class="note">Best F1 score</text>
-      <rect x="240" y="158" width="330" height="32" fill="#e7edf6" /><rect x="240" y="158" width="294" height="32" fill="var(--viz-series-1)" /><text x="517" y="181" text-anchor="end" class="value">89%</text>
-      <rect x="590" y="158" width="330" height="32" fill="#e7edf6" /><rect x="590" y="158" width="244" height="32" fill="var(--viz-series-2)" /><text x="817" y="181" text-anchor="end" class="value">74%</text>
-      <text x="0" y="279" class="row-label">AI videos correctly caught</text><text x="0" y="300" class="note">Recall at the best-F1 threshold</text>
-      <rect x="240" y="256" width="330" height="32" fill="#e7edf6" /><rect x="240" y="256" width="274" height="32" fill="var(--viz-series-1)" /><text x="500" y="279" text-anchor="end" class="value">83%</text>
-      <rect x="590" y="256" width="330" height="32" fill="#e7edf6" /><rect x="590" y="256" width="195" height="32" fill="var(--viz-series-2)" /><text x="770" y="279" text-anchor="end" class="value">59%</text>
+    <svg viewBox="0 0 940 484" role="img" aria-label="Four-provider comparison of best F1 score and AI recall at each provider's best-F1 threshold">
+      <text x="260" y="26" class="axis">BEST F1 SCORE</text><text x="610" y="26" class="axis">AI RECALL AT THAT THRESHOLD</text>
+      <text x="0" y="64" class="row-label">Jev</text>
+      <rect x="240" y="42" width="330" height="32" fill="#e7edf6" /><rect x="240" y="42" width="290" height="32" fill="var(--viz-series-1)" /><text x="516" y="65" text-anchor="end" class="value">88% · 0.80</text>
+      <rect x="590" y="42" width="330" height="32" fill="#e7edf6" /><rect x="590" y="42" width="274" height="32" fill="var(--viz-series-1)" /><text x="850" y="65" text-anchor="end" class="value">83%</text>
+      <text x="0" y="154" class="row-label">Gemini</text>
+      <rect x="240" y="132" width="330" height="32" fill="#e7edf6" /><rect x="240" y="132" width="244" height="32" fill="var(--viz-series-2)" /><text x="470" y="155" text-anchor="end" class="value">74% · 0.20</text>
+      <rect x="590" y="132" width="330" height="32" fill="#e7edf6" /><rect x="590" y="132" width="195" height="32" fill="var(--viz-series-2)" /><text x="771" y="155" text-anchor="end" class="value">59%</text>
+      <text x="0" y="244" class="row-label">WasItAiGenerated.com</text>
+      <rect x="240" y="222" width="330" height="32" fill="#e7edf6" /><rect x="240" y="222" width="198" height="32" fill="#7c3aed" /><text x="424" y="245" text-anchor="end" class="value">60% · 0.60</text>
+      <rect x="590" y="222" width="330" height="32" fill="#e7edf6" /><rect x="590" y="222" width="172" height="32" fill="#7c3aed" /><text x="748" y="245" text-anchor="end" class="value">52%</text>
+      <text x="0" y="334" class="row-label">RADAR-Vicuna-7B</text>
+      <rect x="240" y="312" width="330" height="32" fill="#e7edf6" /><rect x="240" y="312" width="182" height="32" fill="#0891b2" /><text x="408" y="335" text-anchor="end" class="value">55% · 0.20</text>
+      <rect x="590" y="312" width="330" height="32" fill="#e7edf6" /><rect x="590" y="312" width="158" height="32" fill="#0891b2" /><text x="734" y="335" text-anchor="end" class="value">48%</text>
+      <line x1="0" y1="381" x2="920" y2="381" stroke="var(--border)" />
+      <text x="0" y="440" class="note">F1 balances precision and recall; each provider is shown at its own best-performing tested threshold.</text>
     </svg>
   </figure>
 
   <div class="bottom">
-    <div><h3>Why not Gemini?</h3><p>Gemini is exceptionally cautious: it produced no false positives at its best threshold, but missed 41% of known AI examples.</p></div>
-    <div><h3>What this confirms</h3><p>Your current approach—showing a continuous raw AI score rather than a hard claim—fits the evidence.</p></div>
+    <div><h3>The conclusion is clear</h3><p>Jev is the strongest detector in this benchmark by a wide margin: it leads every other standalone system on both balanced F1 and AI recall.</p></div>
+    <div><h3>What this confirms</h3><p>Keep using a continuous score as evidence, not a hard claim. In this corpus, Jev alone outperforms the median four-provider consensus.</p></div>
   </div>
 </section>

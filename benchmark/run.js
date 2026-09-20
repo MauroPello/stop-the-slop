@@ -6,10 +6,11 @@
  * as INDEPENDENT CONCURRENT QUEUES:
  *   1. TypeSafe Jev  (fast queue, ~500ms delay)
  *   2. Google Gemini  (fast queue, ~200ms delay)
- *   3. Sapling AI     (slow queue, ~3s delay)
+ *   3. WasItAiGenerated.com (local Hugging Face model)
+ *   4. RADAR-Vicuna-7B     (local Hugging Face model)
  *
  * Each provider runs its own loop through all videos independently.
- * Jev and Gemini will finish early while Sapling is still working.
+ * Jev and Gemini can run alongside the local model queues.
  * Transcripts are fetched once and shared across all queues.
  *
  * Usage:
@@ -25,7 +26,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execFile } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { promisify } from 'node:util';
 import { unlink } from 'node:fs/promises';
@@ -43,10 +44,11 @@ const FORCE = process.argv.includes('--force');
 const PROVIDER_DELAYS = {
   jev: 0,
   gemini: 0,
-  sapling: 60_000, // it's very very limited, almost to the point of no use
+  wasitaigenerated: 0,
+  radar: 0,
 };
 
-const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', sapling: '🌿' };
+const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', wasitaigenerated: '🌱', radar: '📡' };
 
 // ── CLI Parsing ─────────────────────────────────────────────────────────────────
 
@@ -93,15 +95,18 @@ loadEnvFile();
 
 const TYPESAFE_KEY = process.env.TYPESAFE_API_KEY || process.env.VERCEL_AI_GATEWAY_KEY;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
-const SAPLING_KEY = process.env.SAPLING_API_KEY;
+const HF_TOKEN = process.env.HF_TOKEN || process.env.HUGGINGFACE_HUB_TOKEN;
 
 const AVAILABLE_PROVIDERS = {};
 if (TYPESAFE_KEY) AVAILABLE_PROVIDERS.jev = true;
 if (GEMINI_KEY) AVAILABLE_PROVIDERS.gemini = true;
-if (SAPLING_KEY) AVAILABLE_PROVIDERS.sapling = true;
+// The model is public, but HF_TOKEN avoids download throttling and supports gated
+// revisions if one is selected later. It is intentionally never persisted.
+AVAILABLE_PROVIDERS.wasitaigenerated = true;
+AVAILABLE_PROVIDERS.radar = true;
 
 if (Object.keys(AVAILABLE_PROVIDERS).length === 0) {
-  console.error('❌ No API keys found. Set at least one of: TYPESAFE_API_KEY, GEMINI_API_KEY, SAPLING_API_KEY');
+  console.error('❌ No providers available. Install benchmark Python dependencies or set TYPESAFE_API_KEY / GEMINI_API_KEY.');
   process.exit(1);
 }
 
@@ -110,6 +115,18 @@ if (Object.keys(AVAILABLE_PROVIDERS).length === 0) {
 let results = {};
 let writePending = false;
 let writeQueued = false;
+
+function migrateProviderNames() {
+  for (const entry of Object.values(results)) {
+    if (!entry?.tropa || entry.wasitaigenerated) continue;
+    entry.wasitaigenerated = {
+      ...entry.tropa,
+      provider: 'wasitaigenerated',
+      displayName: 'WasItAiGenerated.com',
+    };
+    delete entry.tropa;
+  }
+}
 
 /**
  * Debounced results writer — prevents concurrent writes and batches rapid updates.
@@ -417,51 +434,171 @@ Respond ONLY with a JSON object containing the probability score from 0.0 (defin
   }
 }
 
-// ── Provider: Sapling AI ────────────────────────────────────────────────────────
+// ── Provider: WasItAiGenerated.com (local Hugging Face model) ─────────────────
 
-async function callSapling(text) {
-  for (let attempt = 0; attempt <= 2; attempt++) {
-    try {
-      const response = await fetch('https://api.sapling.ai/api/v1/aidetect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          key: SAPLING_KEY,
-          text: text.slice(0, TRANSCRIPT_MAX_CHARS),
-          sent_scores: true,
-        }),
-      });
+const WASITAI_SCRIPT = resolve(__dirname, 'tropa_infer.py');
+let wasitaiProcess = null;
+let wasitaiReady = null;
+let wasitaiStartupError = null;
+let wasitaiStarted = false;
+let wasitaiStdoutBuffer = '';
+const wasitaiPending = [];
 
-      if (response.status === 429) {
-        if (attempt < 2) {
-          const wait = (attempt + 1) * 5000;
-          await new Promise((r) => setTimeout(r, wait));
-          continue;
+function startWasItAiGenerated() {
+  if (wasitaiStartupError) return Promise.reject(wasitaiStartupError);
+  if (wasitaiReady) return wasitaiReady;
+
+  wasitaiReady = new Promise((resolveReady, rejectReady) => {
+    const python = process.env.PYTHON || 'python3';
+    wasitaiProcess = spawn(python, [WASITAI_SCRIPT], {
+      cwd: __dirname,
+      env: { ...process.env, ...(HF_TOKEN ? { HF_TOKEN } : {}) },
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+
+    const rejectPending = (error) => {
+      while (wasitaiPending.length) wasitaiPending.shift().reject(error);
+    };
+
+    wasitaiProcess.stdout.setEncoding('utf8');
+    wasitaiProcess.stdout.on('data', (chunk) => {
+      wasitaiStdoutBuffer += chunk;
+      let newline;
+      while ((newline = wasitaiStdoutBuffer.indexOf('\n')) !== -1) {
+        const line = wasitaiStdoutBuffer.slice(0, newline);
+        wasitaiStdoutBuffer = wasitaiStdoutBuffer.slice(newline + 1);
+        if (!line.trim()) continue;
+        try {
+          const message = JSON.parse(line);
+          if (message.ready) {
+            wasitaiStarted = true;
+            resolveReady();
+          } else {
+            const pending = wasitaiPending.shift();
+            if (!pending) continue;
+            if (message.error) pending.reject(new Error(message.error));
+            else pending.resolve(message);
+          }
+        } catch {
+          rejectPending(new Error(`Invalid response from WasItAiGenerated.com: ${line.slice(0, 200)}`));
         }
-        throw new Error('Sapling rate limited after retries');
       }
+    });
+    wasitaiProcess.stderr.setEncoding('utf8');
+    wasitaiProcess.stderr.on('data', (chunk) => process.stderr.write(`[wasitai] ${chunk}`));
+    wasitaiProcess.once('error', (error) => {
+      wasitaiStartupError = error;
+      rejectReady(error);
+      rejectPending(error);
+    });
+    wasitaiProcess.once('exit', (code) => {
+      const error = new Error(`WasItAiGenerated.com process exited${code === 0 ? '' : ` (${code})`}`);
+      if (!wasitaiStarted) wasitaiStartupError = error;
+      rejectReady(error);
+      rejectPending(error);
+      wasitaiProcess = null;
+      wasitaiReady = null;
+    });
+  });
+  return wasitaiReady;
+}
 
-      if (!response.ok) {
-        const errText = await response.text().catch(() => '');
-        throw new Error(`Sapling API error (${response.status}): ${errText.slice(0, 200)}`);
+async function callWasItAiGenerated(text) {
+  await startWasItAiGenerated();
+  return new Promise((resolveResult, rejectResult) => {
+    wasitaiPending.push({ resolve: resolveResult, reject: rejectResult });
+    wasitaiProcess.stdin.write(`${JSON.stringify({ text: text.slice(0, TRANSCRIPT_MAX_CHARS) })}\n`);
+  });
+}
+
+function stopWasItAiGenerated() {
+  if (wasitaiProcess && !wasitaiProcess.killed) wasitaiProcess.stdin.end();
+}
+
+// ── Provider: RADAR-Vicuna-7B (local Hugging Face model) ───────────────────────
+
+const RADAR_SCRIPT = resolve(__dirname, 'radar_infer.py');
+let radarProcess = null;
+let radarReady = null;
+let radarStartupError = null;
+let radarStarted = false;
+let radarStdoutBuffer = '';
+const radarPending = [];
+
+function startRadar() {
+  if (radarStartupError) return Promise.reject(radarStartupError);
+  if (radarReady) return radarReady;
+
+  radarReady = new Promise((resolveReady, rejectReady) => {
+    const python = process.env.PYTHON || 'python3';
+    radarProcess = spawn(python, [RADAR_SCRIPT], {
+      cwd: __dirname,
+      env: { ...process.env, ...(HF_TOKEN ? { HF_TOKEN } : {}) },
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+
+    const rejectPending = (error) => {
+      while (radarPending.length) radarPending.shift().reject(error);
+    };
+
+    radarProcess.stdout.setEncoding('utf8');
+    radarProcess.stdout.on('data', (chunk) => {
+      radarStdoutBuffer += chunk;
+      let newline;
+      while ((newline = radarStdoutBuffer.indexOf('\n')) !== -1) {
+        const line = radarStdoutBuffer.slice(0, newline);
+        radarStdoutBuffer = radarStdoutBuffer.slice(newline + 1);
+        if (!line.trim()) continue;
+        try {
+          const message = JSON.parse(line);
+          if (message.ready) {
+            radarStarted = true;
+            resolveReady();
+          } else {
+            const pending = radarPending.shift();
+            if (!pending) continue;
+            if (message.error) pending.reject(new Error(message.error));
+            else pending.resolve(message);
+          }
+        } catch {
+          rejectPending(new Error(`Invalid response from RADAR: ${line.slice(0, 200)}`));
+        }
       }
+    });
+    radarProcess.stderr.setEncoding('utf8');
+    radarProcess.stderr.on('data', (chunk) => process.stderr.write(`[radar] ${chunk}`));
+    radarProcess.once('error', (error) => {
+      radarStartupError = error;
+      rejectReady(error);
+      rejectPending(error);
+    });
+    radarProcess.once('exit', (code) => {
+      const error = new Error(`RADAR process exited${code === 0 ? '' : ` (${code})`}`);
+      if (!radarStarted) radarStartupError = error;
+      rejectReady(error);
+      rejectPending(error);
+      radarProcess = null;
+      radarReady = null;
+    });
+  });
+  return radarReady;
+}
 
-      const data = await response.json();
-      return {
-        provider: 'sapling',
-        score: typeof data.score === 'number' ? data.score : 0.5,
-        model: 'sapling/ai-detect',
-        sentenceScores: (data.sentence_scores || []).map((s) => ({
-          sentence: s.sentence,
-          score: s.score,
-        })),
-        rawResponse: { score: data.score, sentence_count: data.sentence_scores?.length || 0 },
-      };
-    } catch (e) {
-      if (attempt >= 2) throw e;
-      await new Promise((r) => setTimeout(r, 2000));
-    }
-  }
+async function callRadar(text) {
+  await startRadar();
+  return new Promise((resolveResult, rejectResult) => {
+    radarPending.push({ resolve: resolveResult, reject: rejectResult });
+    radarProcess.stdin.write(`${JSON.stringify({ text: text.slice(0, TRANSCRIPT_MAX_CHARS) })}\n`);
+  });
+}
+
+function stopRadar() {
+  if (!radarProcess || radarProcess.killed) return;
+  radarProcess.stdin.end();
+  // MPS can retain an idle worker after stdin closes; the queue is complete here.
+  setTimeout(() => {
+    if (radarProcess && !radarProcess.killed) radarProcess.kill();
+  }, 1000).unref();
 }
 
 // ── Provider Registry ───────────────────────────────────────────────────────────
@@ -469,7 +606,8 @@ async function callSapling(text) {
 const PROVIDERS = {
   jev: { call: callJev },
   gemini: { call: callGemini },
-  sapling: { call: callSapling },
+  wasitaigenerated: { call: callWasItAiGenerated },
+  radar: { call: callRadar },
 };
 
 // ── Independent Provider Queue ──────────────────────────────────────────────────
@@ -480,7 +618,7 @@ const PROVIDERS = {
  */
 async function runProviderQueue(providerName, dataset, forceProvider) {
   const emoji = PROVIDER_EMOJI[providerName];
-  const delay = PROVIDER_DELAYS[providerName] || 1000;
+  const delay = PROVIDER_DELAYS[providerName] ?? 1000;
   const callFn = PROVIDERS[providerName].call;
   const stats = { success: 0, skipped: 0, noTranscript: 0, error: 0 };
 
@@ -585,6 +723,7 @@ async function main() {
       const existing = JSON.parse(await readFile(RESULTS_PATH, 'utf-8'));
       if (typeof existing === 'object' && !Array.isArray(existing)) {
         results = existing;
+        migrateProviderNames();
       }
     } catch { }
   }
@@ -613,7 +752,13 @@ async function main() {
     runProviderQueue(p, dataset, forceProvider)
   );
 
-  const allStats = await Promise.all(queuePromises);
+  let allStats;
+  try {
+    allStats = await Promise.all(queuePromises);
+  } finally {
+    stopWasItAiGenerated();
+    stopRadar();
+  }
 
   // Final summary
   console.log('\n' + '═'.repeat(70));

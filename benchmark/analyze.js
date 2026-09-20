@@ -2,7 +2,7 @@
 /**
  * Multi-Provider Benchmark Analyzer
  *
- * Reads results.json (with jev, gemini, sapling per video) and produces:
+ * Reads results.json (with jev, gemini, WasItAiGenerated.com, and RADAR per video) and produces:
  *   1. Per-provider distribution stats
  *   2. Head-to-head comparison table
  *   3. Per-provider confusion matrices at multiple thresholds
@@ -23,8 +23,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const RESULTS_PATH = resolve(__dirname, 'results.json');
 const DATASET_PATH = resolve(__dirname, 'dataset.json');
 
-const PROVIDER_NAMES = ['jev', 'gemini', 'sapling'];
-const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', sapling: '🌿' };
+const PROVIDER_NAMES = ['jev', 'gemini', 'wasitaigenerated', 'radar'];
+const PROVIDER_EMOJI = { jev: '🔮', gemini: '💎', wasitaigenerated: '🌱', radar: '📡' };
+const PROVIDER_DISPLAY_NAMES = {
+  jev: 'Jev',
+  gemini: 'Gemini',
+  wasitaigenerated: 'WasItAiGenerated.com',
+  radar: 'RADAR-Vicuna-7B',
+};
 
 // ── Stats helpers ───────────────────────────────────────────────────────────────
 
@@ -129,7 +135,7 @@ async function main() {
   console.log('  MULTI-PROVIDER AI DETECTION BENCHMARK ANALYSIS');
   console.log('═'.repeat(80));
   console.log(`\n  Total entries: ${allEntries.length}`);
-  console.log(`  Providers with data: ${providersWithData.map((p) => `${PROVIDER_EMOJI[p]} ${p}`).join('  |  ')}`);
+  console.log(`  Providers with data: ${providersWithData.map((p) => `${PROVIDER_EMOJI[p]} ${PROVIDER_DISPLAY_NAMES[p]}`).join('  |  ')}`);
 
   // Group by label
   const groups = { human: [], ai: [], mixed: [] };
@@ -149,7 +155,7 @@ async function main() {
   console.log('─'.repeat(80));
 
   for (const provider of providersWithData) {
-    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${provider.toUpperCase()}`);
+    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${PROVIDER_DISPLAY_NAMES[provider]}`);
 
     for (const [label, entries] of Object.entries(groups)) {
       if (entries.length === 0) continue;
@@ -215,11 +221,11 @@ async function main() {
   console.log('─'.repeat(80));
 
   const binaryEntries = allEntries.filter((e) => e.label === 'human' || e.label === 'ai');
-  const thresholds = [0.2, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.8];
+  const thresholds = [0.2, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.8, 0.976];
 
   for (const provider of providersWithData) {
     const dataCount = binaryEntries.filter((e) => typeof getProviderScore(e, provider) === 'number').length;
-    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${provider.toUpperCase()} (${dataCount} entries with scores)`);
+    console.log(`\n  ${PROVIDER_EMOJI[provider]} ${PROVIDER_DISPLAY_NAMES[provider]} (${dataCount} entries with scores)`);
 
     if (dataCount === 0) {
       console.log('    (no data)');

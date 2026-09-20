@@ -1,0 +1,4 @@
+# Local inference dependencies for WasItAiGenerated.com and RADAR benchmark providers.
+torch>=2.2
+transformers>=4.44,<6
+sentencepiece>=0.2

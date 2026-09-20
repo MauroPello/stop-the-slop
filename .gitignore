@@ -36,6 +36,8 @@ package-lock.json
 # Benchmark outputs (keep dataset.json and scripts tracked)
 benchmark/results.json
 benchmark/.env
+benchmark/.venv/
+benchmark/__pycache__/
 
 # IDE & Editor settings
 .idea/
