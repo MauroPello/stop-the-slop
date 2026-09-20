@@ -45,3 +45,4 @@ benchmark/__pycache__/
 *.swp
 *.swo
 *~
+.freebuff

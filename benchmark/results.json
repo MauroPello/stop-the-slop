@@ -66392,6 +66392,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.235Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.11768639087677002,
+      "classProbabilities": {
+        "human": 0.88231360912323,
+        "ai": 0.10581336915493011,
+        "ai_edited": 0.005564133636653423,
+        "humanized": 0.006308944430202246
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:01.687Z"
     }
   },
   "LmXGvsuNDv8": {
@@ -66460,6 +66475,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.336Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.03261911869049072,
+      "classProbabilities": {
+        "human": 0.9673808813095093,
+        "ai": 0.00008278461609734222,
+        "ai_edited": 0.015991564840078354,
+        "humanized": 0.01654483936727047
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:04.970Z"
     }
   },
   "CYM40HN82l4": {
@@ -66528,6 +66558,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.435Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.014404654502868652,
+      "classProbabilities": {
+        "human": 0.9855953454971313,
+        "ai": 0.00020029801817145199,
+        "ai_edited": 0.007001155987381935,
+        "humanized": 0.007203268352895975
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:07.771Z"
     }
   },
   "DjcZrtcBZi4": {
@@ -66596,6 +66641,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.536Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.03870809078216553,
+      "classProbabilities": {
+        "human": 0.9612919092178345,
+        "ai": 0.0023593069054186344,
+        "ai_edited": 0.02786923572421074,
+        "humanized": 0.008479558862745762
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:11.213Z"
     }
   },
   "Klta3uf4uzw": {
@@ -66664,6 +66724,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.634Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.032347917556762695,
+      "classProbabilities": {
+        "human": 0.9676520824432373,
+        "ai": 0.0004937589983455837,
+        "ai_edited": 0.028111200779676437,
+        "humanized": 0.0037429872900247574
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:13.429Z"
     }
   },
   "sUv353ua7E8": {
@@ -66732,6 +66807,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.730Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6111946403980255,
+      "classProbabilities": {
+        "human": 0.3888053596019745,
+        "ai": 0.07477109134197235,
+        "ai_edited": 0.006982794031500816,
+        "humanized": 0.5294407606124878
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:15.051Z"
     }
   },
   "FLbXrNGVXfE": {
@@ -66800,6 +66890,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.828Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.1446022391319275,
+      "classProbabilities": {
+        "human": 0.8553977608680725,
+        "ai": 0.00023147190222516656,
+        "ai_edited": 0.045751508325338364,
+        "humanized": 0.0986192375421524
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:17.589Z"
     }
   },
   "ImmtTHYU5GQ": {
@@ -66868,6 +66973,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:38.926Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.02919560670852661,
+      "classProbabilities": {
+        "human": 0.9708043932914734,
+        "ai": 0.0006717582000419497,
+        "ai_edited": 0.009036840870976448,
+        "humanized": 0.01948699727654457
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:20.899Z"
     }
   },
   "sY0Pf_pfqCI": {
@@ -66936,6 +67056,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.023Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.10119080543518066,
+      "classProbabilities": {
+        "human": 0.8988091945648193,
+        "ai": 0.04345059394836426,
+        "ai_edited": 0.04822174087166786,
+        "humanized": 0.009518515318632126
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:24.544Z"
     }
   },
   "uA70ZGCC1f4": {
@@ -67004,6 +67139,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.121Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7876735180616379,
+      "classProbabilities": {
+        "human": 0.21232648193836212,
+        "ai": 0.0001324596960330382,
+        "ai_edited": 0.000771349121350795,
+        "humanized": 0.7867698073387146
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:25.513Z"
     }
   },
   "cHRZ6OrSvvI": {
@@ -67072,6 +67222,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.220Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.05854994058609009,
+      "classProbabilities": {
+        "human": 0.9414500594139099,
+        "ai": 0.03318122401833534,
+        "ai_edited": 0.012866065837442875,
+        "humanized": 0.012502701953053474
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:28.196Z"
     }
   },
   "wHf8yt_xVrk": {
@@ -67140,6 +67305,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.316Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9987632749835029,
+      "classProbabilities": {
+        "human": 0.0012367250164970756,
+        "ai": 0.8992235660552979,
+        "ai_edited": 0.00004703908052761108,
+        "humanized": 0.09949252009391785
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:29.929Z"
     }
   },
   "_waBFUg_oT8": {
@@ -67208,6 +67388,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.416Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6567811965942383,
+      "classProbabilities": {
+        "human": 0.3432188034057617,
+        "ai": 0.0845571830868721,
+        "ai_edited": 0.027999307960271835,
+        "humanized": 0.5442246198654175
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:31.763Z"
     }
   },
   "Lr8PhkTrx1E": {
@@ -67276,6 +67471,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.515Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5027019679546356,
+      "classProbabilities": {
+        "human": 0.4972980320453644,
+        "ai": 0.3984776735305786,
+        "ai_edited": 0.026099592447280884,
+        "humanized": 0.07812472432851791
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:34.348Z"
     }
   },
   "j4LSwZ05laQ": {
@@ -67344,6 +67554,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.610Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.010480284690856934,
+      "classProbabilities": {
+        "human": 0.9895197153091431,
+        "ai": 0.0005188836948946118,
+        "ai_edited": 0.007703927345573902,
+        "humanized": 0.0022574288304895163
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:35.499Z"
     }
   },
   "WEFAUMVdO08": {
@@ -67412,6 +67637,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.707Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7183104455471039,
+      "classProbabilities": {
+        "human": 0.2816895544528961,
+        "ai": 0.00013556756312027574,
+        "ai_edited": 0.013373779132962227,
+        "humanized": 0.7048011422157288
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:36.507Z"
     }
   },
   "L1kbrlZRDvU": {
@@ -67480,6 +67720,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.806Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6404069662094116,
+      "classProbabilities": {
+        "human": 0.3595930337905884,
+        "ai": 0.02738138660788536,
+        "ai_edited": 0.019691139459609985,
+        "humanized": 0.593334436416626
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:40.376Z"
     }
   },
   "6ST2KzdC_t0": {
@@ -67548,6 +67803,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.880Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7109571993350983,
+      "classProbabilities": {
+        "human": 0.28904280066490173,
+        "ai": 0.6547700762748718,
+        "ai_edited": 0.011741780675947666,
+        "humanized": 0.04444531351327896
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:40.583Z"
     }
   },
   "FKouK2Z8dyo": {
@@ -67616,6 +67886,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:39.964Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999905472359387,
+      "classProbabilities": {
+        "human": 0.000009452764061279595,
+        "ai": 0.9999791383743286,
+        "ai_edited": 9.147793207375798e-7,
+        "humanized": 0.000010520599062147085
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:40.864Z"
     }
   },
   "KxrLSxyyvu4": {
@@ -67684,6 +67969,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:40.034Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.05087089538574219,
+      "classProbabilities": {
+        "human": 0.9491291046142578,
+        "ai": 0.04036722704768181,
+        "ai_edited": 0.004076616372913122,
+        "humanized": 0.006427047774195671
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:40.930Z"
     }
   },
   "XG_U-v7scN8": {
@@ -67752,6 +68052,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:40.129Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999324867167161,
+      "classProbabilities": {
+        "human": 0.00006751328328391537,
+        "ai": 0.99967360496521,
+        "ai_edited": 0.00001073940711648902,
+        "humanized": 0.00024807744193822145
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:41.548Z"
     }
   },
   "OD-VMrkynXw": {
@@ -67820,6 +68135,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:40.192Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8811565488576889,
+      "classProbabilities": {
+        "human": 0.1188434511423111,
+        "ai": 0.14860138297080994,
+        "ai_edited": 0.0033346335403621197,
+        "humanized": 0.7292205095291138
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:41.751Z"
     }
   },
   "Crk-LPS9dfg": {
@@ -67888,6 +68218,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:31:40.255Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9748236462473869,
+      "classProbabilities": {
+        "human": 0.025176353752613068,
+        "ai": 0.9725192189216614,
+        "ai_edited": 0.00023050331219565123,
+        "humanized": 0.002073930576443672
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:41.923Z"
     }
   },
   "0D4dBzS3OuM": {
@@ -67956,6 +68301,21 @@
       },
       "rawOutput": "{\"score\": 0.02}",
       "timestamp": "2026-09-20T20:24:47.256Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9936167718842626,
+      "classProbabilities": {
+        "human": 0.006383228115737438,
+        "ai": 0.00009184917144011706,
+        "ai_edited": 0.9916161298751831,
+        "humanized": 0.001908808364532888
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:42.160Z"
     }
   },
   "3pPqxZbXUuM": {
@@ -68024,6 +68384,21 @@
       },
       "rawOutput": "{\"score\": 0.0}",
       "timestamp": "2026-09-20T20:24:49.551Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8322353214025497,
+      "classProbabilities": {
+        "human": 0.16776467859745026,
+        "ai": 0.40423205494880676,
+        "ai_edited": 0.1551854908466339,
+        "humanized": 0.2728177011013031
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:44.153Z"
     }
   },
   "K7pmqpoVdSA": {
@@ -68102,6 +68477,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:21.673Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.20636963844299316,
+      "classProbabilities": {
+        "human": 0.7936303615570068,
+        "ai": 0.18886642158031464,
+        "ai_edited": 0.006039785221219063,
+        "humanized": 0.011463489383459091
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:44.212Z"
     }
   },
   "3rCxmK6ONAk": {
@@ -68170,6 +68560,21 @@
       },
       "rawOutput": "{\"score\": 0.05}",
       "timestamp": "2026-09-20T20:24:53.261Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5023315846920013,
+      "classProbabilities": {
+        "human": 0.49766841530799866,
+        "ai": 0.003843721468001604,
+        "ai_edited": 0.028027907013893127,
+        "humanized": 0.4704599976539612
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:47.957Z"
     }
   },
   "r59hRPFFAyo": {
@@ -68238,6 +68643,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:25.663Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999861783344386,
+      "classProbabilities": {
+        "human": 0.000013821665561408736,
+        "ai": 0.9999653100967407,
+        "ai_edited": 0.0000011406457360862987,
+        "humanized": 0.000019711596905835904
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:51.617Z"
     }
   },
   "E1pZc0bnRHk": {
@@ -68306,6 +68726,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:25.815Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9952412014827132,
+      "classProbabilities": {
+        "human": 0.0047587985172867775,
+        "ai": 0.9946134686470032,
+        "ai_edited": 0.00001728501229081303,
+        "humanized": 0.00061039935098961
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:52.572Z"
     }
   },
   "MmoXRXjUWZw": {
@@ -68374,6 +68809,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:25.921Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8217142224311829,
+      "classProbabilities": {
+        "human": 0.17828577756881714,
+        "ai": 0.8151425719261169,
+        "ai_edited": 0.0016613068291917443,
+        "humanized": 0.004910317249596119
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:52.735Z"
     }
   },
   "sZ7Pts_L-LM": {
@@ -68442,6 +68892,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.070Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9997781945567112,
+      "classProbabilities": {
+        "human": 0.0002218054432887584,
+        "ai": 0.9965546727180481,
+        "ai_edited": 0.000007526250556111336,
+        "humanized": 0.003215896198526025
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:53.754Z"
     }
   },
   "4mY2PFl0NtY": {
@@ -68510,6 +68975,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.223Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.012369096279144287,
+      "classProbabilities": {
+        "human": 0.9876309037208557,
+        "ai": 0.00012738240184262395,
+        "ai_edited": 0.010060140863060951,
+        "humanized": 0.002181536052376032
+      },
+      "chunkCount": 6,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:56.707Z"
     }
   },
   "dKhG_tR616I": {
@@ -68578,6 +69058,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.413Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9942144295200706,
+      "classProbabilities": {
+        "human": 0.005785570479929447,
+        "ai": 0.9935676455497742,
+        "ai_edited": 0.00008680798055138439,
+        "humanized": 0.0005599441938102245
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:56.972Z"
     }
   },
   "wmswZSGFyf8": {
@@ -68646,6 +69141,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.567Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9989922146778554,
+      "classProbabilities": {
+        "human": 0.0010077853221446276,
+        "ai": 0.9986002445220947,
+        "ai_edited": 0.000021896936232224107,
+        "humanized": 0.0003700342494994402
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:27:58.878Z"
     }
   },
   "dCEMmPLZb4U": {
@@ -68714,6 +69224,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.726Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9809000138193369,
+      "classProbabilities": {
+        "human": 0.01909998618066311,
+        "ai": 0.9806206822395325,
+        "ai_edited": 0.0000397321637137793,
+        "humanized": 0.0002396477502770722
+      },
+      "chunkCount": 7,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:02.543Z"
     }
   },
   "53nLlIVDYA8": {
@@ -68782,6 +69307,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:26.879Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9848530879244208,
+      "classProbabilities": {
+        "human": 0.015146912075579166,
+        "ai": 0.9306756854057312,
+        "ai_edited": 0.00009992823470383883,
+        "humanized": 0.054077401757240295
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:04.476Z"
     }
   },
   "bz7dB_cmESE": {
@@ -68850,6 +69390,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.030Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9953383118845522,
+      "classProbabilities": {
+        "human": 0.00466168811544776,
+        "ai": 0.8165619969367981,
+        "ai_edited": 0.00018973989062942564,
+        "humanized": 0.17858664691448212
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:05.534Z"
     }
   },
   "IsPWgk7Fye0": {
@@ -68918,6 +69473,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.185Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998215181403793,
+      "classProbabilities": {
+        "human": 0.00017848185962066054,
+        "ai": 0.999195396900177,
+        "ai_edited": 0.00000790452122600982,
+        "humanized": 0.0006181662902235985
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:06.136Z"
     }
   },
   "u3Ngkh5c-Yo": {
@@ -68986,6 +69556,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.338Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998830124095548,
+      "classProbabilities": {
+        "human": 0.00011698759044520557,
+        "ai": 0.9996252655982971,
+        "ai_edited": 0.000003756669457288808,
+        "humanized": 0.00025399026344530284
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:08.552Z"
     }
   },
   "ItUeLHArV6Q": {
@@ -69054,6 +69639,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.489Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999541651995969,
+      "classProbabilities": {
+        "human": 0.00004583480040309951,
+        "ai": 0.9998701214790344,
+        "ai_edited": 0.0000036291787637310335,
+        "humanized": 0.00008043399429880083
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:10.721Z"
     }
   },
   "vJlVoISPirc": {
@@ -69122,6 +69722,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.679Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.23041313886642456,
+      "classProbabilities": {
+        "human": 0.7695868611335754,
+        "ai": 0.08378658443689346,
+        "ai_edited": 0.002446021419018507,
+        "humanized": 0.1441805362701416
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:14.404Z"
     }
   },
   "AW_nxki182E": {
@@ -69190,6 +69805,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.778Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.22695434093475342,
+      "classProbabilities": {
+        "human": 0.7730456590652466,
+        "ai": 0.18378417193889618,
+        "ai_edited": 0.00883319228887558,
+        "humanized": 0.034336965531110764
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:18.017Z"
     }
   },
   "__RHiKKFDjg": {
@@ -69258,6 +69888,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:27.932Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999800234963914,
+      "classProbabilities": {
+        "human": 0.0000199765036086319,
+        "ai": 0.9999403357505798,
+        "ai_edited": 0.000001482692368881544,
+        "humanized": 0.000038116580981295556
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:20.107Z"
     }
   },
   "BP9WHSmWMvs": {
@@ -69326,6 +69971,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.084Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3171701431274414,
+      "classProbabilities": {
+        "human": 0.6828298568725586,
+        "ai": 0.06931962817907333,
+        "ai_edited": 0.0076902140863239765,
+        "humanized": 0.24016034603118896
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:23.780Z"
     }
   },
   "BRxCQH-OJ9k": {
@@ -69394,6 +70054,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.235Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.030015885829925537,
+      "classProbabilities": {
+        "human": 0.9699841141700745,
+        "ai": 0.00027233088621869683,
+        "ai_edited": 0.010993091389536858,
+        "humanized": 0.018750494346022606
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:27.137Z"
     }
   },
   "FEyU6aPsY0Y": {
@@ -69462,6 +70137,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.388Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999675953840779,
+      "classProbabilities": {
+        "human": 0.00003240461592213251,
+        "ai": 0.9999343156814575,
+        "ai_edited": 0.0000016348648159691948,
+        "humanized": 0.00003158963954774663
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:29.315Z"
     }
   },
   "T-IEcqtNyOo": {
@@ -69530,6 +70220,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.541Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9963385392911732,
+      "classProbabilities": {
+        "human": 0.0036614607088267803,
+        "ai": 0.9944003224372864,
+        "ai_edited": 0.00009050185326486826,
+        "humanized": 0.0018476479453966022
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:30.526Z"
     }
   },
   "yc1W6DVB_oU": {
@@ -69598,6 +70303,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.694Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999052669008961,
+      "classProbabilities": {
+        "human": 0.00009473309910390526,
+        "ai": 0.9997854232788086,
+        "ai_edited": 0.000003059472646782524,
+        "humanized": 0.0001168519738712348
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:32.693Z"
     }
   },
   "CvPETuwdwfw": {
@@ -69666,6 +70386,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:28.859Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999398377731268,
+      "classProbabilities": {
+        "human": 0.00006016222687321715,
+        "ai": 0.9998326897621155,
+        "ai_edited": 0.0000028792180728487438,
+        "humanized": 0.00010418328747618943
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:35.037Z"
     }
   },
   "b0f5v3eTcmI": {
@@ -69734,6 +70469,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.013Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9804190155118704,
+      "classProbabilities": {
+        "human": 0.019580984488129616,
+        "ai": 0.9018071889877319,
+        "ai_edited": 0.00014192730304785073,
+        "humanized": 0.0784698873758316
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:38.536Z"
     }
   },
   "Rcuuq1uBZPc": {
@@ -69802,6 +70552,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.166Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9593809992074966,
+      "classProbabilities": {
+        "human": 0.04061900079250336,
+        "ai": 0.9520929455757141,
+        "ai_edited": 0.0000966323641478084,
+        "humanized": 0.007191348820924759
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:41.196Z"
     }
   },
   "5f7a5sYxA-Q": {
@@ -69870,6 +70635,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.325Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.1975003480911255,
+      "classProbabilities": {
+        "human": 0.8024996519088745,
+        "ai": 0.03193315491080284,
+        "ai_edited": 0.027385536581277847,
+        "humanized": 0.1381816565990448
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:44.863Z"
     }
   },
   "ohuzxJCSB34": {
@@ -69938,6 +70718,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.475Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9927366240881383,
+      "classProbabilities": {
+        "human": 0.007263375911861658,
+        "ai": 0.992297887802124,
+        "ai_edited": 0.000041287414205726236,
+        "humanized": 0.0003974348946940154
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:45.870Z"
     }
   },
   "0NPwI9vL-_c": {
@@ -69995,6 +70790,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.627Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.01751476526260376,
+      "classProbabilities": {
+        "human": 0.9824852347373962,
+        "ai": 0.0006385330925695598,
+        "ai_edited": 0.011564656160771847,
+        "humanized": 0.005311515647917986
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:49.826Z"
     }
   },
   "KU6fi8ssD0k": {
@@ -70063,6 +70873,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.778Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.014104783535003662,
+      "classProbabilities": {
+        "human": 0.9858952164649963,
+        "ai": 0.00028835839475505054,
+        "ai_edited": 0.012630648910999298,
+        "humanized": 0.0011857091449201107
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:53.228Z"
     }
   },
   "7-13KTSAjr8": {
@@ -70131,6 +70956,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:29.929Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.01857137680053711,
+      "classProbabilities": {
+        "human": 0.9814286231994629,
+        "ai": 0.00026937093934975564,
+        "ai_edited": 0.015835275873541832,
+        "humanized": 0.002466681180521846
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:56.685Z"
     }
   },
   "FK5ikLAm_Kc": {
@@ -70199,6 +71039,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.078Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.989781373180449,
+      "classProbabilities": {
+        "human": 0.010218626819550991,
+        "ai": 0.880357027053833,
+        "ai_edited": 0.0004071528383065015,
+        "humanized": 0.10901721566915512
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:28:57.553Z"
     }
   },
   "0arszbyPRZI": {
@@ -70267,6 +71122,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.232Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3115282654762268,
+      "classProbabilities": {
+        "human": 0.6884717345237732,
+        "ai": 0.017852813005447388,
+        "ai_edited": 0.00497984467074275,
+        "humanized": 0.2886955738067627
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:01.220Z"
     }
   },
   "xPbgCEM8lzA": {
@@ -70335,6 +71205,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.390Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.051936984062194824,
+      "classProbabilities": {
+        "human": 0.9480630159378052,
+        "ai": 0.006750478874891996,
+        "ai_edited": 0.00432870676741004,
+        "humanized": 0.04085785895586014
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:04.971Z"
     }
   },
   "jqOhINj81HY": {
@@ -70403,6 +71288,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.550Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.019917964935302734,
+      "classProbabilities": {
+        "human": 0.9800820350646973,
+        "ai": 0.0009930365486070514,
+        "ai_edited": 0.003686753334477544,
+        "humanized": 0.015238199383020401
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:08.825Z"
     }
   },
   "YVkRyCCfRbA": {
@@ -70471,6 +71371,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.710Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.04790079593658447,
+      "classProbabilities": {
+        "human": 0.9520992040634155,
+        "ai": 0.00034765040618367493,
+        "ai_edited": 0.009906795807182789,
+        "humanized": 0.03764633461833
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:12.039Z"
     }
   },
   "-0kNc7FY0jo": {
@@ -70539,6 +71454,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:30.870Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6817168295383453,
+      "classProbabilities": {
+        "human": 0.31828317046165466,
+        "ai": 0.21190841495990753,
+        "ai_edited": 0.0021178985480219126,
+        "humanized": 0.46769046783447266
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:15.661Z"
     }
   },
   "Wbie5BnvvKk": {
@@ -70607,6 +71537,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.037Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3489142656326294,
+      "classProbabilities": {
+        "human": 0.6510857343673706,
+        "ai": 0.2977604568004608,
+        "ai_edited": 0.005443648435175419,
+        "humanized": 0.04571009799838066
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:19.411Z"
     }
   },
   "TJ657yOKzf4": {
@@ -70675,6 +71620,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.197Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3526749610900879,
+      "classProbabilities": {
+        "human": 0.6473250389099121,
+        "ai": 0.30070510506629944,
+        "ai_edited": 0.01490385364741087,
+        "humanized": 0.03706594184041023
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:23.131Z"
     }
   },
   "9iV19UDttyE": {
@@ -70743,6 +71703,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.372Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5299682021141052,
+      "classProbabilities": {
+        "human": 0.4700317978858948,
+        "ai": 0.2456672340631485,
+        "ai_edited": 0.0018528164364397526,
+        "humanized": 0.2824481427669525
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:26.908Z"
     }
   },
   "vg4COkanX3k": {
@@ -70811,6 +71786,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.476Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9996686292870436,
+      "classProbabilities": {
+        "human": 0.0003313707129564136,
+        "ai": 0.999523401260376,
+        "ai_edited": 0.0000047147782424872275,
+        "humanized": 0.00014053189079277217
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:27.044Z"
     }
   },
   "SPBoMP9te2M": {
@@ -70879,6 +71869,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.631Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.006397902965545654,
+      "classProbabilities": {
+        "human": 0.9936020970344543,
+        "ai": 0.0002869872550945729,
+        "ai_edited": 0.002182027557864785,
+        "humanized": 0.0039289179258048534
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:30.313Z"
     }
   },
   "4wFBA9-KyzY": {
@@ -70947,6 +71952,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.758Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.11401170492172241,
+      "classProbabilities": {
+        "human": 0.8859882950782776,
+        "ai": 0.09829617291688919,
+        "ai_edited": 0.0026497666258364916,
+        "humanized": 0.013065802864730358
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:30.516Z"
     }
   },
   "Ax2SGi9nAxE": {
@@ -71015,6 +72035,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:31.857Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.0669785737991333,
+      "classProbabilities": {
+        "human": 0.9330214262008667,
+        "ai": 0.006553695071488619,
+        "ai_edited": 0.05296950787305832,
+        "humanized": 0.007455412298440933
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:32.055Z"
     }
   },
   "f8FHas1dmt8": {
@@ -71083,6 +72118,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.007Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.05040395259857178,
+      "classProbabilities": {
+        "human": 0.9495960474014282,
+        "ai": 0.041438762098550797,
+        "ai_edited": 0.002961180405691266,
+        "humanized": 0.006003957707434893
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:32.545Z"
     }
   },
   "q98WM0Gta0A": {
@@ -71151,6 +72201,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.156Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9029887020587921,
+      "classProbabilities": {
+        "human": 0.09701129794120789,
+        "ai": 0.8903819918632507,
+        "ai_edited": 0.0005652873078361154,
+        "humanized": 0.012041491456329823
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:33.891Z"
     }
   },
   "UrSo7JTq1Vs": {
@@ -71219,6 +72284,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.306Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.009131908416748047,
+      "classProbabilities": {
+        "human": 0.990868091583252,
+        "ai": 0.0008469633758068085,
+        "ai_edited": 0.0038432800211012363,
+        "humanized": 0.004441691562533379
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:34.355Z"
     }
   },
   "6D4_ZMnPx7I": {
@@ -71287,6 +72367,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.449Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07169896364212036,
+      "classProbabilities": {
+        "human": 0.9283010363578796,
+        "ai": 0.04795575141906738,
+        "ai_edited": 0.016140075400471687,
+        "humanized": 0.00760320108383894
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:34.701Z"
     }
   },
   "bYW_7rWjQMs": {
@@ -71355,6 +72450,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.597Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8235215246677399,
+      "classProbabilities": {
+        "human": 0.17647847533226013,
+        "ai": 0.7944030165672302,
+        "ai_edited": 0.00244236015714705,
+        "humanized": 0.026676177978515625
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:35.291Z"
     }
   },
   "n5OD5Jq8Xac": {
@@ -71423,6 +72533,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.741Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.01023775339126587,
+      "classProbabilities": {
+        "human": 0.9897622466087341,
+        "ai": 0.0010643070563673973,
+        "ai_edited": 0.004822832066565752,
+        "humanized": 0.004350642208009958
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:35.682Z"
     }
   },
   "LotmCays40g": {
@@ -71491,6 +72616,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:32.891Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7803487479686737,
+      "classProbabilities": {
+        "human": 0.2196512520313263,
+        "ai": 0.7678409218788147,
+        "ai_edited": 0.004824021831154823,
+        "humanized": 0.007683769799768925
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:37.714Z"
     }
   },
   "1Pyp9dXleUE": {
@@ -71559,6 +72699,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.038Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.13034003973007202,
+      "classProbabilities": {
+        "human": 0.869659960269928,
+        "ai": 0.10833054035902023,
+        "ai_edited": 0.015504885464906693,
+        "humanized": 0.006504562217742205
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:38.182Z"
     }
   },
   "M3GnkQXp7mM": {
@@ -71627,6 +72782,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.149Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5529587864875793,
+      "classProbabilities": {
+        "human": 0.44704121351242065,
+        "ai": 0.1254933923482895,
+        "ai_edited": 0.003045176388695836,
+        "humanized": 0.4244203269481659
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:38.372Z"
     }
   },
   "ZxvPdYMw_Sw": {
@@ -71695,6 +72865,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.300Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9681222066283226,
+      "classProbabilities": {
+        "human": 0.0318777933716774,
+        "ai": 0.005004055332392454,
+        "ai_edited": 0.00018713709141593426,
+        "humanized": 0.9629310369491577
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:41.804Z"
     }
   },
   "Dm-wCe7j3pA": {
@@ -71763,6 +72948,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.452Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999270113694365,
+      "classProbabilities": {
+        "human": 0.00007298863056348637,
+        "ai": 0.9997827410697937,
+        "ai_edited": 0.00000401658962800866,
+        "humanized": 0.00014025092241354287
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:42.977Z"
     }
   },
   "e9frqIp3ldg": {
@@ -71831,6 +73031,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.576Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9298528507351875,
+      "classProbabilities": {
+        "human": 0.07014714926481247,
+        "ai": 0.9214252829551697,
+        "ai_edited": 0.0012905707117170095,
+        "humanized": 0.007137047592550516
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:43.178Z"
     }
   },
   "pbBZCGBD01M": {
@@ -71899,6 +73114,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.658Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.040569186210632324,
+      "classProbabilities": {
+        "human": 0.9594308137893677,
+        "ai": 0.03202053904533386,
+        "ai_edited": 0.0011992305517196655,
+        "humanized": 0.007349373307079077
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:43.253Z"
     }
   },
   "lrYveOkI-vo": {
@@ -71967,6 +73197,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.809Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.02494567632675171,
+      "classProbabilities": {
+        "human": 0.9750543236732483,
+        "ai": 0.0006780763505958021,
+        "ai_edited": 0.008301965892314911,
+        "humanized": 0.015965532511472702
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:43.718Z"
     }
   },
   "T9L2nvOC5W8": {
@@ -72035,6 +73280,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:33.958Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.150071382522583,
+      "classProbabilities": {
+        "human": 0.849928617477417,
+        "ai": 0.13249309360980988,
+        "ai_edited": 0.007802641484886408,
+        "humanized": 0.009775680489838123
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:44.741Z"
     }
   },
   "B_LD3PnOnQ4": {
@@ -72103,6 +73363,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.109Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.47238999605178833,
+      "classProbabilities": {
+        "human": 0.5276100039482117,
+        "ai": 0.4355737566947937,
+        "ai_edited": 0.0031150535214692354,
+        "humanized": 0.03370116651058197
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:45.680Z"
     }
   },
   "WnT0YWLYXGE": {
@@ -72171,6 +73446,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.260Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5402583181858063,
+      "classProbabilities": {
+        "human": 0.4597416818141937,
+        "ai": 0.41760438680648804,
+        "ai_edited": 0.001771642710082233,
+        "humanized": 0.12088227272033691
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:46.869Z"
     }
   },
   "6ZZ0C46wwMQ": {
@@ -72239,6 +73529,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.408Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07304972410202026,
+      "classProbabilities": {
+        "human": 0.9269502758979797,
+        "ai": 0.02185530588030815,
+        "ai_edited": 0.00536164827644825,
+        "humanized": 0.04583282023668289
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:47.358Z"
     }
   },
   "7jegq--mtAo": {
@@ -72307,6 +73612,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.519Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6688823699951172,
+      "classProbabilities": {
+        "human": 0.3311176300048828,
+        "ai": 0.457449346780777,
+        "ai_edited": 0.009005825966596603,
+        "humanized": 0.2024271935224533
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:47.537Z"
     }
   },
   "1_H8SdBC0sk": {
@@ -72375,6 +73695,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.667Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7269832789897919,
+      "classProbabilities": {
+        "human": 0.27301672101020813,
+        "ai": 0.7021837830543518,
+        "ai_edited": 0.001157403108663857,
+        "humanized": 0.02364211156964302
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:48.504Z"
     }
   },
   "bX_4JfckrlE": {
@@ -72443,6 +73778,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.760Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.017357587814331055,
+      "classProbabilities": {
+        "human": 0.982642412185669,
+        "ai": 0.014927337877452374,
+        "ai_edited": 0.0005066971061751246,
+        "humanized": 0.0019234621431678534
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:48.597Z"
     }
   },
   "CwEbKw3bUpo": {
@@ -72511,6 +73861,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:34.912Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9549212604761124,
+      "classProbabilities": {
+        "human": 0.045078739523887634,
+        "ai": 0.6525904536247253,
+        "ai_edited": 0.07470628619194031,
+        "humanized": 0.22762444615364075
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:49.731Z"
     }
   },
   "9NRk-oWZJB8": {
@@ -72579,6 +73944,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.062Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.43587690591812134,
+      "classProbabilities": {
+        "human": 0.5641230940818787,
+        "ai": 0.11739115417003632,
+        "ai_edited": 0.0024959826841950417,
+        "humanized": 0.3159897029399872
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:52.470Z"
     }
   },
   "rYqRHJ_UDf4": {
@@ -72647,6 +74027,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.178Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.945687610656023,
+      "classProbabilities": {
+        "human": 0.054312389343976974,
+        "ai": 0.40309128165245056,
+        "ai_edited": 0.0015825836453586817,
+        "humanized": 0.5410137176513672
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:52.704Z"
     }
   },
   "rXRFUaWsBRA": {
@@ -72715,6 +74110,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.327Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5592577159404755,
+      "classProbabilities": {
+        "human": 0.44074228405952454,
+        "ai": 0.046118710190057755,
+        "ai_edited": 0.003858203301206231,
+        "humanized": 0.5092807412147522
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:53.504Z"
     }
   },
   "TBvErYkNSiw": {
@@ -72783,6 +74193,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.488Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.2851365804672241,
+      "classProbabilities": {
+        "human": 0.7148634195327759,
+        "ai": 0.22812949120998383,
+        "ai_edited": 0.014723163098096848,
+        "humanized": 0.04228385537862778
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:53.890Z"
     }
   },
   "Bpwbtmmmb4I": {
@@ -72851,6 +74276,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.609Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.18382668495178223,
+      "classProbabilities": {
+        "human": 0.8161733150482178,
+        "ai": 0.001076525542885065,
+        "ai_edited": 0.18087825179100037,
+        "humanized": 0.0018719281069934368
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:54.095Z"
     }
   },
   "yU43DGnA4no": {
@@ -72919,6 +74359,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.794Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.959831740707159,
+      "classProbabilities": {
+        "human": 0.04016825929284096,
+        "ai": 0.9585453271865845,
+        "ai_edited": 0.0003723350528161973,
+        "humanized": 0.0009140815818682313
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:54.209Z"
     }
   },
   "akp4ymEqqSE": {
@@ -72987,6 +74442,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:35.947Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5175015032291412,
+      "classProbabilities": {
+        "human": 0.48249849677085876,
+        "ai": 0.5077478289604187,
+        "ai_edited": 0.001532194553874433,
+        "humanized": 0.008221521973609924
+      },
+      "chunkCount": 5,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:57.719Z"
     }
   },
   "a-XS4qfyKpM": {
@@ -73055,6 +74525,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.095Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8172494322061539,
+      "classProbabilities": {
+        "human": 0.18275056779384613,
+        "ai": 0.7937358021736145,
+        "ai_edited": 0.002919791266322136,
+        "humanized": 0.020593848079442978
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:58.199Z"
     }
   },
   "pLvtdaqVw3I": {
@@ -73123,6 +74608,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.279Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9903927911072969,
+      "classProbabilities": {
+        "human": 0.009607208892703056,
+        "ai": 0.9640871286392212,
+        "ai_edited": 0.0003831193898804486,
+        "humanized": 0.02592247538268566
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:29:58.930Z"
     }
   },
   "edgdJL8_TR0": {
@@ -73191,6 +74691,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.428Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8458563536405563,
+      "classProbabilities": {
+        "human": 0.15414364635944366,
+        "ai": 0.821315586566925,
+        "ai_edited": 0.001473139156587422,
+        "humanized": 0.023067506030201912
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:00.802Z"
     }
   },
   "FuHVAnbN22g": {
@@ -73259,6 +74774,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.514Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07532632350921631,
+      "classProbabilities": {
+        "human": 0.9246736764907837,
+        "ai": 0.050146427005529404,
+        "ai_edited": 0.0009561093174852431,
+        "humanized": 0.024223731830716133
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:00.869Z"
     }
   },
   "eFQ4nVx-SH0": {
@@ -73327,6 +74857,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.664Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998854782606941,
+      "classProbabilities": {
+        "human": 0.00011452173930592835,
+        "ai": 0.999712347984314,
+        "ai_edited": 0.000003177839062118437,
+        "humanized": 0.00016988122661132365
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:01.383Z"
     }
   },
   "QSsm9fzxSOM": {
@@ -73395,6 +74940,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.818Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.1190904974937439,
+      "classProbabilities": {
+        "human": 0.8809095025062561,
+        "ai": 0.088486447930336,
+        "ai_edited": 0.003812025301158428,
+        "humanized": 0.02679198794066906
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:02.358Z"
     }
   },
   "MG8gyxXvw4g": {
@@ -73463,6 +75023,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:36.970Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999877673035371,
+      "classProbabilities": {
+        "human": 0.00001223269646288827,
+        "ai": 0.999976634979248,
+        "ai_edited": 0.0000011333723932693829,
+        "humanized": 0.00000997472943708999
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:03.024Z"
     }
   },
   "Ya7pFvPh-EQ": {
@@ -73531,6 +75106,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.061Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7055816352367401,
+      "classProbabilities": {
+        "human": 0.2944183647632599,
+        "ai": 0.6982885003089905,
+        "ai_edited": 0.0003293120244052261,
+        "humanized": 0.006963797379285097
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:03.107Z"
     }
   },
   "ZotiDh6z8BQ": {
@@ -73599,6 +75189,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.202Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6767919063568115,
+      "classProbabilities": {
+        "human": 0.3232080936431885,
+        "ai": 0.5836535096168518,
+        "ai_edited": 0.004405029583722353,
+        "humanized": 0.08873331546783447
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:03.417Z"
     }
   },
   "VZuMcqI9xoo": {
@@ -73667,6 +75272,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.324Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07197767496109009,
+      "classProbabilities": {
+        "human": 0.9280223250389099,
+        "ai": 0.005067368503659964,
+        "ai_edited": 0.004868295509368181,
+        "humanized": 0.06204187124967575
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:03.608Z"
     }
   },
   "7Tef7pqlFp4": {
@@ -73735,6 +75355,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.424Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3187205195426941,
+      "classProbabilities": {
+        "human": 0.6812794804573059,
+        "ai": 0.3094961941242218,
+        "ai_edited": 0.002244506264105439,
+        "humanized": 0.006979837082326412
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:03.714Z"
     }
   },
   "pDR0wnHicdk": {
@@ -73803,6 +75438,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.577Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.367722749710083,
+      "classProbabilities": {
+        "human": 0.632277250289917,
+        "ai": 0.31092262268066406,
+        "ai_edited": 0.0064820097759366035,
+        "humanized": 0.050318170338869095
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:06.455Z"
     }
   },
   "pK9MHP4O2vE": {
@@ -73871,6 +75521,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.706Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.19701039791107178,
+      "classProbabilities": {
+        "human": 0.8029896020889282,
+        "ai": 0.18055357038974762,
+        "ai_edited": 0.005329444073140621,
+        "humanized": 0.011127385310828686
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:06.676Z"
     }
   },
   "bKXXQmx7WKA": {
@@ -73939,6 +75604,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.789Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8101250678300858,
+      "classProbabilities": {
+        "human": 0.18987493216991425,
+        "ai": 0.804714560508728,
+        "ai_edited": 0.0024696707259863615,
+        "humanized": 0.002940855920314789
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:06.734Z"
     }
   },
   "4FcEcxl2zV4": {
@@ -74007,6 +75687,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.870Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7776868045330048,
+      "classProbabilities": {
+        "human": 0.22231319546699524,
+        "ai": 0.7695904970169067,
+        "ai_edited": 0.00286375405266881,
+        "humanized": 0.005232453811913729
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:06.797Z"
     }
   },
   "ONTklS43Tt0": {
@@ -74075,6 +75770,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:37.987Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07282167673110962,
+      "classProbabilities": {
+        "human": 0.9271783232688904,
+        "ai": 0.06725320965051651,
+        "ai_edited": 0.0020740097388625145,
+        "humanized": 0.003494430100545287
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:06.885Z"
     }
   },
   "aFPBxb3-93I": {
@@ -74143,6 +75853,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.086Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7641181647777557,
+      "classProbabilities": {
+        "human": 0.23588183522224426,
+        "ai": 0.7249824404716492,
+        "ai_edited": 0.02676326408982277,
+        "humanized": 0.012372458353638649
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:07.315Z"
     }
   },
   "dp4-Sv0uVzE": {
@@ -74211,6 +75936,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.236Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9511682279407978,
+      "classProbabilities": {
+        "human": 0.048831772059202194,
+        "ai": 0.9367087483406067,
+        "ai_edited": 0.004216921515762806,
+        "humanized": 0.01024247519671917
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:07.684Z"
     }
   },
   "VegXroUMoYU": {
@@ -74279,6 +76019,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.390Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6762857735157013,
+      "classProbabilities": {
+        "human": 0.3237142264842987,
+        "ai": 0.39214539527893066,
+        "ai_edited": 0.0060177454724907875,
+        "humanized": 0.27812260389328003
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:08.358Z"
     }
   },
   "RHF0h8bkDKc": {
@@ -74347,6 +76102,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.476Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.029266297817230225,
+      "classProbabilities": {
+        "human": 0.9707337021827698,
+        "ai": 0.022735098376870155,
+        "ai_edited": 0.003413003869354725,
+        "humanized": 0.003118164138868451
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:08.461Z"
     }
   },
   "vQMxsGWm4pc": {
@@ -74425,6 +76195,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.631Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.41801148653030396,
+      "classProbabilities": {
+        "human": 0.581988513469696,
+        "ai": 0.3875681757926941,
+        "ai_edited": 0.0016749327769502997,
+        "humanized": 0.028768358752131462
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:10.597Z"
     }
   },
   "wiiSFEggRc8": {
@@ -74493,6 +76278,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.780Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9920316869392991,
+      "classProbabilities": {
+        "human": 0.007968313060700893,
+        "ai": 0.9816848635673523,
+        "ai_edited": 0.00010541846131673083,
+        "humanized": 0.010241415351629257
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:11.382Z"
     }
   },
   "lEnvmni7w9g": {
@@ -74561,6 +76361,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:38.886Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.29086291790008545,
+      "classProbabilities": {
+        "human": 0.7091370820999146,
+        "ai": 0.028158174827694893,
+        "ai_edited": 0.01885688677430153,
+        "humanized": 0.24384784698486328
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:11.553Z"
     }
   },
   "OF9xcQCQSFc": {
@@ -74629,6 +76444,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.041Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9333416819572449,
+      "classProbabilities": {
+        "human": 0.06665831804275513,
+        "ai": 0.39952537417411804,
+        "ai_edited": 0.0020080716349184513,
+        "humanized": 0.5318082571029663
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:14.195Z"
     }
   },
   "vQqjvkKrCko": {
@@ -74697,6 +76527,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.192Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5610850155353546,
+      "classProbabilities": {
+        "human": 0.4389149844646454,
+        "ai": 0.00125097983982414,
+        "ai_edited": 0.053758468478918076,
+        "humanized": 0.5060755610466003
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:16.972Z"
     }
   },
   "s9sqD_TegXc": {
@@ -74765,6 +76610,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.342Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998574900528183,
+      "classProbabilities": {
+        "human": 0.0001425099471816793,
+        "ai": 0.9989927411079407,
+        "ai_edited": 0.000012248430721228942,
+        "humanized": 0.0008524158620275557
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:19.332Z"
     }
   },
   "EuSnBrm0f1Q": {
@@ -74833,6 +76693,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.453Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.17689603567123413,
+      "classProbabilities": {
+        "human": 0.8231039643287659,
+        "ai": 0.1343352049589157,
+        "ai_edited": 0.0016554017784073949,
+        "humanized": 0.04090547934174538
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:19.438Z"
     }
   },
   "CUIVTLMcg2o": {
@@ -74901,6 +76776,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.610Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9899012316018343,
+      "classProbabilities": {
+        "human": 0.010098768398165703,
+        "ai": 0.954433023929596,
+        "ai_edited": 0.00044681079452857375,
+        "humanized": 0.03502129390835762
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:22.656Z"
     }
   },
   "-FWo0uqIcFc": {
@@ -74969,6 +76859,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.762Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9967483696527779,
+      "classProbabilities": {
+        "human": 0.0032516303472220898,
+        "ai": 0.9948753714561462,
+        "ai_edited": 0.00008187139610527083,
+        "humanized": 0.0017912406474351883
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:24.915Z"
     }
   },
   "vO1LxiJQCgQ": {
@@ -75037,6 +76942,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:39.894Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.893563523888588,
+      "classProbabilities": {
+        "human": 0.10643647611141205,
+        "ai": 0.8508372902870178,
+        "ai_edited": 0.029356637969613075,
+        "humanized": 0.013369617983698845
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:25.196Z"
     }
   },
   "DCaU9ifD3pk": {
@@ -75105,6 +77025,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.054Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999520847486565,
+      "classProbabilities": {
+        "human": 0.000047915251343511045,
+        "ai": 0.9989357590675354,
+        "ai_edited": 0.000004351494681031909,
+        "humanized": 0.0010119738290086389
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:27.135Z"
     }
   },
   "MvIEJh6Roic": {
@@ -75173,6 +77108,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.212Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9805961865931749,
+      "classProbabilities": {
+        "human": 0.019403813406825066,
+        "ai": 0.9783449172973633,
+        "ai_edited": 0.00004416971933096647,
+        "humanized": 0.0022071057464927435
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:28.433Z"
     }
   },
   "sLDPji8Hil4": {
@@ -75241,6 +77191,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.366Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.06580597162246704,
+      "classProbabilities": {
+        "human": 0.934194028377533,
+        "ai": 0.0038936783093959093,
+        "ai_edited": 0.025946956127882004,
+        "humanized": 0.03596528619527817
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:30.017Z"
     }
   },
   "hZAgQ-adeUo": {
@@ -75309,6 +77274,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.467Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9992769083473831,
+      "classProbabilities": {
+        "human": 0.0007230916526168585,
+        "ai": 0.9991112351417542,
+        "ai_edited": 0.00001540484845463652,
+        "humanized": 0.00015036154945846647
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:30.186Z"
     }
   },
   "Jnhp9JbWyeM": {
@@ -75377,6 +77357,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.620Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9981613829731941,
+      "classProbabilities": {
+        "human": 0.0018386170268058777,
+        "ai": 0.9977036714553833,
+        "ai_edited": 0.000008445932508038823,
+        "humanized": 0.0004491704166866839
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:31.977Z"
     }
   },
   "y7d5fe8hji8": {
@@ -75445,6 +77440,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.717Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.11418348550796509,
+      "classProbabilities": {
+        "human": 0.8858165144920349,
+        "ai": 0.0008806231780909002,
+        "ai_edited": 0.08275976032018661,
+        "humanized": 0.030543146654963493
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:32.103Z"
     }
   },
   "Ai__S2y6t8s": {
@@ -75513,6 +77523,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:40.854Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999657571752323,
+      "classProbabilities": {
+        "human": 0.00003424282476771623,
+        "ai": 0.9999260902404785,
+        "ai_edited": 0.0000015005124396338942,
+        "humanized": 0.00003813652801909484
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:32.366Z"
     }
   },
   "bQ2beRw5YmA": {
@@ -75581,6 +77606,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.005Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9961849024984986,
+      "classProbabilities": {
+        "human": 0.003815097501501441,
+        "ai": 0.9761707782745361,
+        "ai_edited": 0.000308740243781358,
+        "humanized": 0.019705450162291527
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:33.894Z"
     }
   },
   "x5t4cgvkAfs": {
@@ -75649,6 +77689,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.153Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.019266605377197266,
+      "classProbabilities": {
+        "human": 0.9807333946228027,
+        "ai": 0.0027185920625925064,
+        "ai_edited": 0.006902785040438175,
+        "humanized": 0.009645229205489159
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:34.257Z"
     }
   },
   "xdWj3wmwgQk": {
@@ -75717,6 +77772,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.304Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9504741951823235,
+      "classProbabilities": {
+        "human": 0.049525804817676544,
+        "ai": 0.7825677990913391,
+        "ai_edited": 0.15530894696712494,
+        "humanized": 0.012597410939633846
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:36.248Z"
     }
   },
   "A14HI1p3Dyo": {
@@ -75785,6 +77855,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.408Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9446170628070831,
+      "classProbabilities": {
+        "human": 0.05538293719291687,
+        "ai": 0.9412887096405029,
+        "ai_edited": 0.0006468786159530282,
+        "humanized": 0.002681539161130786
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:36.386Z"
     }
   },
   "PcYDG7gyMZU": {
@@ -75853,6 +77938,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.561Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9992471043951809,
+      "classProbabilities": {
+        "human": 0.0007528956048190594,
+        "ai": 0.9972007870674133,
+        "ai_edited": 0.00004790830644196831,
+        "humanized": 0.0019984261598438025
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:37.125Z"
     }
   },
   "Whh8vCqboxQ": {
@@ -75921,6 +78021,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.718Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9747481532394886,
+      "classProbabilities": {
+        "human": 0.0252518467605114,
+        "ai": 0.6921181082725525,
+        "ai_edited": 0.00324070593342185,
+        "humanized": 0.27938929200172424
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:40.091Z"
     }
   },
   "inKUQtDxlDk": {
@@ -75989,6 +78104,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:41.875Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8287029564380646,
+      "classProbabilities": {
+        "human": 0.17129704356193542,
+        "ai": 0.7722819447517395,
+        "ai_edited": 0.025712862610816956,
+        "humanized": 0.030708029866218567
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:41.160Z"
     }
   },
   "BGo578sWCGw": {
@@ -76057,6 +78187,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.026Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8486938774585724,
+      "classProbabilities": {
+        "human": 0.1513061225414276,
+        "ai": 0.739902675151825,
+        "ai_edited": 0.0016801723977550864,
+        "humanized": 0.10711108893156052
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:42.005Z"
     }
   },
   "E6_3_kyq6Qw": {
@@ -76125,6 +78270,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.234Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8241465538740158,
+      "classProbabilities": {
+        "human": 0.1758534461259842,
+        "ai": 0.8184354305267334,
+        "ai_edited": 0.002162531716749072,
+        "humanized": 0.0035485306289047003
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:42.634Z"
     }
   },
   "4Jw0q1HYHOE": {
@@ -76193,6 +78353,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.387Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9544179290533066,
+      "classProbabilities": {
+        "human": 0.04558207094669342,
+        "ai": 0.9468725323677063,
+        "ai_edited": 0.000907963840290904,
+        "humanized": 0.006637476850301027
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:43.109Z"
     }
   },
   "V1G3YWuKU3o": {
@@ -76261,6 +78436,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.486Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9774084091186523,
+      "classProbabilities": {
+        "human": 0.022591590881347656,
+        "ai": 0.9757232666015625,
+        "ai_edited": 0.00029976069345138967,
+        "humanized": 0.0013854708522558212
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:43.221Z"
     }
   },
   "Wb2AcOVwPQs": {
@@ -76329,6 +78519,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.644Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5618607997894287,
+      "classProbabilities": {
+        "human": 0.4381392002105713,
+        "ai": 0.5307675004005432,
+        "ai_edited": 0.00595074100419879,
+        "humanized": 0.025142528116703033
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:45.075Z"
     }
   },
   "6Znd1k1ERDY": {
@@ -76397,6 +78602,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.796Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6452206969261169,
+      "classProbabilities": {
+        "human": 0.35477930307388306,
+        "ai": 0.46807369589805603,
+        "ai_edited": 0.008251229301095009,
+        "humanized": 0.16889584064483643
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:46.407Z"
     }
   },
   "6jQw0G-SVNk": {
@@ -76465,6 +78685,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:42.918Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999867525566515,
+      "classProbabilities": {
+        "human": 0.000013247443348518573,
+        "ai": 0.9999615550041199,
+        "ai_edited": 0.0000012117385495002964,
+        "humanized": 0.00002392530586803332
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:46.609Z"
     }
   },
   "j73GuxGm59k": {
@@ -76533,6 +78768,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:43.065Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9794264994561672,
+      "classProbabilities": {
+        "human": 0.02057350054383278,
+        "ai": 0.3188813030719757,
+        "ai_edited": 0.0007965413969941437,
+        "humanized": 0.6597486138343811
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:46.994Z"
     }
   },
   "xSjbdpvUrTg": {
@@ -76601,6 +78851,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:43.213Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.927211619913578,
+      "classProbabilities": {
+        "human": 0.07278838008642197,
+        "ai": 0.9231105446815491,
+        "ai_edited": 0.000565386435482651,
+        "humanized": 0.0035356529988348484
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:47.999Z"
     }
   },
   "DBrX2eMexsY": {
@@ -76669,6 +78934,21 @@
       },
       "rawOutput": "{\"score\": 0.02}",
       "timestamp": "2026-09-20T20:26:13.263Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.16264629364013672,
+      "classProbabilities": {
+        "human": 0.8373537063598633,
+        "ai": 0.06523283571004868,
+        "ai_edited": 0.030961884185671806,
+        "humanized": 0.0664515420794487
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:48.153Z"
     }
   },
   "bPzskj9ijdI": {
@@ -76737,6 +79017,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:59.284Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.048677027225494385,
+      "classProbabilities": {
+        "human": 0.9513229727745056,
+        "ai": 0.045564379543066025,
+        "ai_edited": 0.0005195287521928549,
+        "humanized": 0.002593079349026084
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:48.264Z"
     }
   },
   "fDav-ed_R48": {
@@ -76805,6 +79100,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:59.489Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9993310623685829,
+      "classProbabilities": {
+        "human": 0.0006689376314170659,
+        "ai": 0.006521014031022787,
+        "ai_edited": 0.000092695678176824,
+        "humanized": 0.9927172660827637
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:48.652Z"
     }
   },
   "z77K1UfPb1o": {
@@ -76873,6 +79183,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:59.640Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.015878915786743164,
+      "classProbabilities": {
+        "human": 0.9841210842132568,
+        "ai": 0.008809088729321957,
+        "ai_edited": 0.0030172583647072315,
+        "humanized": 0.0040526906959712505
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:49.500Z"
     }
   },
   "eiiFxdprW14": {
@@ -76941,6 +79266,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:59.744Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.999982254454153,
+      "classProbabilities": {
+        "human": 0.000017745545846992172,
+        "ai": 0.9999712705612183,
+        "ai_edited": 9.803389957596664e-7,
+        "humanized": 0.000010042816938948818
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:49.657Z"
     }
   },
   "bg7CAf9rHBE": {
@@ -77009,6 +79349,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:32:59.896Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.019334375858306885,
+      "classProbabilities": {
+        "human": 0.9806656241416931,
+        "ai": 0.0005464241839945316,
+        "ai_edited": 0.010239601135253906,
+        "humanized": 0.00854834821075201
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:50.898Z"
     }
   },
   "pjHiBUqSZqs": {
@@ -77077,6 +79432,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.049Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.12077087163925171,
+      "classProbabilities": {
+        "human": 0.8792291283607483,
+        "ai": 0.0013841295149177313,
+        "ai_edited": 0.10749267041683197,
+        "humanized": 0.011894149705767632
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:51.899Z"
     }
   },
   "ZrkwJG2O9LY": {
@@ -77145,6 +79515,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.137Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5955412983894348,
+      "classProbabilities": {
+        "human": 0.4044587016105652,
+        "ai": 0.5835723280906677,
+        "ai_edited": 0.0005664383643306792,
+        "humanized": 0.01140249241143465
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:51.973Z"
     }
   },
   "t7ih9NYgVMc": {
@@ -77213,6 +79598,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.291Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998663769074483,
+      "classProbabilities": {
+        "human": 0.00013362309255171567,
+        "ai": 0.9996625185012817,
+        "ai_edited": 0.000010349918738938868,
+        "humanized": 0.0001935886248247698
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:52.835Z"
     }
   },
   "RQofSY9nPW4": {
@@ -77281,6 +79681,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.396Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.06994366645812988,
+      "classProbabilities": {
+        "human": 0.9300563335418701,
+        "ai": 0.02533707581460476,
+        "ai_edited": 0.007821296341717243,
+        "humanized": 0.036785244941711426
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:52.989Z"
     }
   },
   "q6OhwrQU-VQ": {
@@ -77349,6 +79764,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.485Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.037684500217437744,
+      "classProbabilities": {
+        "human": 0.9623154997825623,
+        "ai": 0.03076668083667755,
+        "ai_edited": 0.0007067506085149944,
+        "humanized": 0.006211098749190569
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:53.080Z"
     }
   },
   "Hpn9wxf_uuk": {
@@ -77417,6 +79847,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.636Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.09113121032714844,
+      "classProbabilities": {
+        "human": 0.9088687896728516,
+        "ai": 0.00040082811028696597,
+        "ai_edited": 0.07321558147668839,
+        "humanized": 0.01751471310853958
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:53.545Z"
     }
   },
   "Z_shA1L-3SY": {
@@ -77485,6 +79930,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.746Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.4759292006492615,
+      "classProbabilities": {
+        "human": 0.5240707993507385,
+        "ai": 0.44925355911254883,
+        "ai_edited": 0.003388041164726019,
+        "humanized": 0.023287616670131683
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:53.744Z"
     }
   },
   "dFoRchlq7oE": {
@@ -77553,6 +80013,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.859Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.16398882865905762,
+      "classProbabilities": {
+        "human": 0.8360111713409424,
+        "ai": 0.14133740961551666,
+        "ai_edited": 0.011392824351787567,
+        "humanized": 0.01125857513397932
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:53.882Z"
     }
   },
   "PU05l6GIlAI": {
@@ -77621,6 +80096,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:00.966Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07855963706970215,
+      "classProbabilities": {
+        "human": 0.9214403629302979,
+        "ai": 0.004942324478179216,
+        "ai_edited": 0.0035229797940701246,
+        "humanized": 0.07009432464838028
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:54.024Z"
     }
   },
   "EzTlIRknuVI": {
@@ -77689,6 +80179,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.096Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9778460785746574,
+      "classProbabilities": {
+        "human": 0.02215392142534256,
+        "ai": 0.9770408272743225,
+        "ai_edited": 0.0002508263278286904,
+        "humanized": 0.0005543695879168808
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:54.255Z"
     }
   },
   "5De09niud1U": {
@@ -77757,6 +80262,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.191Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7325142025947571,
+      "classProbabilities": {
+        "human": 0.2674857974052429,
+        "ai": 0.7257680892944336,
+        "ai_edited": 0.00044812363921664655,
+        "humanized": 0.006297970190644264
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:54.363Z"
     }
   },
   "8TCCYueHW6c": {
@@ -77825,6 +80345,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.326Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.12307882308959961,
+      "classProbabilities": {
+        "human": 0.8769211769104004,
+        "ai": 0.007682301104068756,
+        "ai_edited": 0.03411049023270607,
+        "humanized": 0.08128605782985687
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:54.695Z"
     }
   },
   "g-ziSkweeCY": {
@@ -77893,6 +80428,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.467Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.999132551252842,
+      "classProbabilities": {
+        "human": 0.0008674487471580505,
+        "ai": 0.9989519119262695,
+        "ai_edited": 0.000035249740903964266,
+        "humanized": 0.00014535576337948442
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:54.987Z"
     }
   },
   "RPMqx27JEhA": {
@@ -77961,6 +80511,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.618Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.956702433526516,
+      "classProbabilities": {
+        "human": 0.04329756647348404,
+        "ai": 0.8948991894721985,
+        "ai_edited": 0.00028682893025688827,
+        "humanized": 0.06151634827256203
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:55.906Z"
     }
   },
   "TNmiM8zS24w": {
@@ -78029,6 +80594,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.769Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7647614777088165,
+      "classProbabilities": {
+        "human": 0.23523852229118347,
+        "ai": 0.025493569672107697,
+        "ai_edited": 0.013785897754132748,
+        "humanized": 0.7254819869995117
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:57.696Z"
     }
   },
   "3A3OVh0y0IY": {
@@ -78097,6 +80677,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:01.917Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9934296626597643,
+      "classProbabilities": {
+        "human": 0.00657033734023571,
+        "ai": 0.9927318096160889,
+        "ai_edited": 0.00006727517757099122,
+        "humanized": 0.0006306335562840104
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:58.536Z"
     }
   },
   "ANcgjcmldrE": {
@@ -78165,6 +80760,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.067Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.09609514474868774,
+      "classProbabilities": {
+        "human": 0.9039048552513123,
+        "ai": 0.0026666836347430944,
+        "ai_edited": 0.05209839344024658,
+        "humanized": 0.041330039501190186
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:30:59.906Z"
     }
   },
   "uM4PaD14fsU": {
@@ -78233,6 +80843,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.273Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999525593411818,
+      "classProbabilities": {
+        "human": 0.000047440658818231896,
+        "ai": 0.9996148347854614,
+        "ai_edited": 0.0000032132227261172375,
+        "humanized": 0.0003346176235936582
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:01.311Z"
     }
   },
   "4j4vCbJDe-8": {
@@ -78321,6 +80946,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.427Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9236141592264175,
+      "classProbabilities": {
+        "human": 0.07638584077358246,
+        "ai": 0.7818700075149536,
+        "ai_edited": 0.0008093842770904303,
+        "humanized": 0.14093482494354248
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.101Z"
     }
   },
   "Ofbn05XCfMI": {
@@ -78389,6 +81029,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.565Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.949241615831852,
+      "classProbabilities": {
+        "human": 0.05075838416814804,
+        "ai": 0.9454303979873657,
+        "ai_edited": 0.0009600699995644391,
+        "humanized": 0.0028511416167020798
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.367Z"
     }
   },
   "dAHOxQOiCvA": {
@@ -78457,6 +81112,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.651Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.08598685264587402,
+      "classProbabilities": {
+        "human": 0.914013147354126,
+        "ai": 0.08092842996120453,
+        "ai_edited": 0.0017117245588451624,
+        "humanized": 0.003346687648445368
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.440Z"
     }
   },
   "roNbYyd-3P8": {
@@ -78525,6 +81195,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:02.744Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.10741674900054932,
+      "classProbabilities": {
+        "human": 0.8925832509994507,
+        "ai": 0.07005023211240768,
+        "ai_edited": 0.008208803832530975,
+        "humanized": 0.029157763347029686
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.531Z"
     }
   },
   "wXvFW3yCVsA": {
@@ -78603,6 +81288,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T20:26:02.005Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.079245924949646,
+      "classProbabilities": {
+        "human": 0.920754075050354,
+        "ai": 0.07364936172962189,
+        "ai_edited": 0.0010924211237579584,
+        "humanized": 0.004504145588725805
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.594Z"
     }
   },
   "i5x52pe4CFQ": {
@@ -78671,6 +81371,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:37.953Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.012188971042633057,
+      "classProbabilities": {
+        "human": 0.9878110289573669,
+        "ai": 0.003269503591582179,
+        "ai_edited": 0.005272358190268278,
+        "humanized": 0.003647087374702096
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.641Z"
     }
   },
   "JeJmBN2qCi0": {
@@ -78739,6 +81454,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.056Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.402275025844574,
+      "classProbabilities": {
+        "human": 0.597724974155426,
+        "ai": 0.34034374356269836,
+        "ai_edited": 0.008684421889483929,
+        "humanized": 0.053246911615133286
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.766Z"
     }
   },
   "b_0GVsSIC6Q": {
@@ -78807,6 +81537,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.161Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.007320284843444824,
+      "classProbabilities": {
+        "human": 0.9926797151565552,
+        "ai": 0.0010547218844294548,
+        "ai_edited": 0.004165606573224068,
+        "humanized": 0.0021000069100409746
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.870Z"
     }
   },
   "KaeZ4YqtdqI": {
@@ -78875,6 +81620,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.254Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.0220680832862854,
+      "classProbabilities": {
+        "human": 0.9779319167137146,
+        "ai": 0.004477259702980518,
+        "ai_edited": 0.002397892065346241,
+        "humanized": 0.015192956663668156
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:02.947Z"
     }
   },
   "6EJdfXs_7bI": {
@@ -78943,6 +81703,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.338Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.07623755931854248,
+      "classProbabilities": {
+        "human": 0.9237624406814575,
+        "ai": 0.054954893887043,
+        "ai_edited": 0.008839046582579613,
+        "humanized": 0.012443562038242817
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:03.038Z"
     }
   },
   "_XaNum3gUYI": {
@@ -79011,6 +81786,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.417Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.04989737272262573,
+      "classProbabilities": {
+        "human": 0.9501026272773743,
+        "ai": 0.04178578034043312,
+        "ai_edited": 0.002424967475235462,
+        "humanized": 0.005686673801392317
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:03.086Z"
     }
   },
   "XQFcW_0FIkk": {
@@ -79079,6 +81869,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.562Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.10715138912200928,
+      "classProbabilities": {
+        "human": 0.8928486108779907,
+        "ai": 0.0010411359835416079,
+        "ai_edited": 0.07827483862638474,
+        "humanized": 0.02783547155559063
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:03.428Z"
     }
   },
   "-8Dnvy_VASE": {
@@ -79157,6 +81962,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.707Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9605389349162579,
+      "classProbabilities": {
+        "human": 0.03946106508374214,
+        "ai": 0.9554224014282227,
+        "ai_edited": 0.002382001606747508,
+        "humanized": 0.002734627341851592
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:03.821Z"
     }
   },
   "_sfopoCY5UU": {
@@ -79225,6 +82045,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.809Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.09852510690689087,
+      "classProbabilities": {
+        "human": 0.9014748930931091,
+        "ai": 0.0009183714864775538,
+        "ai_edited": 0.08295588940382004,
+        "humanized": 0.014650839380919933
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:03.941Z"
     }
   },
   "LlIGxydyE34": {
@@ -79293,6 +82128,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:38.902Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.1020999550819397,
+      "classProbabilities": {
+        "human": 0.8979000449180603,
+        "ai": 0.08192817121744156,
+        "ai_edited": 0.008932826109230518,
+        "humanized": 0.011238868348300457
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:04.026Z"
     }
   },
   "N2nOFf1QFMc": {
@@ -79361,6 +82211,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.055Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999574625326204,
+      "classProbabilities": {
+        "human": 0.000042537467379588634,
+        "ai": 0.9992383122444153,
+        "ai_edited": 0.000002572247922216775,
+        "humanized": 0.0007165496936067939
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:05.638Z"
     }
   },
   "HNL2aWBZ5sg": {
@@ -79429,6 +82294,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.146Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9823848269879818,
+      "classProbabilities": {
+        "human": 0.017615173012018204,
+        "ai": 0.9815019965171814,
+        "ai_edited": 0.00032788034877739847,
+        "humanized": 0.0005549492780119181
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:05.701Z"
     }
   },
   "S4LXTS8pHMs": {
@@ -79497,6 +82377,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.232Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5419353544712067,
+      "classProbabilities": {
+        "human": 0.45806464552879333,
+        "ai": 0.5261889696121216,
+        "ai_edited": 0.0021247994154691696,
+        "humanized": 0.013621526770293713
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:05.755Z"
     }
   },
   "cGGxVzvTbds": {
@@ -79565,6 +82460,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.382Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.980071060359478,
+      "classProbabilities": {
+        "human": 0.019928939640522003,
+        "ai": 0.5242896676063538,
+        "ai_edited": 0.001752931741066277,
+        "humanized": 0.4540284276008606
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:06.292Z"
     }
   },
   "p4fc88NV8I0": {
@@ -79633,6 +82543,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.478Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.4864668846130371,
+      "classProbabilities": {
+        "human": 0.5135331153869629,
+        "ai": 0.18386545777320862,
+        "ai_edited": 0.04255546256899834,
+        "humanized": 0.2600459158420563
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:09.091Z"
     }
   },
   "S94HzGktpXI": {
@@ -79701,6 +82626,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.528Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9252090379595757,
+      "classProbabilities": {
+        "human": 0.07479096204042435,
+        "ai": 0.83455491065979,
+        "ai_edited": 0.0033056202810257673,
+        "humanized": 0.08734849840402603
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:09.180Z"
     }
   },
   "bHvcJ3ykxV8": {
@@ -79769,6 +82709,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.625Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3742626905441284,
+      "classProbabilities": {
+        "human": 0.6257373094558716,
+        "ai": 0.0001143986446550116,
+        "ai_edited": 0.37247368693351746,
+        "humanized": 0.0016746537294238806
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:09.706Z"
     }
   },
   "K_WjFUyy2zE": {
@@ -79837,6 +82792,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.708Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6987199187278748,
+      "classProbabilities": {
+        "human": 0.30128008127212524,
+        "ai": 0.6713089346885681,
+        "ai_edited": 0.0014150337083265185,
+        "humanized": 0.02599599026143551
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:09.967Z"
     }
   },
   "atGPAYfSuWk": {
@@ -79905,6 +82875,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.763Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8623698651790619,
+      "classProbabilities": {
+        "human": 0.1376301348209381,
+        "ai": 0.8255255818367004,
+        "ai_edited": 0.017059292644262314,
+        "humanized": 0.019784975796937943
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:10.125Z"
     }
   },
   "tJPyoJyig9I": {
@@ -79983,6 +82968,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:39.910Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7995175272226334,
+      "classProbabilities": {
+        "human": 0.20048247277736664,
+        "ai": 0.5497557520866394,
+        "ai_edited": 0.0018600707408040762,
+        "humanized": 0.24790173768997192
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:11.186Z"
     }
   },
   "xXvX1XlAp_s": {
@@ -80051,6 +83051,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.005Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.16575253009796143,
+      "classProbabilities": {
+        "human": 0.8342474699020386,
+        "ai": 0.0001999380037887022,
+        "ai_edited": 0.1634080410003662,
+        "humanized": 0.0021445639431476593
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:12.220Z"
     }
   },
   "Hjpf2LH_g1Y": {
@@ -80119,6 +83134,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.057Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.018820762634277344,
+      "classProbabilities": {
+        "human": 0.9811792373657227,
+        "ai": 0.011012325063347816,
+        "ai_edited": 0.00567453121766448,
+        "humanized": 0.0021340122912079096
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:12.281Z"
     }
   },
   "3GRaC9yeKUg": {
@@ -80187,6 +83217,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.111Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.03537595272064209,
+      "classProbabilities": {
+        "human": 0.9646240472793579,
+        "ai": 0.027015279978513718,
+        "ai_edited": 0.002781924093142152,
+        "humanized": 0.005578793119639158
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:12.358Z"
     }
   },
   "j6HIC5p3rAM": {
@@ -80255,6 +83300,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.171Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9196031093597412,
+      "classProbabilities": {
+        "human": 0.08039689064025879,
+        "ai": 0.000608177506364882,
+        "ai_edited": 0.9162033796310425,
+        "humanized": 0.0027915264945477247
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:12.531Z"
     }
   },
   "xZANBSFEkKY": {
@@ -80323,6 +83383,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.316Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.00981980562210083,
+      "classProbabilities": {
+        "human": 0.9901801943778992,
+        "ai": 0.0000775949883973226,
+        "ai_edited": 0.004547190386801958,
+        "humanized": 0.005194937344640493
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:13.770Z"
     }
   },
   "kCqf3z0gicQ": {
@@ -80391,6 +83466,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.370Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3711625933647156,
+      "classProbabilities": {
+        "human": 0.6288374066352844,
+        "ai": 0.007676724344491959,
+        "ai_edited": 0.3599706292152405,
+        "humanized": 0.0035152907948940992
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:13.918Z"
     }
   },
   "VBrFIfvI64U": {
@@ -80459,6 +83549,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.454Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.02781832218170166,
+      "classProbabilities": {
+        "human": 0.9721816778182983,
+        "ai": 0.020778870210051537,
+        "ai_edited": 0.0029830518178641796,
+        "humanized": 0.004056334961205721
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:13.972Z"
     }
   },
   "55vlwcFqxUw": {
@@ -80527,6 +83632,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.503Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.06882357597351074,
+      "classProbabilities": {
+        "human": 0.9311764240264893,
+        "ai": 0.05514386668801308,
+        "ai_edited": 0.003014941466972232,
+        "humanized": 0.010664785280823708
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:14.054Z"
     }
   },
   "wlgan_j9vLU": {
@@ -80605,6 +83725,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.602Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.045423150062561035,
+      "classProbabilities": {
+        "human": 0.954576849937439,
+        "ai": 0.004279613494873047,
+        "ai_edited": 0.026502279564738274,
+        "humanized": 0.014641259796917439
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.089Z"
     }
   },
   "--waSctd6pM": {
@@ -80673,6 +83808,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.651Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8163243979215622,
+      "classProbabilities": {
+        "human": 0.1836756020784378,
+        "ai": 0.8104999661445618,
+        "ai_edited": 0.0013320925645530224,
+        "humanized": 0.004492267966270447
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.158Z"
     }
   },
   "gYayZlnhw2g": {
@@ -80741,6 +83891,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.705Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.2498151659965515,
+      "classProbabilities": {
+        "human": 0.7501848340034485,
+        "ai": 0.20376159250736237,
+        "ai_edited": 0.0023409617133438587,
+        "humanized": 0.04371258243918419
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.257Z"
     }
   },
   "Yk-ml6XY2Fg": {
@@ -80809,6 +83974,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.790Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9991841298760846,
+      "classProbabilities": {
+        "human": 0.0008158701239153743,
+        "ai": 0.9978383183479309,
+        "ai_edited": 0.00002141901495633647,
+        "humanized": 0.001324452692642808
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.589Z"
     }
   },
   "rRLwpQF12Qw": {
@@ -80877,6 +84057,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.875Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8663379102945328,
+      "classProbabilities": {
+        "human": 0.13366208970546722,
+        "ai": 0.7833114862442017,
+        "ai_edited": 0.0013077238108962774,
+        "humanized": 0.08171872049570084
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.933Z"
     }
   },
   "slDvq_rxWOI": {
@@ -80945,6 +84140,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:40.933Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8160157352685928,
+      "classProbabilities": {
+        "human": 0.18398426473140717,
+        "ai": 0.8099408149719238,
+        "ai_edited": 0.0016393684782087803,
+        "humanized": 0.004435557406395674
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:16.995Z"
     }
   },
   "7VGJRK-fgFE": {
@@ -81013,6 +84223,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.019Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.029998958110809326,
+      "classProbabilities": {
+        "human": 0.9700010418891907,
+        "ai": 0.00042895242222584784,
+        "ai_edited": 0.01882646419107914,
+        "humanized": 0.010743482038378716
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.284Z"
     }
   },
   "x2_v-Xrt_0g": {
@@ -81081,6 +84306,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.070Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.16429775953292847,
+      "classProbabilities": {
+        "human": 0.8357022404670715,
+        "ai": 0.15097378194332123,
+        "ai_edited": 0.0032357198651880026,
+        "humanized": 0.01008825283497572
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.350Z"
     }
   },
   "teMdk8Tav_c": {
@@ -81149,6 +84389,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.129Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.005604267120361328,
+      "classProbabilities": {
+        "human": 0.9943957328796387,
+        "ai": 0.00055201246868819,
+        "ai_edited": 0.0011582209262996912,
+        "humanized": 0.0038939365185797215
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.428Z"
     }
   },
   "UbBpAMC3NYo": {
@@ -81217,6 +84472,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.187Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.15903866291046143,
+      "classProbabilities": {
+        "human": 0.8409613370895386,
+        "ai": 0.14214195311069489,
+        "ai_edited": 0.0011981816496700048,
+        "humanized": 0.015698447823524475
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.498Z"
     }
   },
   "pIRGJtoTYxY": {
@@ -81285,6 +84555,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.240Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.2788074016571045,
+      "classProbabilities": {
+        "human": 0.7211925983428955,
+        "ai": 0.2745632529258728,
+        "ai_edited": 0.000305952038615942,
+        "humanized": 0.003938217647373676
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.555Z"
     }
   },
   "K7XDeizNHsI": {
@@ -81353,6 +84638,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.313Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.20876169204711914,
+      "classProbabilities": {
+        "human": 0.7912383079528809,
+        "ai": 0.09386034309864044,
+        "ai_edited": 0.04460390284657478,
+        "humanized": 0.07029744982719421
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.747Z"
     }
   },
   "gl2hFO3KTNQ": {
@@ -81421,6 +84721,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.384Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.3771722912788391,
+      "classProbabilities": {
+        "human": 0.6228277087211609,
+        "ai": 0.35310113430023193,
+        "ai_edited": 0.0029817449394613504,
+        "humanized": 0.021089395508170128
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:17.916Z"
     }
   },
   "ITRAuxMBWtQ": {
@@ -81489,6 +84804,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.438Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.11132639646530151,
+      "classProbabilities": {
+        "human": 0.8886736035346985,
+        "ai": 0.022016748785972595,
+        "ai_edited": 0.011395085602998734,
+        "humanized": 0.0779145285487175
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:18.085Z"
     }
   },
   "-TeGJ9wafJ8": {
@@ -81557,6 +84887,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.542Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5505739152431488,
+      "classProbabilities": {
+        "human": 0.4494260847568512,
+        "ai": 0.007211904041469097,
+        "ai_edited": 0.019974136725068092,
+        "humanized": 0.5233879089355469
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:18.507Z"
     }
   },
   "lFp1d4qvwG4": {
@@ -81625,6 +84970,21 @@
       },
       "rawOutput": "{\"score\": 0.08}",
       "timestamp": "2026-09-20T20:25:16.028Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.04611027240753174,
+      "classProbabilities": {
+        "human": 0.9538897275924683,
+        "ai": 0.0005577484844252467,
+        "ai_edited": 0.04426465928554535,
+        "humanized": 0.0012878705747425556
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:18.847Z"
     }
   },
   "uc65sUEaxIM": {
@@ -81693,6 +85053,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:33:41.696Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.29823118448257446,
+      "classProbabilities": {
+        "human": 0.7017688155174255,
+        "ai": 0.2899874448776245,
+        "ai_edited": 0.0029647478368133307,
+        "humanized": 0.0052789910696446896
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:20.297Z"
     }
   },
   "kZXi1g5t7b0": {
@@ -81761,6 +85136,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T20:25:25.342Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6283083558082581,
+      "classProbabilities": {
+        "human": 0.37169164419174194,
+        "ai": 0.6187746524810791,
+        "ai_edited": 0.0028368844650685787,
+        "humanized": 0.006696765311062336
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:20.683Z"
     }
   },
   "-xHNMEHD2so": {
@@ -81829,6 +85219,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:02.847Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.22024405002593994,
+      "classProbabilities": {
+        "human": 0.7797559499740601,
+        "ai": 0.20864751935005188,
+        "ai_edited": 0.003692145459353924,
+        "humanized": 0.007904468104243279
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:20.746Z"
     }
   },
   "f98m4zTHRU8": {
@@ -81897,6 +85302,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:02.997Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998894288219162,
+      "classProbabilities": {
+        "human": 0.0001105711780837737,
+        "ai": 0.9996538162231445,
+        "ai_edited": 0.000005239978236204479,
+        "humanized": 0.00023039102961774915
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:21.171Z"
     }
   },
   "QVyZq6e09xI": {
@@ -81965,6 +85385,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.097Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.900770291686058,
+      "classProbabilities": {
+        "human": 0.09922970831394196,
+        "ai": 0.897973895072937,
+        "ai_edited": 0.0008653347031213343,
+        "humanized": 0.0019310712814331055
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:21.263Z"
     }
   },
   "vDFX24nQx18": {
@@ -82033,6 +85468,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.251Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.7873184978961945,
+      "classProbabilities": {
+        "human": 0.21268150210380554,
+        "ai": 0.7835136651992798,
+        "ai_edited": 0.0008593357633799314,
+        "humanized": 0.0029454755131155252
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:22.201Z"
     }
   },
   "D_EvJ8DIF7Q": {
@@ -82101,6 +85551,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.340Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.021014153957366943,
+      "classProbabilities": {
+        "human": 0.9789858460426331,
+        "ai": 0.0025917591992765665,
+        "ai_edited": 0.014540255069732666,
+        "humanized": 0.0038820337504148483
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:22.295Z"
     }
   },
   "q0knabo6tHM": {
@@ -82169,6 +85634,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.422Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.019401371479034424,
+      "classProbabilities": {
+        "human": 0.9805986285209656,
+        "ai": 0.013008691370487213,
+        "ai_edited": 0.0028163508977741003,
+        "humanized": 0.003576238639652729
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:22.346Z"
     }
   },
   "nRHe6cMDU7k": {
@@ -82237,6 +85717,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.532Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9538839608430862,
+      "classProbabilities": {
+        "human": 0.04611603915691376,
+        "ai": 0.06332471966743469,
+        "ai_edited": 0.000918858393561095,
+        "humanized": 0.8896404504776001
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:22.460Z"
     }
   },
   "IijvmUhXG90": {
@@ -82305,6 +85800,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.682Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.903081588447094,
+      "classProbabilities": {
+        "human": 0.09691841155290604,
+        "ai": 0.0026852209120988846,
+        "ai_edited": 0.5198709964752197,
+        "humanized": 0.3805253207683563
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:23.056Z"
     }
   },
   "EBH83eHAnSY": {
@@ -82373,6 +85883,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.803Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9345810413360596,
+      "classProbabilities": {
+        "human": 0.06541895866394043,
+        "ai": 0.0003354079963173717,
+        "ai_edited": 0.9326906204223633,
+        "humanized": 0.001555035705678165
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:23.225Z"
     }
   },
   "5VrNKA1ppEg": {
@@ -82441,6 +85966,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:03.937Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.012868881225585938,
+      "classProbabilities": {
+        "human": 0.9871311187744141,
+        "ai": 0.0021288490388542414,
+        "ai_edited": 0.008557656779885292,
+        "humanized": 0.002182376105338335
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:23.416Z"
     }
   },
   "4h214EKBBj8": {
@@ -82509,6 +86049,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:04.078Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8593133836984634,
+      "classProbabilities": {
+        "human": 0.14068661630153656,
+        "ai": 0.15801212191581726,
+        "ai_edited": 0.47850149869918823,
+        "humanized": 0.22279974818229675
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:23.868Z"
     }
   },
   "IVe3gCdlwnY": {
@@ -82577,6 +86132,21 @@
       },
       "rawOutput": "{\"score\": 0.05}",
       "timestamp": "2026-09-20T20:25:19.041Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.0010219812393188477,
+      "classProbabilities": {
+        "human": 0.9989780187606812,
+        "ai": 0.0002816237974911928,
+        "ai_edited": 0.0002796873450279236,
+        "humanized": 0.00046069215750321746
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:23.947Z"
     }
   },
   "VkjwvddX7no": {
@@ -82645,6 +86215,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:12.972Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999607760437357,
+      "classProbabilities": {
+        "human": 0.000039223956264322624,
+        "ai": 0.9999451041221619,
+        "ai_edited": 0.0000019042402072955156,
+        "humanized": 0.000013845248759025708
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:24.469Z"
     }
   },
   "dHbblnTFKs4": {
@@ -82713,6 +86298,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:13.065Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5406985282897949,
+      "classProbabilities": {
+        "human": 0.4593014717102051,
+        "ai": 0.5361335277557373,
+        "ai_edited": 0.001068101730197668,
+        "humanized": 0.003496854566037655
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:24.539Z"
     }
   },
   "wIH8KNKwD8M": {
@@ -82781,6 +86381,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T20:25:25.098Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.963583767414093,
+      "classProbabilities": {
+        "human": 0.03641623258590698,
+        "ai": 0.9623900055885315,
+        "ai_edited": 0.00021776203357148916,
+        "humanized": 0.0009759771055541933
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:24.592Z"
     }
   },
   "goGBkcMHsto": {
@@ -82849,6 +86464,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:16.814Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.2656201124191284,
+      "classProbabilities": {
+        "human": 0.7343798875808716,
+        "ai": 0.011971358209848404,
+        "ai_edited": 0.19819623231887817,
+        "humanized": 0.05545240640640259
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:24.850Z"
     }
   },
   "0bVBlWtjs0w": {
@@ -82917,6 +86547,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:16.920Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9171917364001274,
+      "classProbabilities": {
+        "human": 0.08280826359987259,
+        "ai": 0.9130753874778748,
+        "ai_edited": 0.002576937200501561,
+        "humanized": 0.0015394455986097455
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.003Z"
     }
   },
   "bqB63lKgIJc": {
@@ -82995,6 +86640,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.020Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.1298511028289795,
+      "classProbabilities": {
+        "human": 0.8701488971710205,
+        "ai": 0.052442461252212524,
+        "ai_edited": 0.015809301286935806,
+        "humanized": 0.0615994967520237
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.134Z"
     }
   },
   "vEdWCI2EHnU": {
@@ -83073,6 +86733,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.110Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9739347472786903,
+      "classProbabilities": {
+        "human": 0.026065252721309662,
+        "ai": 0.9727458953857422,
+        "ai_edited": 0.00023651645460631698,
+        "humanized": 0.0009523228509351611
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.215Z"
     }
   },
   "Vou817EGqUY": {
@@ -83141,6 +86816,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.197Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.016922056674957275,
+      "classProbabilities": {
+        "human": 0.9830779433250427,
+        "ai": 0.006597705651074648,
+        "ai_edited": 0.0027661288622766733,
+        "humanized": 0.007558242883533239
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.299Z"
     }
   },
   "yTNK50A1LR4": {
@@ -83209,6 +86899,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.345Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9970187195576727,
+      "classProbabilities": {
+        "human": 0.002981280442327261,
+        "ai": 0.9919405579566956,
+        "ai_edited": 0.00024311683955602348,
+        "humanized": 0.004835117142647505
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.606Z"
     }
   },
   "Nuwg0Jq9Mk8": {
@@ -83277,6 +86982,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.451Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.23117202520370483,
+      "classProbabilities": {
+        "human": 0.7688279747962952,
+        "ai": 0.01235604751855135,
+        "ai_edited": 0.11181837320327759,
+        "humanized": 0.10699757933616638
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:25.759Z"
     }
   },
   "xk6XplKVbJQ": {
@@ -83345,6 +87065,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.601Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9947720244526863,
+      "classProbabilities": {
+        "human": 0.00522797554731369,
+        "ai": 0.994465172290802,
+        "ai_edited": 0.0001046443940140307,
+        "humanized": 0.00020221022714395076
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:26.071Z"
     }
   },
   "V1ptFyMtuWo": {
@@ -83413,6 +87148,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.715Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9539504572749138,
+      "classProbabilities": {
+        "human": 0.04604954272508621,
+        "ai": 0.8168635368347168,
+        "ai_edited": 0.043870653957128525,
+        "humanized": 0.09321620315313339
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:26.260Z"
     }
   },
   "QiBrTE_WQUQ": {
@@ -83481,6 +87231,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.865Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.921814315021038,
+      "classProbabilities": {
+        "human": 0.07818568497896194,
+        "ai": 0.9191011786460876,
+        "ai_edited": 0.0009478349820710719,
+        "humanized": 0.0017652998212724924
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:28.878Z"
     }
   },
   "MprT7ePwJR0": {
@@ -83549,6 +87314,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:17.968Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.004278004169464111,
+      "classProbabilities": {
+        "human": 0.9957219958305359,
+        "ai": 0.000025956484023481607,
+        "ai_edited": 0.004093433730304241,
+        "humanized": 0.0001585486315889284
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:28.990Z"
     }
   },
   "78ZVAUz1h3w": {
@@ -83617,6 +87397,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.120Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.42317694425582886,
+      "classProbabilities": {
+        "human": 0.5768230557441711,
+        "ai": 0.0011928142048418522,
+        "ai_edited": 0.39737895131111145,
+        "humanized": 0.024605222046375275
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:29.107Z"
     }
   },
   "xWVlzliwgzg": {
@@ -83685,6 +87480,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.220Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.4346463084220886,
+      "classProbabilities": {
+        "human": 0.5653536915779114,
+        "ai": 0.017220282927155495,
+        "ai_edited": 0.013153345324099064,
+        "humanized": 0.4042726457118988
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:29.226Z"
     }
   },
   "WWBqqyc3ctQ": {
@@ -83753,6 +87563,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.371Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.05921649932861328,
+      "classProbabilities": {
+        "human": 0.9407835006713867,
+        "ai": 0.019551346078515053,
+        "ai_edited": 0.02672429196536541,
+        "humanized": 0.01294076256453991
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:30.121Z"
     }
   },
   "BeeUZc1k1Z0": {
@@ -83821,6 +87646,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.509Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.0615198016166687,
+      "classProbabilities": {
+        "human": 0.9384801983833313,
+        "ai": 0.0037060785107314587,
+        "ai_edited": 0.04775133728981018,
+        "humanized": 0.010062450543045998
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:30.325Z"
     }
   },
   "rMFcpjeA2NQ": {
@@ -83889,6 +87729,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.600Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.023562610149383545,
+      "classProbabilities": {
+        "human": 0.9764373898506165,
+        "ai": 0.021001961082220078,
+        "ai_edited": 0.0011283167405053973,
+        "humanized": 0.0014325127704069018
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:30.390Z"
     }
   },
   "7rWw8IzG0y0": {
@@ -83957,6 +87812,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.755Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9889507135376334,
+      "classProbabilities": {
+        "human": 0.011049286462366581,
+        "ai": 0.9749079346656799,
+        "ai_edited": 0.0004690481291618198,
+        "humanized": 0.013573684729635715
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:30.943Z"
     }
   },
   "Ut8p8FXh8xc": {
@@ -84025,6 +87895,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.842Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.5836766362190247,
+      "classProbabilities": {
+        "human": 0.41632336378097534,
+        "ai": 0.5759665966033936,
+        "ai_edited": 0.0017088187159970403,
+        "humanized": 0.006001276429742575
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:31.009Z"
     }
   },
   "ua7PRJHdO6g": {
@@ -84093,6 +87978,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:18.998Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9913854906335473,
+      "classProbabilities": {
+        "human": 0.008614509366452694,
+        "ai": 0.0002749243285506964,
+        "ai_edited": 0.0003885470796376467,
+        "humanized": 0.9907220602035522
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:31.783Z"
     }
   },
   "FInqagFeYBc": {
@@ -84161,6 +88061,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.157Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9994036284624599,
+      "classProbabilities": {
+        "human": 0.000596371537540108,
+        "ai": 0.9993676543235779,
+        "ai_edited": 0.000010084106179419905,
+        "humanized": 0.000025874409402604215
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:33.385Z"
     }
   },
   "pgrxbWduS6E": {
@@ -84229,6 +88144,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.303Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998618414101657,
+      "classProbabilities": {
+        "human": 0.00013815858983434737,
+        "ai": 0.9998422861099243,
+        "ai_edited": 0.000008713798706594389,
+        "humanized": 0.000010794486115628388
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:33.728Z"
     }
   },
   "pT5_MgLmkHg": {
@@ -84297,6 +88227,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.455Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9751403834670782,
+      "classProbabilities": {
+        "human": 0.02485961653292179,
+        "ai": 0.07089893519878387,
+        "ai_edited": 0.0015680597862228751,
+        "humanized": 0.9026734232902527
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:34.354Z"
     }
   },
   "0iRo_sS2pIk": {
@@ -84365,6 +88310,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.611Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.17027002573013306,
+      "classProbabilities": {
+        "human": 0.8297299742698669,
+        "ai": 0.14732789993286133,
+        "ai_edited": 0.016175560653209686,
+        "humanized": 0.006766563281416893
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:35.143Z"
     }
   },
   "94ZNkHwLf3M": {
@@ -84433,6 +88393,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.766Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.028452157974243164,
+      "classProbabilities": {
+        "human": 0.9715478420257568,
+        "ai": 0.014885645359754562,
+        "ai_edited": 0.011359091848134995,
+        "humanized": 0.002207361161708832
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:36.075Z"
     }
   },
   "5AaLHZuJsdk": {
@@ -84501,6 +88476,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:19.920Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9476644769310951,
+      "classProbabilities": {
+        "human": 0.05233552306890488,
+        "ai": 0.9469977021217346,
+        "ai_edited": 0.00032552139600738883,
+        "humanized": 0.0003412662190385163
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:38.238Z"
     }
   },
   "rSbJCme4ZBA": {
@@ -84569,6 +88559,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.073Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9998157048539724,
+      "classProbabilities": {
+        "human": 0.0001842951460275799,
+        "ai": 0.9997944235801697,
+        "ai_edited": 0.000006141226549516432,
+        "humanized": 0.000015102512406883761
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:38.643Z"
     }
   },
   "kLgyEwiPIoI": {
@@ -84637,6 +88642,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.193Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999414682060888,
+      "classProbabilities": {
+        "human": 0.00005853179391124286,
+        "ai": 0.9999216198921204,
+        "ai_edited": 0.0000025871286197798327,
+        "humanized": 0.00001724010144243948
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:38.840Z"
     }
   },
   "aCcoXwN0hYM": {
@@ -84705,6 +88725,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.363Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.99451262364164,
+      "classProbabilities": {
+        "human": 0.005487376358360052,
+        "ai": 0.9943339824676514,
+        "ai_edited": 0.00005965210948488675,
+        "humanized": 0.00011902560800081119
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:39.853Z"
     }
   },
   "PJDxhetPB0c": {
@@ -84773,6 +88808,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.520Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9950102027505636,
+      "classProbabilities": {
+        "human": 0.0049897972494363785,
+        "ai": 0.9947400689125061,
+        "ai_edited": 0.00014665319758933038,
+        "humanized": 0.00012356307706795633
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:41.736Z"
     }
   },
   "Kt1p3FQT3N4": {
@@ -84841,6 +88891,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.648Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9980081277899444,
+      "classProbabilities": {
+        "human": 0.0019918722100555897,
+        "ai": 0.9979090690612793,
+        "ai_edited": 0.000013901226338930428,
+        "humanized": 0.00008511035412084311
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:41.910Z"
     }
   },
   "Skxsa46IO3s": {
@@ -84909,6 +88974,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.793Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9983948464505374,
+      "classProbabilities": {
+        "human": 0.0016051535494625568,
+        "ai": 0.9981689453125,
+        "ai_edited": 0.0000492800390929915,
+        "humanized": 0.0001765294437063858
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:42.240Z"
     }
   },
   "TfSiMJjYGsA": {
@@ -84977,6 +89057,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:20.919Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.031036078929901123,
+      "classProbabilities": {
+        "human": 0.9689639210700989,
+        "ai": 0.0018347019795328379,
+        "ai_edited": 0.023089149966835976,
+        "humanized": 0.006112148519605398
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:42.414Z"
     }
   },
   "HdMpPDqWMrE": {
@@ -85045,6 +89140,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.075Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.8405843377113342,
+      "classProbabilities": {
+        "human": 0.15941566228866577,
+        "ai": 0.8360427618026733,
+        "ai_edited": 0.001956366468220949,
+        "humanized": 0.0025851752143353224
+      },
+      "chunkCount": 4,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:45.133Z"
     }
   },
   "Cl4SRH7vlbQ": {
@@ -85113,6 +89223,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.228Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.001796722412109375,
+      "classProbabilities": {
+        "human": 0.9982032775878906,
+        "ai": 0.000652335409540683,
+        "ai_edited": 0.0008575568208470941,
+        "humanized": 0.0002867881557904184
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:45.797Z"
     }
   },
   "O3jqvL6hhUU": {
@@ -85181,6 +89306,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.383Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9791058134287596,
+      "classProbabilities": {
+        "human": 0.020894186571240425,
+        "ai": 0.9778178930282593,
+        "ai_edited": 0.00043629089486785233,
+        "humanized": 0.0008516417001374066
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:46.405Z"
     }
   },
   "BI2cfbR2oek": {
@@ -85249,6 +89389,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.538Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.6535037159919739,
+      "classProbabilities": {
+        "human": 0.3464962840080261,
+        "ai": 0.6483123898506165,
+        "ai_edited": 0.0019821631722152233,
+        "humanized": 0.0032092309556901455
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:47.442Z"
     }
   },
   "xQBYiczjisM": {
@@ -85317,6 +89472,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.686Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.768022745847702,
+      "classProbabilities": {
+        "human": 0.23197725415229797,
+        "ai": 0.7586279511451721,
+        "ai_edited": 0.00340706342831254,
+        "humanized": 0.005987714510411024
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:47.815Z"
     }
   },
   "5hqJDevbvWk": {
@@ -85385,6 +89555,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.783Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9999613317631884,
+      "classProbabilities": {
+        "human": 0.00003866823681164533,
+        "ai": 0.9999523162841797,
+        "ai_edited": 0.000002206341378041543,
+        "humanized": 0.0000067438368205330335
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:47.919Z"
     }
   },
   "qXW_5Om0lbA": {
@@ -85453,6 +89638,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:21.931Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9994437486748211,
+      "classProbabilities": {
+        "human": 0.0005562513251788914,
+        "ai": 0.9993898868560791,
+        "ai_edited": 0.00002312022479600273,
+        "humanized": 0.000030706647521583363
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:48.634Z"
     }
   },
   "v4IBVHkEiZ0": {
@@ -85521,6 +89721,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:22.090Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9472441449761391,
+      "classProbabilities": {
+        "human": 0.05275585502386093,
+        "ai": 0.9289621114730835,
+        "ai_edited": 0.0014260405441746116,
+        "humanized": 0.016855958849191666
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:49.128Z"
     }
   },
   "ERbnrjvLUq0": {
@@ -85589,6 +89804,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:22.245Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9993989229551516,
+      "classProbabilities": {
+        "human": 0.0006010770448483527,
+        "ai": 0.9920800924301147,
+        "ai_edited": 0.000031557006877847016,
+        "humanized": 0.007287278305739164
+      },
+      "chunkCount": 3,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:50.982Z"
     }
   },
   "bNGmL8nbboU": {
@@ -85657,6 +89887,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:22.402Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.793316200375557,
+      "classProbabilities": {
+        "human": 0.20668379962444305,
+        "ai": 0.787019670009613,
+        "ai_edited": 0.0004711878136731684,
+        "humanized": 0.005825336556881666
+      },
+      "chunkCount": 1,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:51.715Z"
     }
   },
   "5qnt_ME7O7A": {
@@ -85725,6 +89970,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:22.556Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9831455983221531,
+      "classProbabilities": {
+        "human": 0.01685440167784691,
+        "ai": 0.9825531244277954,
+        "ai_edited": 0.0001310643128817901,
+        "humanized": 0.0004613524361047894
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:52.704Z"
     }
   },
   "YObAHFeeYJs": {
@@ -85793,6 +90053,21 @@
       "tokenLimit": 512,
       "device": "mps",
       "timestamp": "2026-09-20T16:34:22.709Z"
+    },
+    "wasitaigenerated": {
+      "provider": "wasitaigenerated",
+      "model": "wasitaigeneratedcom/ai-text-detector-small",
+      "score": 0.9973954616580158,
+      "classProbabilities": {
+        "human": 0.002604538341984153,
+        "ai": 0.9965910315513611,
+        "ai_edited": 0.000050611932238098234,
+        "humanized": 0.0007538829231634736
+      },
+      "chunkCount": 2,
+      "decisionThreshold": 0.976,
+      "device": "mps",
+      "timestamp": "2026-09-20T20:31:53.729Z"
     }
   },
   "Qop_0xh-CSc": {

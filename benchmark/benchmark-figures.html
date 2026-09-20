@@ -31,31 +31,43 @@
     @media (max-width:640px) { #benchmark-figures .hero,#benchmark-figures .bottom { grid-template-columns:1fr; } #benchmark-figures .hero-side { border-left:0; border-top:1px solid var(--border); } }
   </style>
 
-  <h2>Jev is the strongest single AI detector for YouTube transcript.</h2>
-  <p class="lede">Across <strong>250 human</strong>, <strong>125 declared-AI</strong>, and <strong>125 mixed</strong> videos, Jev has the best balanced result. Gemini, WasItAiGenerated.com, and RADAR provide useful comparison signals, but do not improve on Jev alone in this corpus.</p>
+  <h2>Jev is the strongest single AI detector in this YouTube-transcript benchmark.</h2>
+  <p class="lede">The benchmark contains <strong>1,000 videos</strong>: <strong>500 human</strong> and <strong>500 AI</strong>, with no mixed class. Provider coverage ranges from 985 to 987 scored entries. At each provider's best tested F1 threshold, Jev has the strongest balanced result.</p>
+
+  <div class="hero">
+    <div class="hero-main">
+      <p class="hero-label">Best single-provider F1</p>
+      <div class="hero-number">91%</div>
+      <p class="hero-text">Jev at threshold 0.65, with 88% precision and 94% AI recall.</p>
+    </div>
+    <div class="hero-side">
+      <strong>Median consensus: 87% F1</strong>
+      <p>Its best tested threshold is 0.35, with 94% precision and 80% recall. Jev's best F1 is 4 percentage points higher.</p>
+    </div>
+  </div>
 
   <figure>
     <svg viewBox="0 0 940 484" role="img" aria-label="Four-provider comparison of best F1 score and AI recall at each provider's best-F1 threshold">
       <text x="260" y="26" class="axis">BEST F1 SCORE</text><text x="610" y="26" class="axis">AI RECALL AT THAT THRESHOLD</text>
       <text x="0" y="64" class="row-label">Jev</text>
-      <rect x="240" y="42" width="330" height="32" fill="#e7edf6" /><rect x="240" y="42" width="290" height="32" fill="var(--viz-series-1)" /><text x="516" y="65" text-anchor="end" class="value">88% · 0.80</text>
-      <rect x="590" y="42" width="330" height="32" fill="#e7edf6" /><rect x="590" y="42" width="274" height="32" fill="var(--viz-series-1)" /><text x="850" y="65" text-anchor="end" class="value">83%</text>
+      <rect x="240" y="42" width="330" height="32" fill="#e7edf6" /><rect x="240" y="42" width="300" height="32" fill="var(--viz-series-1)" /><text x="526" y="65" text-anchor="end" class="value">91% · 0.65</text>
+      <rect x="590" y="42" width="330" height="32" fill="#e7edf6" /><rect x="590" y="42" width="310" height="32" fill="var(--viz-series-1)" /><text x="886" y="65" text-anchor="end" class="value">94%</text>
       <text x="0" y="154" class="row-label">Gemini</text>
-      <rect x="240" y="132" width="330" height="32" fill="#e7edf6" /><rect x="240" y="132" width="244" height="32" fill="var(--viz-series-2)" /><text x="470" y="155" text-anchor="end" class="value">74% · 0.20</text>
-      <rect x="590" y="132" width="330" height="32" fill="#e7edf6" /><rect x="590" y="132" width="195" height="32" fill="var(--viz-series-2)" /><text x="771" y="155" text-anchor="end" class="value">59%</text>
+      <rect x="240" y="132" width="330" height="32" fill="#e7edf6" /><rect x="240" y="132" width="201" height="32" fill="var(--viz-series-2)" /><text x="427" y="155" text-anchor="end" class="value">61% · 0.20</text>
+      <rect x="590" y="132" width="330" height="32" fill="#e7edf6" /><rect x="590" y="132" width="145" height="32" fill="var(--viz-series-2)" /><text x="721" y="155" text-anchor="end" class="value">44%</text>
       <text x="0" y="244" class="row-label">WasItAiGenerated.com</text>
-      <rect x="240" y="222" width="330" height="32" fill="#e7edf6" /><rect x="240" y="222" width="198" height="32" fill="#7c3aed" /><text x="424" y="245" text-anchor="end" class="value">60% · 0.60</text>
-      <rect x="590" y="222" width="330" height="32" fill="#e7edf6" /><rect x="590" y="222" width="172" height="32" fill="#7c3aed" /><text x="748" y="245" text-anchor="end" class="value">52%</text>
+      <rect x="240" y="222" width="330" height="32" fill="#e7edf6" /><rect x="240" y="222" width="211" height="32" fill="#7c3aed" /><text x="437" y="245" text-anchor="end" class="value">64% · 0.40</text>
+      <rect x="590" y="222" width="330" height="32" fill="#e7edf6" /><rect x="590" y="222" width="191" height="32" fill="#7c3aed" /><text x="767" y="245" text-anchor="end" class="value">58%</text>
       <text x="0" y="334" class="row-label">RADAR-Vicuna-7B</text>
-      <rect x="240" y="312" width="330" height="32" fill="#e7edf6" /><rect x="240" y="312" width="182" height="32" fill="#0891b2" /><text x="408" y="335" text-anchor="end" class="value">55% · 0.20</text>
-      <rect x="590" y="312" width="330" height="32" fill="#e7edf6" /><rect x="590" y="312" width="158" height="32" fill="#0891b2" /><text x="734" y="335" text-anchor="end" class="value">48%</text>
+      <rect x="240" y="312" width="330" height="32" fill="#e7edf6" /><rect x="240" y="312" width="248" height="32" fill="#0891b2" /><text x="474" y="335" text-anchor="end" class="value">75% · 0.20</text>
+      <rect x="590" y="312" width="330" height="32" fill="#e7edf6" /><rect x="590" y="312" width="218" height="32" fill="#0891b2" /><text x="794" y="335" text-anchor="end" class="value">66%</text>
       <line x1="0" y1="381" x2="920" y2="381" stroke="var(--border)" />
       <text x="0" y="440" class="note">F1 balances precision and recall; each provider is shown at its own best-performing tested threshold.</text>
     </svg>
   </figure>
 
   <div class="bottom">
-    <div><h3>The conclusion is clear</h3><p>Jev is the strongest detector in this benchmark by a wide margin: it leads every other standalone system on both balanced F1 and AI recall.</p></div>
-    <div><h3>What this confirms</h3><p>Keep using a continuous score as evidence, not a hard claim. In this corpus, Jev alone outperforms the median four-provider consensus.</p></div>
+    <div><h3>The single-provider result</h3><p>Jev reaches 91% F1 at threshold 0.65 (88% precision, 94% recall), ahead of RADAR at 75%, WasItAiGenerated.com at 64%, and Gemini at 61%.</p></div>
+    <div><h3>The consensus trade-off</h3><p>The median four-provider consensus peaks at 87% F1 at threshold 0.35. The benchmark summary notes that Jev alone matches or beats the ensemble, so the added providers may not justify their latency and complexity.</p></div>
   </div>
 </section>
