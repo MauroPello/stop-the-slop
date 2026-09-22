@@ -1433,8 +1433,14 @@
       return;
     }
     if (!videoId) {
+      // Navigated to a non-video YouTube page (home, subscriptions, search...):
+      // drop the in-player badge and clear the stale toolbar badge.
       lastActiveVideoId = null;
       removePlayerBadge();
+      try {
+        chrome.runtime.sendMessage({ type: 'CLEAR_BADGE' });
+      } catch (_) { }
+      requestScan();
       return;
     }
     if (videoId === lastActiveVideoId) return;
@@ -1523,12 +1529,11 @@
         handleContextInvalidated();
         return;
       }
-      const videoId = getActiveVideoId();
-      if (videoId) {
-        handleActiveVideoChange(videoId);
-      } else {
-        removePlayerBadge();
-      }
+      // Always route through handleActiveVideoChange (even for non-video
+      // pages) so lastActiveVideoId stays in sync — otherwise revisiting the
+      // same video later is treated as "no change" and the service worker is
+      // never told to restore the toolbar badge.
+      handleActiveVideoChange(getActiveVideoId());
       requestScan();
     });
 
@@ -1537,12 +1542,11 @@
         handleContextInvalidated();
         return;
       }
-      const videoId = getActiveVideoId();
-      if (videoId) {
-        handleActiveVideoChange(videoId);
-      } else {
-        removePlayerBadge();
-      }
+      // Always route through handleActiveVideoChange (even for non-video
+      // pages) so lastActiveVideoId stays in sync — otherwise revisiting the
+      // same video later is treated as "no change" and the service worker is
+      // never told to restore the toolbar badge.
+      handleActiveVideoChange(getActiveVideoId());
       requestScan();
     });
 
@@ -1551,21 +1555,12 @@
         handleContextInvalidated();
         return;
       }
-      const videoId = getActiveVideoId();
-      if (videoId) {
-        handleActiveVideoChange(videoId);
-      } else {
-        removePlayerBadge();
-      }
+      handleActiveVideoChange(getActiveVideoId());
+      requestScan();
     });
 
     // Initial page scan and player badge check
-    const initialVideoId = getActiveVideoId();
-    if (initialVideoId) {
-      handleActiveVideoChange(initialVideoId);
-    } else {
-      removePlayerBadge();
-    }
+    handleActiveVideoChange(getActiveVideoId());
     requestScan();
   }
 
