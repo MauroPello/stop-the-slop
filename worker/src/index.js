@@ -109,29 +109,41 @@ export default {
         }
 
         // 2. Rate limits on AI detections
-        // - 30 analyses per minute per IP
+        // - 5 analyses per minute per IP (prevents rapid-fire tab spamming)
         const minuteLimitRes = await enforceRateLimit(
           env,
           request,
           'analyze_min',
-          30,
+          5,
           60,
           corsHeaders,
-          'Rate limit exceeded (max 30 analyses/min). Please wait a moment before analyzing more videos.'
+          'Rate limit exceeded (max 5 analyses/min). Please wait a moment before analyzing more videos.'
         );
         if (minuteLimitRes) return minuteLimitRes;
 
-        // - 300 analyses per hour per IP
+        // - 25 analyses per hour per IP (generous for active human viewers, prevents runaway usage)
         const hourLimitRes = await enforceRateLimit(
           env,
           request,
           'analyze_hr',
-          300,
+          25,
           3600,
           corsHeaders,
-          'Hourly rate limit exceeded (max 300 analyses/hr). Please try again later.'
+          'Hourly rate limit exceeded (max 25 analyses/hr). Please try again later.'
         );
         if (hourLimitRes) return hourLimitRes;
+
+        // - 60 analyses per day per IP (daily ceiling to guarantee minimal AI spend)
+        const dayLimitRes = await enforceRateLimit(
+          env,
+          request,
+          'analyze_day',
+          60,
+          86400,
+          corsHeaders,
+          'Daily analysis limit reached (max 60 uncached videos/day). Please try again tomorrow.'
+        );
+        if (dayLimitRes) return dayLimitRes;
 
         const result = await analyzeTranscript(videoId, transcript, env);
         return json(result, corsHeaders);

@@ -723,15 +723,21 @@ function showRateLimit(retryAfterSeconds = 30, message) {
       return;
     }
 
+    const formattedTime = remaining < 60
+      ? `${remaining}s`
+      : remaining < 3600
+        ? `${Math.floor(remaining / 60)}m ${remaining % 60}s`
+        : `${Math.floor(remaining / 3600)}h ${Math.floor((remaining % 3600) / 60)}m`;
+
     if (els.cooldownSeconds) {
-      els.cooldownSeconds.textContent = `${remaining}s`;
+      els.cooldownSeconds.textContent = formattedTime;
     }
     if (els.btnRateLimitRetry) {
       els.btnRateLimitRetry.disabled = true;
       els.btnRateLimitRetry.setAttribute('disabled', 'true');
     }
     if (els.rateLimitRetryText) {
-      els.rateLimitRetryText.textContent = `Wait ${remaining}s...`;
+      els.rateLimitRetryText.textContent = `Wait ${formattedTime}...`;
     }
   };
 
