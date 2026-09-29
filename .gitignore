@@ -38,6 +38,7 @@ package-lock.json
 benchmark/.env
 benchmark/.venv/
 benchmark/__pycache__/
+demo
 
 # IDE & Editor settings
 .idea/
