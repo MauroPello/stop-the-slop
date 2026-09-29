@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="studio-light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#f8fafc" id="meta-theme-color">
+  <title>Teleprompter — Stop the Slop Demo</title>
+  <meta name="description"
+    content="Clean studio teleprompter with auto-scroll pacing, presentation timer, section markers, and visual stage cues for the Stop the Slop 5-minute presentation.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       Design System & Theme Tokens (Default: Studio Light)
+       ========================================================================== */
+    :root {
+      /* Safe area insets for mobile edge-to-edge displays */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+
+      /* Studio Light (Default) */
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-surface-glass: rgba(255, 255, 255, 0.92);
+      --border-subtle: #e2e8f0;
+
+      --text-main: #0f172a;
+      --text-dim: #64748b;
+      --text-upcoming: #0f172a;
+      --text-current: #0284c7;
+
+      --accent-cyan: #0284c7;
+      --accent-cyan-glow: rgba(2, 132, 199, 0.18);
+      --accent-amber: #d97706;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --btn-primary-text: #ffffff;
+      --shadow-dock: 0 12px 36px rgba(15, 23, 42, 0.12);
+      --shadow-modal: 0 20px 48px rgba(15, 23, 42, 0.18);
+      --kbd-bg: #e2e8f0;
+      --kbd-color: #0369a1;
+
+      /* Visual Action Cue Cards */
+      --cue-bg: #fef3c7;
+      --cue-border: #f59e0b;
+      --cue-text: #92400e;
+
+      /* Typography & Prompter Dimensions */
+      --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --prompter-font-size: 34px;
+      --prompter-line-height: 1.65;
+      --prompter-width: 820px;
+      --sweet-spot-top: 36%;
+      /* Vertical eye-line focal area */
+    }
+
+    /* Studio Light Theme */
+    [data-theme="studio-light"] {
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-surface-glass: rgba(255, 255, 255, 0.92);
+      --border-subtle: #e2e8f0;
+
+      --text-main: #0f172a;
+      --text-dim: #64748b;
+      --text-upcoming: #0f172a;
+      --text-current: #0284c7;
+
+      --accent-cyan: #0284c7;
+      --accent-cyan-glow: rgba(2, 132, 199, 0.18);
+      --accent-amber: #d97706;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --btn-primary-text: #ffffff;
+      --shadow-dock: 0 12px 36px rgba(15, 23, 42, 0.12);
+      --shadow-modal: 0 20px 48px rgba(15, 23, 42, 0.18);
+      --kbd-bg: #e2e8f0;
+      --kbd-color: #0369a1;
+
+      --cue-bg: #fef3c7;
+      --cue-border: #f59e0b;
+      --cue-text: #92400e;
+    }
+
+    /* Studio Dark Theme */
+    [data-theme="studio-dark"] {
+      --bg-body: #07090e;
+      --bg-surface: #0f1422;
+      --bg-surface-elevated: #182035;
+      --bg-surface-glass: rgba(15, 20, 34, 0.88);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+
+      --text-main: #f8fafc;
+      --text-dim: #64748b;
+      --text-upcoming: #f1f5f9;
+      --text-current: #38bdf8;
+
+      --accent-cyan: #38bdf8;
+      --accent-cyan-glow: rgba(56, 189, 248, 0.25);
+      --accent-amber: #fbbf24;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --btn-primary-text: #05070c;
+      --shadow-dock: 0 12px 40px rgba(0, 0, 0, 0.5);
+      --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --kbd-bg: #000000;
+      --kbd-color: #38bdf8;
+
+      --cue-bg: rgba(251, 191, 36, 0.1);
+      --cue-border: #f59e0b;
+      --cue-text: #fef08a;
+    }
+
+    /* Pitch Black Theme */
+    [data-theme="oled-black"] {
+      --bg-body: #000000;
+      --bg-surface: #0a0a0a;
+      --bg-surface-elevated: #161616;
+      --bg-surface-glass: rgba(5, 5, 5, 0.94);
+      --border-subtle: #222222;
+
+      --text-main: #ffffff;
+      --text-dim: #71717a;
+      --text-upcoming: #ffffff;
+      --text-current: #fbbf24;
+
+      --accent-cyan: #fbbf24;
+      --accent-cyan-glow: rgba(251, 191, 36, 0.35);
+      --accent-amber: #fbbf24;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --btn-primary-text: #05070c;
+      --shadow-dock: 0 12px 40px rgba(0, 0, 0, 0.8);
+      --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.9);
+      --kbd-bg: #111111;
+      --kbd-color: #fbbf24;
+
+      --cue-bg: rgba(251, 191, 36, 0.14);
+      --cue-border: #fbbf24;
+      --cue-text: #fde047;
+    }
+
+    /* Base Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* ==========================================================================
+       Header HUD
+       ========================================================================== */
+    .teleprompter-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg-surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: calc(10px + var(--safe-top)) calc(16px + var(--safe-right)) 10px calc(16px + var(--safe-left));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .teleprompter-header.autohide {
+      opacity: 0.15;
+      transform: translateY(-80%);
+    }
+
+    .teleprompter-header.autohide:hover {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #cc0000, #990000);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 10px rgba(204, 0, 0, 0.4);
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    /* Pacing & Target Clock */
+    .pacing-center-hud {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-surface-elevated);
+      padding: 6px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .clock-time {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .clock-target {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .clock-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .btn-clock-icon {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-clock-icon:hover {
+      color: var(--text-main);
+      border-color: var(--accent-cyan);
+      background: var(--bg-surface);
+    }
+
+    .pacing-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .pacing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .pacing-dot.warning {
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    .pacing-dot.danger {
+      background: var(--accent-rose);
+      box-shadow: 0 0 8px var(--accent-rose);
+    }
+
+    /* Top Right Utility Buttons */
+    .top-utils {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-util {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn-util:hover {
+      color: var(--text-main);
+      border-color: var(--accent-cyan);
+    }
+
+    /* ==========================================================================
+       Prompter Viewport & Vignettes
+       ========================================================================== */
+    .prompter-viewport {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding-top: 140px;
+      padding-bottom: 75vh;
+      /* Allows ending lines to scroll cleanly to eye-line */
+    }
+
+    .script-section:first-child .prompter-section-header {
+      margin-top: 10px;
+    }
+
+    /* Soft Gradient Vignettes */
+    .prompter-vignette-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, var(--bg-body) 30%, transparent 100%);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    .prompter-vignette-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 220px;
+      background: linear-gradient(to top, var(--bg-body) 35%, transparent 100%);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* Eye-Level Focal Target Guide */
+    .prompter-eyeline-guide {
+      position: fixed;
+      top: var(--sweet-spot-top);
+      left: 0;
+      right: 0;
+      height: 0;
+      pointer-events: none;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .eyeline-beam {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 2%, var(--accent-cyan) 25%, var(--accent-cyan) 75%, transparent 98%);
+      opacity: 0.22;
+      box-shadow: 0 0 10px var(--accent-cyan-glow);
+    }
+
+    .eyeline-arrow-left,
+    .eyeline-arrow-right {
+      position: relative;
+      color: var(--accent-cyan);
+      font-size: 18px;
+      font-weight: 800;
+      opacity: 0.6;
+      animation: nudge 2s infinite ease-in-out;
+    }
+
+    .eyeline-arrow-right {
+      animation: nudge-right 2s infinite ease-in-out;
+    }
+
+    @keyframes nudge {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(4px);
+      }
+    }
+
+    @keyframes nudge-right {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-4px);
+      }
+    }
+
+    /* Reading Track */
+    .prompter-reading-track {
+      width: 100%;
+      max-width: var(--prompter-width);
+      padding: 0 24px;
+      position: relative;
+      z-index: 30;
+      transition: max-width 0.2s ease;
+    }
+
+    /* Section Headers - Compact & Natural Flow */
+    .prompter-section-header {
+      margin: 22px 0 10px;
+      padding: 4px 0 6px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-time-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 8px;
+      border-radius: 6px;
+      letter-spacing: normal;
+    }
+
+    .section-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Visual Screen Action Cue Cards - Compact */
+    .action-cue-banner {
+      background: var(--cue-bg);
+      border: 1.5px solid var(--cue-border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.1);
+      user-select: none;
+    }
+
+    .cue-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cue-clapper {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .cue-action-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+    }
+
+    .cue-timing-tag {
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      background: var(--bg-surface-elevated);
+      color: var(--text-dim);
+      border: 1px solid var(--border-subtle);
+      padding: 1px 7px;
+      border-radius: 9999px;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .cue-timing-tag.demo {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    [data-theme="studio-dark"] .cue-timing-tag.demo,
+    [data-theme="oled-black"] .cue-timing-tag.demo {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fde047;
+      border-color: #fbbf24;
+    }
+
+    .cue-action-text {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--cue-text);
+      letter-spacing: -0.01em;
+    }
+
+    .cue-action-link {
+      font-size: 11px;
+      font-weight: 700;
+      color: #05070c;
+      background: var(--accent-amber);
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .cue-action-link:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+
+    .action-cue-banner.active-pause-cue {
+      border-color: #fde047;
+      background: rgba(251, 191, 36, 0.22);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.45);
+      animation: cuePulse 1.4s infinite alternate ease-in-out;
+    }
+
+    @keyframes cuePulse {
+      from {
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+      }
+
+      to {
+        box-shadow: 0 0 35px rgba(245, 158, 11, 0.6);
+      }
+    }
+
+    .cue-countdown-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #000;
+      color: #fbbf24;
+      border: 1px solid #fbbf24;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+
+    .cue-resume-btn {
+      background: var(--accent-cyan);
+      color: var(--btn-primary-text);
+      border: none;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      transition: all 0.15s ease;
+    }
+
+    .cue-resume-btn:hover {
+      filter: brightness(1.15);
+      transform: scale(1.05);
+    }
+
+    /* Spoken Script Paragraphs - Smooth Continuous Flow */
+    .prompter-paragraph {
+      font-size: var(--prompter-font-size);
+      line-height: var(--prompter-line-height);
+      color: var(--text-upcoming);
+      margin-bottom: 16px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .prompter-paragraph:hover {
+      background: var(--bg-surface-elevated);
+    }
+
+    .prompter-paragraph.is-active {
+      border-left-color: var(--accent-cyan);
+      background: var(--accent-cyan-glow);
+    }
+
+    .sentence-unit {
+      display: inline;
+      padding: 2px 4px;
+      border-radius: 6px;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .sentence-unit.current-focus {
+      color: var(--text-current);
+      background: var(--accent-cyan-glow);
+      font-weight: 700;
+      box-shadow: 0 0 16px var(--accent-cyan-glow);
+    }
+
+    strong {
+      color: var(--text-main);
+      font-weight: 800;
+      text-decoration: underline;
+      text-decoration-color: var(--accent-cyan);
+      text-underline-offset: 4px;
+    }
+
+    /* Left Floating Section Navigation Pills */
+    .section-pill-bar {
+      position: fixed;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 60;
+    }
+
+    .section-pill {
+      background: var(--bg-surface-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 220px;
+    }
+
+    .section-pill:hover {
+      color: var(--text-main);
+      border-color: var(--accent-cyan);
+      background: var(--bg-surface-elevated);
+    }
+
+    .section-pill.active {
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      background: var(--accent-cyan-glow);
+      box-shadow: var(--shadow-dock);
+    }
+
+    .section-pill-time {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent-amber);
+    }
+
+    /* ==========================================================================
+       Bottom Studio Controller Dock
+       ========================================================================== */
+    .prompter-dock {
+      position: fixed;
+      bottom: calc(16px + var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 860px;
+      background: var(--bg-surface-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 10px 18px;
+      box-shadow: var(--shadow-dock);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: opacity 0.3s ease, transform 0.3s ease, padding 0.2s ease;
+    }
+
+    .prompter-dock.autohide {
+      opacity: 0.15;
+      transform: translate(-50%, 75%);
+    }
+
+    .prompter-dock.autohide:hover {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* Progress Track */
+    .dock-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--bg-surface-elevated);
+      border-radius: 9999px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-amber));
+      border-radius: 9999px;
+      transition: width 0.15s ease;
+    }
+
+    .progress-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .btn-dock-collapse {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-dock-collapse:hover {
+      color: var(--text-main);
+      border-color: var(--accent-cyan);
+    }
+
+    /* Controls Row */
+    .dock-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dock-secondary-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dock-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mobile-only-btn {
+      display: none;
+    }
+
+    /* Big Prompter Action Button */
+    .btn-main-prompter {
+      background: var(--accent-cyan);
+      color: var(--btn-primary-text);
+      border: none;
+      padding: 9px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px var(--accent-cyan-glow);
+      transition: all 0.15s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn-main-prompter:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .btn-main-prompter.running {
+      background: var(--accent-amber);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4);
+    }
+
+    .btn-dock-icon {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn-dock-icon:hover {
+      background: var(--bg-surface);
+      border-color: var(--accent-cyan);
+    }
+
+    /* Sliders */
+    .slider-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slider-item label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .slider-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      min-width: 58px;
+    }
+
+    .slider-range {
+      -webkit-appearance: none;
+      width: 80px;
+      height: 4px;
+      background: var(--bg-surface-elevated);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .slider-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    /* Modal dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: var(--shadow-modal);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .modal-head h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .shortcuts-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .shortcut-entry {
+      background: var(--bg-surface-elevated);
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .kbd {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--kbd-bg);
+      color: var(--kbd-color);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Script Editor Modal Textarea */
+    .editor-box {
+      width: 100%;
+      height: 360px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 14px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .editor-box:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    /* Toast */
+    .toast-box {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--accent-cyan);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Floating Tap Indicator for mobile / quick gestures */
+    .tap-indicator {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      background: var(--bg-surface-glass);
+      border: 1.5px solid var(--accent-cyan);
+      color: var(--text-main);
+      padding: 12px 22px;
+      border-radius: 9999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      pointer-events: none;
+      z-index: 250;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tap-indicator.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Mobile Section Navigation Modal List */
+    .mobile-sections-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .mobile-section-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+      font-family: var(--font-ui);
+      width: 100%;
+    }
+
+    .mobile-section-card:hover,
+    .mobile-section-card:active {
+      border-color: var(--accent-cyan);
+      background: var(--accent-cyan-glow);
+    }
+
+    .mobile-section-card.active {
+      border-color: var(--accent-cyan);
+      background: var(--accent-cyan-glow);
+      box-shadow: 0 0 14px var(--accent-cyan-glow);
+    }
+
+    .sec-card-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .sec-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .sec-card-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .sec-card-play {
+      font-size: 13px;
+      color: var(--accent-cyan);
+      font-weight: 800;
+    }
+
+    /* Responsive Design for Tablets & Mobile Devices */
+    @media (max-width: 900px) {
+      .section-pill-bar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --prompter-width: 100%;
+        --sweet-spot-top: 32%;
+      }
+
+      .teleprompter-header {
+        padding: calc(6px + var(--safe-top)) calc(12px + var(--safe-right)) 6px calc(12px + var(--safe-left));
+        gap: 8px;
+      }
+
+      .brand-wrap {
+        gap: 8px;
+      }
+
+      .badge-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+      }
+
+      .brand-title {
+        font-size: 13px;
+      }
+
+      .pacing-center-hud {
+        padding: 3px 8px;
+        gap: 6px;
+      }
+
+      .clock-time {
+        font-size: 13px;
+      }
+
+      .clock-target {
+        font-size: 10px;
+      }
+
+      .btn-clock-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+      }
+
+      .pacing-status {
+        display: none;
+      }
+
+      .top-utils {
+        gap: 6px;
+      }
+
+      .btn-util {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+
+      .prompter-viewport {
+        padding-top: calc(75px + var(--safe-top));
+        padding-bottom: 50vh;
+      }
+
+      .prompter-vignette-top {
+        height: 100px;
+      }
+
+      .prompter-vignette-bottom {
+        height: 140px;
+      }
+
+      .prompter-reading-track {
+        padding: 0 16px;
+      }
+
+      .prompter-paragraph {
+        margin-bottom: 12px;
+        padding: 4px 8px;
+      }
+
+      .action-cue-banner {
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 8px;
+      }
+
+      .cue-badge-wrap {
+        gap: 8px;
+        flex: 1 1 180px;
+      }
+
+      .cue-action-link {
+        margin-left: auto;
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+
+      /* Mobile Dock Layout */
+      .prompter-dock {
+        width: calc(100% - 20px);
+        max-width: 480px;
+        bottom: calc(10px + var(--safe-bottom));
+        padding: 8px 12px;
+        border-radius: 16px;
+        gap: 8px;
+      }
+
+      .btn-dock-collapse {
+        display: flex;
+      }
+
+      .mobile-only-btn {
+        display: inline-flex;
+      }
+
+      .dock-controls-row {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .dock-group-primary {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn-main-prompter {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 16px;
+        font-size: 13px;
+        min-height: 40px;
+      }
+
+      .dock-group-primary .btn-dock-icon {
+        min-height: 40px;
+        padding: 8px 14px;
+      }
+
+      .dock-secondary-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .dock-secondary-wrap .slider-group {
+        background: var(--bg-surface-elevated);
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-subtle);
+        width: 100%;
+      }
+
+      .dock-secondary-wrap .slider-item {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .dock-secondary-wrap .slider-range {
+        width: 60px;
+        height: 6px;
+      }
+
+      .dock-secondary-wrap .slider-range::-webkit-slider-thumb {
+        width: 18px;
+        height: 18px;
+      }
+
+      .dock-group-aux {
+        grid-column: span 2;
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .dock-group-aux button {
+        flex: 1;
+        justify-content: center;
+        min-height: 36px;
+      }
+
+      /* Collapsed Dock State on Mobile */
+      .prompter-dock.collapsed .dock-secondary-wrap {
+        display: none;
+      }
+
+      .prompter-dock.collapsed {
+        padding: 6px 12px;
+        gap: 6px;
+      }
+
+      .shortcuts-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .badge-tag {
+        display: none;
+      }
+
+      .pacing-center-hud {
+        display: none;
+      }
+
+      .btn-label-desktop {
+        display: none;
+      }
+
+      .prompter-dock {
+        width: calc(100% - 14px);
+        padding: 8px 10px;
+      }
+
+      .modal-box {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Header HUD -->
+  <header class="teleprompter-header" id="header-hud">
+    <div class="brand-wrap">
+      <div class="badge-icon">🛡️</div>
+      <span class="brand-title">Stop the Slop</span>
+      <span class="badge-tag">Teleprompter</span>
+    </div>
+
+    <!-- Pacing & Rehearsal Clock -->
+    <div class="pacing-center-hud">
+      <div class="clock-time">
+        <span id="clock-display">00:00</span>
+        <span class="clock-target" id="clock-target">/ --:--</span>
+      </div>
+      <div class="clock-actions">
+        <button class="btn-clock-icon" id="btn-clock-toggle" title="Start/Pause Timer (Shortcut: T)">▶</button>
+        <button class="btn-clock-icon" id="btn-clock-reset" title="Reset Timer (Shortcut: R)">↺</button>
+      </div>
+      <div class="pacing-status">
+        <span class="pacing-dot" id="pacing-dot"></span>
+        <span id="pacing-text">Ready</span>
+      </div>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="top-utils">
+      <!-- Section Navigation (Mobile & Desktop) -->
+      <button class="btn-util" id="btn-open-sections" title="Script Sections">§ <span class="btn-label-desktop">Sections</span></button>
+
+      <!-- Theme -->
+      <select class="btn-util" id="theme-select" style="cursor: pointer;">
+        <option value="studio-light" selected>☀️ Studio Light</option>
+        <option value="studio-dark">🌙 Studio Dark</option>
+        <option value="oled-black">🎬 OLED Black</option>
+      </select>
+
+      <!-- Shortcuts / Help -->
+      <button class="btn-clock-icon" id="btn-open-help" title="Keyboard Shortcuts & Touch Gestures (?)">?</button>
+
+      <!-- Edit Script -->
+      <button class="btn-util" id="btn-open-edit" title="Edit Script">✏️ <span class="btn-label-desktop">Edit Script</span></button>
+    </div>
+  </header>
+
+  <!-- Left Floating Section Navigation Pills -->
+  <nav class="section-pill-bar" id="section-pills">
+    <!-- Populated dynamically -->
+  </nav>
+
+  <!-- Eye-Level Reading Target Guide -->
+  <div class="prompter-eyeline-guide" id="eyeline-guide">
+    <div class="eyeline-beam"></div>
+    <span class="eyeline-arrow-left">▶</span>
+    <span class="eyeline-arrow-right">◀</span>
+  </div>
+
+  <!-- Vignettes for Studio Eye Comfort -->
+  <div class="prompter-vignette-top"></div>
+  <div class="prompter-vignette-bottom"></div>
+
+  <!-- Prompter Viewport & Content Track -->
+  <div class="prompter-viewport" id="prompter-viewport">
+    <main class="prompter-reading-track" id="prompter-track">
+      <!-- Script sections rendered here -->
+    </main>
+  </div>
+
+  <!-- Floating Tap Indicator -->
+  <div class="tap-indicator" id="tap-indicator">
+    <span id="tap-indicator-icon">▶</span>
+    <span id="tap-indicator-text">Scrolling</span>
+  </div>
+
+  <!-- Bottom Floating Studio Control Dock -->
+  <footer class="prompter-dock" id="prompter-dock">
+    <!-- Progress Indicator -->
+    <div class="dock-progress-row">
+      <div class="progress-track" id="progress-track" title="Click or drag to jump location in script">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <span class="progress-label" id="progress-pct">0%</span>
+      <button class="btn-dock-collapse" id="btn-dock-collapse" title="Collapse / Expand Controls" aria-label="Toggle Controls">▼</button>
+    </div>
+
+    <!-- Actions Row -->
+    <div class="dock-controls-row" id="dock-controls-row">
+      <!-- Primary Controls -->
+      <div class="dock-group dock-group-primary">
+        <button class="btn-main-prompter" id="btn-prompter-toggle">
+          <span id="prompter-toggle-icon">▶</span>
+          <span id="prompter-toggle-text">Start Scroll</span>
+        </button>
+        <button class="btn-dock-icon" id="btn-prompter-reset" title="Rewind to beginning (Shortcut: R)">↺
+          <span class="btn-label-text">Rewind</span></button>
+      </div>
+
+      <!-- Secondary Controls & Sliders -->
+      <div class="dock-secondary-wrap" id="dock-secondary-wrap">
+        <!-- Auto-Scroll / Target WPM Speed -->
+        <div class="dock-group slider-group">
+          <div class="slider-item" title="Scroll Speed / Speaking Pace">
+            <label>Pace:</label>
+            <input type="range" class="slider-range" id="slider-wpm" min="80" max="220" step="5" value="140">
+            <span class="slider-val" id="val-wpm">140 WPM</span>
+          </div>
+        </div>
+
+        <!-- Typography Size -->
+        <div class="dock-group slider-group">
+          <div class="slider-item" title="Adjust Text Size">
+            <label>Size:</label>
+            <input type="range" class="slider-range" id="slider-size" min="18" max="54" step="2" value="34">
+            <span class="slider-val" id="val-size">34px</span>
+          </div>
+        </div>
+
+        <!-- Screen Action Break Duration -->
+        <div class="dock-group">
+          <div class="slider-item" title="Automatic pause when reaching a screen action cue">
+            <label>Break:</label>
+            <select class="btn-dock-icon" id="select-cue-break"
+              style="padding: 4px 8px; font-size: 12px; cursor: pointer;">
+              <option value="adaptive" selected>1s (3s Demo)</option>
+              <option value="1">1s All</option>
+              <option value="2">2s All</option>
+              <option value="3">3s All</option>
+              <option value="manual">Wait for Space</option>
+              <option value="0">No Break (Continuous)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Navigation & Fullscreen -->
+        <div class="dock-group dock-group-aux">
+          <button class="btn-dock-icon mobile-only-btn" id="btn-dock-sections" title="View Sections">§ Sections</button>
+          <button class="btn-dock-icon" id="btn-toggle-fullscreen" title="Toggle Fullscreen (Shortcut: F)">⛶
+            <span class="btn-label-text">Fullscreen</span></button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Section Navigator -->
+  <div class="modal-overlay" id="modal-sections">
+    <div class="modal-box" style="max-width: 460px;">
+      <div class="modal-head">
+        <h3>Script Sections</h3>
+        <button class="modal-close" data-close="modal-sections">&times;</button>
+      </div>
+      <div class="mobile-sections-list" id="modal-sections-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Keyboard Shortcuts & Gestures -->
+  <div class="modal-overlay" id="modal-shortcuts">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>Teleprompter Controls</h3>
+        <button class="modal-close" data-close="modal-shortcuts">&times;</button>
+      </div>
+
+      <h4 style="font-size: 12px; text-transform: uppercase; color: var(--accent-cyan); margin: 0 0 10px; letter-spacing: 0.06em;">📱 Mobile & Touch Controls</h4>
+      <div class="shortcuts-list" style="margin-bottom: 22px;">
+        <div class="shortcut-entry">
+          <span>Tap Reading Area</span>
+          <span class="kbd">Start / Pause</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Tap any Sentence</span>
+          <span class="kbd">Jump to Line</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Scrub Progress Bar</span>
+          <span class="kbd">Jump Position</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Dock Button (▼ / ▲)</span>
+          <span class="kbd">Hide / Show Dock</span>
+        </div>
+      </div>
+
+      <h4 style="font-size: 12px; text-transform: uppercase; color: var(--accent-cyan); margin: 0 0 10px; letter-spacing: 0.06em;">⌨️ Keyboard Shortcuts</h4>
+      <div class="shortcuts-list">
+        <div class="shortcut-entry">
+          <span>Start / Pause Scrolling</span>
+          <span class="kbd">Space</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Resume Action Break</span>
+          <span class="kbd">Space</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Start / Pause Timer</span>
+          <span class="kbd">T</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Rewind to Start</span>
+          <span class="kbd">R</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Speed Up / Slow Down</span>
+          <span class="kbd">↑ / ↓</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Next / Previous Section</span>
+          <span class="kbd">→ / ←</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Increase / Decrease Font</span>
+          <span class="kbd">+ / -</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Toggle Fullscreen</span>
+          <span class="kbd">F</span>
+        </div>
+        <div class="shortcut-entry">
+          <span>Open Shortcuts Help</span>
+          <span class="kbd">?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Script -->
+  <div class="modal-overlay" id="modal-edit">
+    <div class="modal-box" style="max-width: 760px;">
+      <div class="modal-head">
+        <h3>Edit Demo Script (Markdown)</h3>
+        <button class="modal-close" data-close="modal-edit">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 12px;">
+        Lines starting with <code>### [0:00 – 0:45] Title</code> become timed sections, and
+        <code>*[Show something]*</code> become visual stage cue banners.
+      </p>
+      <textarea class="editor-box" id="editor-textarea"></textarea>
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; gap: 8px;">
+          <input type="file" id="file-picker" accept=".md,.txt" style="display: none;">
+          <button class="btn-dock-icon" id="btn-load-file">📂 Load .md File</button>
+          <button class="btn-dock-icon" id="btn-export-file">💾 Export .md</button>
+          <button class="btn-dock-icon" id="btn-restore-default">Reset Original</button>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-dock-icon" data-close="modal-edit">Cancel</button>
+          <button class="btn-main-prompter" id="btn-apply-script">Apply Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-box" id="toast-box"></div>
+
+  <!-- Embedded Default Script -->
+  <script type="text/markdown" id="embedded-script">
+### [0:00 – 0:45] Intro & Problem
+
+*[Show Stop the Slop website]*
+
+Hi everyone, I’m Mauro Pellonara. I’m a second-year Master’s student in Data Science at EPFL, and I’m currently interning at Logitech as a Machine Learning Research Intern.
+
+Like most people, I spend a lot of time on YouTube. But lately, there’s been a lot more low-quality AI-generated content, more specifically videos that sound interesting but don’t really say anything.
+
+So I built a small side project to help with that: it's called **Stop the Slop**, it's an open-source extension that detects AI-generated videos on YouTube.
+
+### [0:45 – 1:45] Product Demo
+
+*[Show YouTube feed]*
+
+Here, you can already see badges on some of the thumbnails. You won’t see one on every video, because I don’t analyze the whole feed in advance.
+
+A video gets analyzed when someone actually opens it.
+
+*[Open a video]*
+
+So when I open this one, the extension automatically grabs the transcript and checks it in the background.
+
+Then I can see the result directly inside the YouTube player, or by opening the extension.
+
+And once a video has been analyzed once, I save the result. So if someone else comes across the same video later, they can see the badge immediately on the thumbnail without analyzing it again.
+
+That keeps the extension fast and avoids doing unnecessary work.
+
+### [1:45 – 3:40] Keeping the Cost at Zero
+
+*[Show Cloudflare tab]*
+
+That also connects to one of the main goals of the project: I wanted to see if I could run the whole thing for basically no money.
+
+And right now, the monthly cost is ~**zero dollars**.
+
+This is because the backend runs on Cloudflare’s free tier, and I use their free SQLite database to save the results.
+
+The website is also hosted for free on GitHub, so I don’t pay for a custom domain that I don't need anyway since Stop the Slop is just an extension.
+
+The last piece was choosing the AI detector.
+
+There are already quite a few options. I could use a general-purpose model like Gemini, an online AI detector service, or an open-source one.
+
+Instead of just choosing one, I ran a benchmark.
+
+*[Show benchmark figure]*
+
+I tested several detectors on **1,000 YouTube videos: 500 human-written and 500 AI-generated**.
+
+I compared Jev, Gemini, WasItAiGenerated.com, and a popular open-source detector called RADAR.
+
+*[Show Jev announcement X post]*
+
+In case you don't know, Jev is a new model from TypeSafe AI built for exactly this kind of task: making fast decisions instead of generating text.
+
+And it performed best in my benchmark, with about **91% F1**, compared with 75% for RADAR, 64% for WasItAiGenerated.com, and 61% for Gemini.
+
+It’s also extremely cheap — about **4 cents per million input tokens** — which made it the perfect fit for this project.
+
+### [3:40 – 4:15] Dealing With Uncertainty
+
+*[Back to benchmark figure or YouTube home feed]*
+
+Of course, AI detection isn’t perfect and that's why companies like Anthropic are now watermarking the output of their models.
+
+The issue is that some people write very polished and structured scripts, which can look surprisingly similar to AI-generated text.
+
+So for this reason the extension shows the likelihood of the video being AI-generated instead of a simple yes-or-no answer.
+
+### [4:15 – 5:00] Conclusion
+
+*[Show GitHub repo]*
+
+So to wrap it up, the interesting part for me wasn’t just building an AI detector. It was figuring out how to turn it into something 300+ people actually use without it costing a lot.
+
+And right now, the whole thing costs essentially **zero dollars to run**.
+
+More broadly, I hope this inspires some of you to think about cheaper ways of deploying AI and software. AI has made it much easier and faster to build things, and I think it’s just as important to make them cheap enough to actually put out into the world.
+
+In my opinion, you shouldn’t need a huge budget to ship an idea and see if people use it.
+
+Thanks for listening, and I’d be happy to take any questions.
+  </script>
+
+  <!-- Teleprompter Engine -->
+  <script>
+    /* ==========================================================================
+       State Management
+       ========================================================================== */
+    const PrompterState = {
+      rawMarkdown: document.getElementById('embedded-script').textContent.trim(),
+      sections: [],
+      sentences: [],
+      currentSentenceIdx: 0,
+      currentSectionIdx: 0,
+
+      // Auto-Scrolling
+      isRunning: false,
+      wpm: 140, // Words per minute
+      pixelsPerSecond: 30,
+      animationFrameId: null,
+      lastTimestamp: null,
+
+      // Timer & Pacing
+      timerSeconds: 0,
+      isTimerRunning: false,
+      timerInterval: null,
+
+      // Action Cue Breathing Breaks
+      cuePauseMode: 'adaptive', // 'adaptive' (1s quick cues, 3s for YouTube demo cues)
+      isCuePaused: false,
+      cuePauseInterval: null,
+      activePausedCueEl: null,
+
+      // Appearance
+      fontSize: 34,
+      theme: 'studio-light'
+    };
+
+    /* Stage Cues Link Directory */
+    const StageCueLinks = {
+      "Show Stop the Slop website": "https://mauropello.github.io/stop-the-slop/",
+      "Show YouTube feed": "https://www.youtube.com",
+      "Open a video": "https://www.youtube.com",
+      "Show Cloudflare tab": "https://dash.cloudflare.com",
+      "Show benchmark figure": "https://mauropello.github.io/stop-the-slop/#benchmark",
+      "Show Jev announcement X post": "https://x.com",
+      "Back to benchmark figure or YouTube home feed": "https://www.youtube.com",
+      "Show GitHub repo": "https://github.com/MauroPello/stop-the-slop"
+    };
+
+    /* Action Cue Detection & Durations (1s default, 3s for YouTube demo & video opening) */
+    function isYouTubeDemoCue(text) {
+      const norm = (text || '').toLowerCase().trim();
+      return norm === 'show youtube feed' ||
+        norm.startsWith('show youtube feed') ||
+        norm === 'open a video' ||
+        norm.startsWith('open a video');
+    }
+
+    function getCueDuration(cueEl) {
+      const mode = PrompterState.cuePauseMode;
+      if (mode === '0' || mode === 0) return 0;
+      if (mode === 'manual') return 'manual';
+
+      const isDemo = cueEl.dataset.isDemoCue === 'true';
+
+      if (mode === 'adaptive') {
+        return isDemo ? 3 : 1;
+      }
+
+      const parsed = parseInt(mode, 10);
+      if (!isNaN(parsed)) {
+        return parsed;
+      }
+
+      return isDemo ? 3 : 1;
+    }
+
+    /* ==========================================================================
+       Markdown Parser
+       ========================================================================== */
+    function parsePrompterScript(markdown) {
+      const lines = markdown.split('\n');
+      const sections = [];
+      let currentSection = null;
+      let sentenceCounter = 0;
+
+      lines.forEach((line) => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        // Section Header: ### [0:00 – 0:45] Title or ### Title
+        const secMatch = trimmed.match(/^###\s*(?:\[(.*?)\])?\s*(.*)$/);
+        if (secMatch) {
+          const rawTimeRange = secMatch[1] ? secMatch[1].trim() : '';
+          const title = (secMatch[2] || 'Section').trim();
+
+          currentSection = {
+            id: `sec-${sections.length}`,
+            rawTimeRange,
+            title,
+            wordCount: 0,
+            durationSeconds: 0,
+            calculatedStartSeconds: 0,
+            calculatedEndSeconds: 0,
+            items: []
+          };
+          sections.push(currentSection);
+          return;
+        }
+
+        if (!currentSection) {
+          currentSection = {
+            id: 'sec-0',
+            rawTimeRange: '',
+            title: 'Intro',
+            wordCount: 0,
+            durationSeconds: 0,
+            calculatedStartSeconds: 0,
+            calculatedEndSeconds: 0,
+            items: []
+          };
+          sections.push(currentSection);
+        }
+
+        // Visual Stage Cue: *[Show Stop the Slop website]*
+        const cueMatch = trimmed.match(/^\*\[(.*)\]\*$/);
+        if (cueMatch) {
+          const cueText = cueMatch[1].trim();
+          currentSection.items.push({
+            type: 'cue',
+            text: cueText,
+            link: StageCueLinks[cueText] || null
+          });
+          return;
+        }
+
+        // Spoken Paragraph
+        const rawSentences = splitSentences(trimmed);
+        const sentenceObjs = rawSentences.map(sent => {
+          const id = sentenceCounter++;
+          const clean = sent.replace(/[*#_~`]/g, '').trim();
+          const wordCount = clean ? clean.split(/\s+/).filter(Boolean).length : 0;
+          return {
+            id,
+            text: sent.replace(/\\~/g, '~'),
+            wordCount
+          };
+        });
+
+        currentSection.items.push({
+          type: 'paragraph',
+          sentences: sentenceObjs
+        });
+      });
+
+      return sections;
+    }
+
+    function splitSentences(text) {
+      const matches = text.match(/[^.!?]+[.!?]+["'\u2019]?|[^.!?]+$/g);
+      if (!matches) return [text];
+      return matches.map(s => s.trim()).filter(s => s.length > 0);
+    }
+
+    function parseTimeString(str) {
+      if (!str) return 0;
+      const parts = str.split(':').map(Number);
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      return 0;
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    /* ==========================================================================
+       DOM Rendering
+       ========================================================================== */
+    function renderPrompterDOM() {
+      const track = document.getElementById('prompter-track');
+      const pillsContainer = document.getElementById('section-pills');
+      const modalList = document.getElementById('modal-sections-list');
+      track.innerHTML = '';
+      pillsContainer.innerHTML = '';
+      if (modalList) modalList.innerHTML = '';
+      PrompterState.sentences = [];
+
+      PrompterState.sections.forEach((sec, sIdx) => {
+        // Section Container
+        const secEl = document.createElement('section');
+        secEl.id = sec.id;
+        secEl.className = 'script-section';
+        secEl.dataset.sectionIndex = sIdx;
+
+        // Section Banner - Compact & Ground Truth
+        const headerEl = document.createElement('div');
+        headerEl.className = 'prompter-section-header';
+        headerEl.innerHTML = `
+          <h2 class="section-name">§ ${sec.title}</h2>
+          <span class="section-time-tag" id="sec-time-${sIdx}">Calculating...</span>
+        `;
+        secEl.appendChild(headerEl);
+
+        // Sidebar Navigation Pill
+        const pill = document.createElement('button');
+        pill.className = `section-pill ${sIdx === 0 ? 'active' : ''}`;
+        pill.dataset.secIdx = sIdx;
+        pill.innerHTML = `
+          <span>${sec.title}</span>
+          <span class="section-pill-time" id="pill-time-${sIdx}">--:--</span>
+        `;
+        pill.addEventListener('click', () => jumpToSection(sIdx));
+        pillsContainer.appendChild(pill);
+
+        // Mobile Section Modal Card
+        if (modalList) {
+          const card = document.createElement('button');
+          card.className = `mobile-section-card ${sIdx === 0 ? 'active' : ''}`;
+          card.id = `modal-sec-${sIdx}`;
+          card.innerHTML = `
+            <div class="sec-card-left">
+              <span class="sec-card-title">${sec.title}</span>
+              <span class="sec-card-meta" id="modal-sec-meta-${sIdx}">Calculating...</span>
+            </div>
+            <span class="sec-card-play">▶</span>
+          `;
+          card.addEventListener('click', () => {
+            jumpToSection(sIdx);
+            document.getElementById('modal-sections').classList.remove('open');
+          });
+          modalList.appendChild(card);
+        }
+
+        // Section Items
+        sec.items.forEach(item => {
+          if (item.type === 'cue') {
+            const cueEl = document.createElement('div');
+            cueEl.className = 'action-cue-banner';
+            const isDemo = isYouTubeDemoCue(item.text);
+            cueEl.dataset.isDemoCue = isDemo ? 'true' : 'false';
+            if (isDemo) cueEl.classList.add('demo-cue');
+
+            let linkHtml = '';
+            if (item.link) {
+              linkHtml = `<a href="${item.link}" target="_blank" rel="noopener" class="cue-action-link">Open Tab ↗</a>`;
+            }
+
+            const timingTag = isDemo
+              ? `<span class="cue-timing-tag demo">🎬 3s Demo Break</span>`
+              : `<span class="cue-timing-tag">⏱ 1s Break</span>`;
+
+            cueEl.innerHTML = `
+              <div class="cue-badge-wrap">
+                <span class="cue-clapper">🎬</span>
+                <div>
+                  <div class="cue-action-label" style="display: flex; align-items: center; gap: 8px;">
+                    <span>SCREEN ACTION (DO NOT READ)</span>
+                    ${timingTag}
+                  </div>
+                  <div class="cue-action-text">${item.text}</div>
+                </div>
+              </div>
+              ${linkHtml}
+            `;
+            secEl.appendChild(cueEl);
+          } else if (item.type === 'paragraph') {
+            const pEl = document.createElement('p');
+            pEl.className = 'prompter-paragraph';
+            pEl.dataset.secIdx = sIdx;
+
+            item.sentences.forEach(sent => {
+              const span = document.createElement('span');
+              span.className = 'sentence-unit';
+              span.id = `sent-${sent.id}`;
+              span.dataset.sentId = sent.id;
+
+              // Format bold markdown
+              let formatted = sent.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+              span.innerHTML = formatted + ' ';
+
+              pEl.appendChild(span);
+
+              PrompterState.sentences.push({
+                id: sent.id,
+                sectionIdx: sIdx,
+                wordCount: sent.wordCount,
+                element: span,
+                paragraphEl: pEl
+              });
+            });
+
+            // Click to set focal position
+            pEl.addEventListener('click', (e) => {
+              const targetSpan = e.target.closest('.sentence-unit');
+              if (targetSpan) {
+                const sId = parseInt(targetSpan.dataset.sentId, 10);
+                setActiveSentence(sId, true);
+              }
+            });
+
+            secEl.appendChild(pEl);
+          }
+        });
+
+        track.appendChild(secEl);
+      });
+
+      // Highlight initial sentence
+      if (PrompterState.sentences.length > 0) {
+        setActiveSentence(0, false);
+      }
+      computeGroundTruthTimings();
+      updateProgress();
+    }
+
+    /* Set active sentence with smooth eye-line positioning */
+    function setActiveSentence(index, scrollIntoEyeLine = true) {
+      if (index < 0 || index >= PrompterState.sentences.length) return;
+      PrompterState.currentSentenceIdx = index;
+      const targetObj = PrompterState.sentences[index];
+
+      PrompterState.sentences.forEach((s, idx) => {
+        if (idx === index) {
+          s.element.className = 'sentence-unit current-focus';
+          s.paragraphEl.classList.add('is-active');
+        } else {
+          s.element.className = 'sentence-unit';
+          s.paragraphEl.classList.remove('is-active');
+        }
+      });
+
+      highlightSectionPill(targetObj.sectionIdx);
+
+      if (scrollIntoEyeLine && targetObj.element) {
+        scrollSentenceToEyeLine(targetObj.element);
+      }
+
+      updateProgress();
+    }
+
+    function scrollSentenceToEyeLine(element) {
+      const rect = element.getBoundingClientRect();
+      const eyeLineY = window.innerHeight * (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sweet-spot-top')) / 100);
+      const deltaY = rect.top - eyeLineY;
+
+      window.scrollBy({
+        top: deltaY,
+        behavior: 'smooth'
+      });
+    }
+
+    function jumpToSection(sectionIdx) {
+      const firstSent = PrompterState.sentences.find(s => s.sectionIdx === sectionIdx);
+      if (firstSent) {
+        setActiveSentence(firstSent.id, true);
+      } else {
+        const secEl = document.getElementById(`sec-${sectionIdx}`);
+        if (secEl) secEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function highlightSectionPill(secIdx) {
+      PrompterState.currentSectionIdx = secIdx;
+      document.querySelectorAll('.section-pill').forEach((pill, idx) => {
+        pill.classList.toggle('active', idx === secIdx);
+      });
+      document.querySelectorAll('.mobile-section-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === secIdx);
+      });
+      checkPacing();
+    }
+
+    /* Screen Wake Lock API for Mobile Continuity */
+    let wakeLock = null;
+    async function requestWakeLock() {
+      if ('wakeLock' in navigator) {
+        try {
+          wakeLock = await navigator.wakeLock.request('screen');
+        } catch (err) {}
+      }
+    }
+    function releaseWakeLock() {
+      if (wakeLock) {
+        wakeLock.release().catch(() => {});
+        wakeLock = null;
+      }
+    }
+    document.addEventListener('visibilitychange', async () => {
+      if (document.visibilityState === 'visible' && PrompterState.isRunning) {
+        await requestWakeLock();
+      }
+    });
+
+    /* Quick Feedback Tap Indicator */
+    let tapIndicatorTimer = null;
+    function showTapIndicator(msg) {
+      const ind = document.getElementById('tap-indicator');
+      if (!ind) return;
+      const isPlay = msg.includes('Play') || msg.includes('Resume') || msg.includes('Scroll');
+      const icon = document.getElementById('tap-indicator-icon');
+      const text = document.getElementById('tap-indicator-text');
+      if (icon) icon.textContent = isPlay ? '▶' : '⏸';
+      if (text) text.textContent = msg.replace(/[▶⏸]/g, '').trim();
+      ind.classList.add('show');
+      clearTimeout(tapIndicatorTimer);
+      tapIndicatorTimer = setTimeout(() => {
+        ind.classList.remove('show');
+      }, 700);
+    }
+
+    /* ==========================================================================
+       Auto-Scroll Engine (Calibrated Words-Per-Minute)
+       ========================================================================== */
+    function startAutoScroll() {
+      // If starting fresh from the beginning, ensure view is at the top of the script
+      if (PrompterState.currentSentenceIdx === 0 && PrompterState.timerSeconds === 0 && window.scrollY > 80) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+      PrompterState.isRunning = true;
+      PrompterState.lastTimestamp = performance.now();
+      requestWakeLock();
+      updateDockUI();
+      if (!PrompterState.isTimerRunning) startTimer();
+
+      function scrollLoop(timestamp) {
+        if (!PrompterState.isRunning) return;
+
+        // If currently in a cue pause, wait
+        if (PrompterState.isCuePaused) {
+          PrompterState.lastTimestamp = timestamp;
+          PrompterState.animationFrameId = requestAnimationFrame(scrollLoop);
+          return;
+        }
+
+        const delta = (timestamp - PrompterState.lastTimestamp) / 1000;
+        PrompterState.lastTimestamp = timestamp;
+
+        // Check if an upcoming screen action cue entered the eye-line focal area
+        if (checkActionCueBreak()) {
+          PrompterState.animationFrameId = requestAnimationFrame(scrollLoop);
+          return;
+        }
+
+        // Calculate px per second from WPM (140 WPM ≈ 30px/s)
+        const speedMultiplier = PrompterState.wpm / 140;
+        const pxToScroll = PrompterState.pixelsPerSecond * speedMultiplier * delta;
+
+        window.scrollBy({ top: pxToScroll, behavior: 'instant' });
+
+        detectEyeLineSentence();
+        updateProgress();
+
+        PrompterState.animationFrameId = requestAnimationFrame(scrollLoop);
+      }
+
+      PrompterState.animationFrameId = requestAnimationFrame(scrollLoop);
+    }
+
+    function checkActionCueBreak() {
+      if (PrompterState.cuePauseMode === '0' || PrompterState.cuePauseMode === 0 || PrompterState.isCuePaused) return false;
+      const eyeLineY = window.innerHeight * (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sweet-spot-top')) / 100);
+
+      const cueBanners = document.querySelectorAll('.action-cue-banner');
+      for (const cueEl of cueBanners) {
+        if (cueEl.dataset.hasPaused === 'true') continue;
+        const rect = cueEl.getBoundingClientRect();
+        // Check if cue card is crossing the eye-line focal area
+        if (rect.top <= eyeLineY + 25 && rect.bottom >= eyeLineY - 25) {
+          const duration = getCueDuration(cueEl);
+          if (duration === 0) continue;
+          cueEl.dataset.hasPaused = 'true';
+          triggerCueBreak(cueEl, duration);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function triggerCueBreak(cueEl, duration) {
+      PrompterState.isCuePaused = true;
+      PrompterState.activePausedCueEl = cueEl;
+      cueEl.classList.add('active-pause-cue');
+
+      let badge = cueEl.querySelector('.cue-countdown-pill');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.className = 'cue-countdown-pill';
+        cueEl.appendChild(badge);
+      }
+
+      const isDemo = cueEl.dataset.isDemoCue === 'true';
+
+      if (duration === 'manual') {
+        badge.innerHTML = `<span>⏸ Action Break</span> <button class="cue-resume-btn" onclick="resumeFromCueBreak()">Resume ▶ (Space)</button>`;
+        showToast('⏸ Action Break: switch tabs · Tap Space to resume', 'info');
+      } else {
+        let secondsLeft = parseInt(duration, 10);
+        function updateBadge() {
+          const title = isDemo
+            ? `🎬 Live Demo: <strong>${secondsLeft}s</strong>`
+            : `⏳ <strong>${secondsLeft}s</strong>`;
+          badge.innerHTML = `<span>${title}</span> <button class="cue-resume-btn" onclick="resumeFromCueBreak()">Resume ▶ (Space)</button>`;
+        }
+        updateBadge();
+
+        PrompterState.cuePauseInterval = setInterval(() => {
+          secondsLeft--;
+          if (secondsLeft <= 0) {
+            resumeFromCueBreak();
+          } else {
+            updateBadge();
+          }
+        }, 1000);
+      }
+    }
+
+    function resumeFromCueBreak() {
+      if (PrompterState.cuePauseInterval) {
+        clearInterval(PrompterState.cuePauseInterval);
+        PrompterState.cuePauseInterval = null;
+      }
+      if (PrompterState.activePausedCueEl) {
+        PrompterState.activePausedCueEl.classList.remove('active-pause-cue');
+        const badge = PrompterState.activePausedCueEl.querySelector('.cue-countdown-pill');
+        if (badge) badge.remove();
+        PrompterState.activePausedCueEl = null;
+      }
+      PrompterState.isCuePaused = false;
+      PrompterState.lastTimestamp = performance.now();
+    }
+
+    function stopAutoScroll() {
+      PrompterState.isRunning = false;
+      if (PrompterState.animationFrameId) {
+        cancelAnimationFrame(PrompterState.animationFrameId);
+        PrompterState.animationFrameId = null;
+      }
+      releaseWakeLock();
+      updateDockUI();
+    }
+
+    function togglePrompter() {
+      if (PrompterState.isRunning) stopAutoScroll();
+      else startAutoScroll();
+    }
+
+    function detectEyeLineSentence() {
+      const eyeLineY = window.innerHeight * (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sweet-spot-top')) / 100);
+
+      // At the start of the script, keep sentence 0 active until it has scrolled above the eye-line
+      if (PrompterState.currentSentenceIdx === 0 && PrompterState.sentences[0]) {
+        const firstRect = PrompterState.sentences[0].element.getBoundingClientRect();
+        if (firstRect.bottom > eyeLineY - 15) {
+          return;
+        }
+      }
+
+      for (let i = 0; i < PrompterState.sentences.length; i++) {
+        const rect = PrompterState.sentences[i].element.getBoundingClientRect();
+        if (rect.top <= eyeLineY + 15 && rect.bottom >= eyeLineY - 15) {
+          if (i !== PrompterState.currentSentenceIdx) {
+            setActiveSentence(i, false);
+          }
+          break;
+        }
+      }
+    }
+
+    function updateDockUI() {
+      const btn = document.getElementById('btn-prompter-toggle');
+      const icon = document.getElementById('prompter-toggle-icon');
+      const text = document.getElementById('prompter-toggle-text');
+
+      if (PrompterState.isRunning) {
+        btn.classList.add('running');
+        icon.textContent = '⏸';
+        text.textContent = 'Pause';
+      } else {
+        btn.classList.remove('running');
+        icon.textContent = '▶';
+        text.textContent = 'Start Scroll';
+      }
+    }
+
+    /* ==========================================================================
+       Timer & Pacing Tracker
+       ========================================================================== */
+    function startTimer() {
+      if (PrompterState.isTimerRunning) return;
+      PrompterState.isTimerRunning = true;
+      document.getElementById('btn-clock-toggle').textContent = '⏸';
+
+      PrompterState.timerInterval = setInterval(() => {
+        PrompterState.timerSeconds++;
+        document.getElementById('clock-display').textContent = formatTime(PrompterState.timerSeconds);
+        checkPacing();
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      PrompterState.isTimerRunning = false;
+      clearInterval(PrompterState.timerInterval);
+      document.getElementById('btn-clock-toggle').textContent = '▶';
+    }
+
+    function toggleTimer() {
+      if (PrompterState.isTimerRunning) pauseTimer();
+      else startTimer();
+    }
+
+    function resetPrompterAndTimer() {
+      if (PrompterState.isRunning) stopAutoScroll();
+      releaseWakeLock();
+      resumeFromCueBreak();
+      document.querySelectorAll('.action-cue-banner').forEach(c => {
+        c.dataset.hasPaused = 'false';
+        c.classList.remove('active-pause-cue');
+        const b = c.querySelector('.cue-countdown-pill');
+        if (b) b.remove();
+      });
+      pauseTimer();
+      PrompterState.timerSeconds = 0;
+      document.getElementById('clock-display').textContent = '00:00';
+      setActiveSentence(0, false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Rewound to beginning of script', 'info');
+    }
+
+    /* Ground Truth Timing Calibration (Derived strictly from Words & WPM) */
+    function computeGroundTruthTimings() {
+      const wpm = PrompterState.wpm || 140;
+      const wordsPerSec = wpm / 60;
+      let runningSec = 0;
+      let cumWords = 0;
+
+      PrompterState.sections.forEach((sec, idx) => {
+        let secWords = 0;
+        sec.items.forEach(item => {
+          if (item.type === 'paragraph') {
+            item.sentences.forEach(s => {
+              secWords += (s.wordCount || 0);
+            });
+          }
+        });
+        sec.wordCount = secWords;
+        sec.durationSeconds = Math.max(1, Math.round(secWords / wordsPerSec));
+        sec.calculatedStartSeconds = Math.round(runningSec);
+        runningSec += secWords / wordsPerSec;
+        sec.calculatedEndSeconds = Math.round(runningSec);
+      });
+
+      PrompterState.sentences.forEach(s => {
+        cumWords += (s.wordCount || 0);
+        s.cumulativeWords = cumWords;
+        s.expectedTimeSeconds = cumWords / wordsPerSec;
+      });
+      PrompterState.totalWordCount = cumWords;
+      PrompterState.totalEstimatedSeconds = Math.max(1, Math.round(cumWords / wordsPerSec));
+
+      // Update Target Time in header HUD
+      const targetEl = document.getElementById('clock-target');
+      if (targetEl) {
+        targetEl.textContent = `/ ${formatTime(PrompterState.totalEstimatedSeconds)}`;
+      }
+
+      // Update Section Header Badges, Sidebar Pills, and Mobile Section Cards
+      PrompterState.sections.forEach((sec, idx) => {
+        const timeBadge = document.getElementById(`sec-time-${idx}`);
+        if (timeBadge) {
+          timeBadge.textContent = `${sec.wordCount} words · ~${sec.durationSeconds}s`;
+        }
+        const pillTime = document.getElementById(`pill-time-${idx}`);
+        if (pillTime) {
+          pillTime.textContent = `${formatTime(sec.calculatedStartSeconds)} (${sec.durationSeconds}s)`;
+        }
+        const modalMeta = document.getElementById(`modal-sec-meta-${idx}`);
+        if (modalMeta) {
+          modalMeta.textContent = `${formatTime(sec.calculatedStartSeconds)} · ${sec.wordCount} words (~${sec.durationSeconds}s)`;
+        }
+      });
+    }
+
+    function checkPacing() {
+      const dot = document.getElementById('pacing-dot');
+      const text = document.getElementById('pacing-text');
+      if (!dot || !text) return;
+
+      const currentSent = PrompterState.sentences[PrompterState.currentSentenceIdx];
+      if (!currentSent || PrompterState.timerSeconds === 0) {
+        text.textContent = 'Ready';
+        dot.className = 'pacing-dot';
+        return;
+      }
+
+      const elapsed = PrompterState.timerSeconds;
+      const expected = currentSent.expectedTimeSeconds || 0;
+      const diff = elapsed - Math.round(expected);
+
+      if (diff > 5) {
+        text.textContent = `+${diff}s Slower`;
+        dot.className = 'pacing-dot danger';
+      } else if (diff < -5) {
+        text.textContent = `-${Math.abs(diff)}s Faster`;
+        dot.className = 'pacing-dot warning';
+      } else {
+        text.textContent = `On Pace (${PrompterState.wpm} WPM)`;
+        dot.className = 'pacing-dot';
+      }
+    }
+
+    function updateProgress() {
+      let pct = 0;
+      if (PrompterState.sentences.length > 0) {
+        pct = Math.round(((PrompterState.currentSentenceIdx + 1) / PrompterState.sentences.length) * 100);
+      }
+      pct = Math.min(100, Math.max(0, pct));
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+      document.getElementById('progress-pct').textContent = `${pct}%`;
+    }
+
+    /* ==========================================================================
+       Themes & Typography
+       ========================================================================== */
+    function applyTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      PrompterState.theme = themeName;
+      const themeSelect = document.getElementById('theme-select');
+      if (themeSelect && themeSelect.value !== themeName) {
+        themeSelect.value = themeName;
+      }
+      const metaTheme = document.getElementById('meta-theme-color');
+      if (metaTheme) {
+        if (themeName === 'studio-dark') metaTheme.setAttribute('content', '#07090e');
+        else if (themeName === 'oled-black') metaTheme.setAttribute('content', '#000000');
+        else metaTheme.setAttribute('content', '#f8fafc');
+      }
+    }
+
+    function setPrompterFontSize(size) {
+      PrompterState.fontSize = size;
+      document.documentElement.style.setProperty('--prompter-font-size', `${size}px`);
+      document.getElementById('val-size').textContent = `${size}px`;
+      document.getElementById('slider-size').value = size;
+    }
+
+    function setWpm(wpm) {
+      PrompterState.wpm = Math.min(220, Math.max(80, wpm));
+      document.getElementById('val-wpm').textContent = `${PrompterState.wpm} WPM`;
+      document.getElementById('slider-wpm').value = PrompterState.wpm;
+      computeGroundTruthTimings();
+      checkPacing();
+    }
+
+    /* Toast Helper */
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-box');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      const icon = type === 'warning' ? '⚠️' : '✨';
+      toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 2200);
+    }
+
+    /* ==========================================================================
+       Event Listeners & Hotkeys
+       ========================================================================== */
+    function setupEvents() {
+      // Prompter Main Toggle & Reset
+      document.getElementById('btn-prompter-toggle').addEventListener('click', togglePrompter);
+      document.getElementById('btn-prompter-reset').addEventListener('click', resetPrompterAndTimer);
+
+      // Timer buttons
+      document.getElementById('btn-clock-toggle').addEventListener('click', toggleTimer);
+      document.getElementById('btn-clock-reset').addEventListener('click', resetPrompterAndTimer);
+
+      // Theme
+      document.getElementById('theme-select').addEventListener('change', (e) => applyTheme(e.target.value));
+
+      // Sliders
+      document.getElementById('slider-wpm').addEventListener('input', (e) => setWpm(parseInt(e.target.value, 10)));
+      document.getElementById('slider-size').addEventListener('input', (e) => setPrompterFontSize(parseInt(e.target.value, 10)));
+
+      // Screen Action Break Selector
+      document.getElementById('select-cue-break').addEventListener('change', (e) => {
+        const val = e.target.value;
+        PrompterState.cuePauseMode = val;
+        let desc = '1s (3s Demo)';
+        if (val === '1') desc = '1s All';
+        else if (val === '2') desc = '2s All';
+        else if (val === '3') desc = '3s All';
+        else if (val === 'manual') desc = 'Wait for Space';
+        else if (val === '0') desc = 'Off';
+        showToast(`Action Break: ${desc}`, 'info');
+      });
+
+      // Fullscreen
+      document.getElementById('btn-toggle-fullscreen').addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      // Progress Seek & Drag for Mouse and Touch
+      const progressTrack = document.getElementById('progress-track');
+      function handleProgressSeek(clientX) {
+        const rect = progressTrack.getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        const targetIdx = Math.floor(ratio * PrompterState.sentences.length);
+        setActiveSentence(targetIdx, true);
+      }
+      progressTrack.addEventListener('click', (e) => handleProgressSeek(e.clientX));
+
+      let isSeeking = false;
+      progressTrack.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isSeeking = true;
+          handleProgressSeek(e.touches[0].clientX);
+        }
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (isSeeking && e.touches.length === 1) {
+          handleProgressSeek(e.touches[0].clientX);
+        }
+      }, { passive: true });
+      window.addEventListener('touchend', () => { isSeeking = false; });
+
+      // Mobile Section Navigation Modal
+      const openSecModal = () => document.getElementById('modal-sections').classList.add('open');
+      const btnOpenSections = document.getElementById('btn-open-sections');
+      if (btnOpenSections) btnOpenSections.addEventListener('click', openSecModal);
+      const btnDockSections = document.getElementById('btn-dock-sections');
+      if (btnDockSections) btnDockSections.addEventListener('click', openSecModal);
+
+      // Mobile Dock Collapse / Expand Toggle
+      const dock = document.getElementById('prompter-dock');
+      const collapseBtn = document.getElementById('btn-dock-collapse');
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => {
+          const isCollapsed = dock.classList.toggle('collapsed');
+          collapseBtn.textContent = isCollapsed ? '▲' : '▼';
+          collapseBtn.setAttribute('title', isCollapsed ? 'Expand Controls' : 'Collapse Controls');
+        });
+      }
+
+      // Tap-to-Scroll Gestures on Reading Viewport
+      const viewport = document.getElementById('prompter-viewport');
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+
+      viewport.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartTime = Date.now();
+        }
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length !== 1) return;
+        const target = e.target;
+        if (target.closest('button, a, input, select, textarea, .action-cue-banner, .modal-box')) return;
+        const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartX);
+        const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        const deltaTime = Date.now() - touchStartTime;
+
+        if (deltaX < 12 && deltaY < 12 && deltaTime < 350) {
+          if (target.closest('.sentence-unit')) return;
+          if (PrompterState.isCuePaused) {
+            resumeFromCueBreak();
+            showTapIndicator('▶ Resumed');
+          } else {
+            togglePrompter();
+            showTapIndicator(PrompterState.isRunning ? '▶ Scrolling' : '⏸ Paused');
+          }
+        }
+      }, { passive: true });
+
+      // Modals General Handlers
+      document.getElementById('btn-open-help').addEventListener('click', () => {
+        document.getElementById('modal-shortcuts').classList.add('open');
+      });
+      document.getElementById('btn-open-edit').addEventListener('click', () => {
+        document.getElementById('editor-textarea').value = PrompterState.rawMarkdown;
+        document.getElementById('modal-edit').classList.add('open');
+      });
+      document.querySelectorAll('[data-close]').forEach(b => {
+        b.addEventListener('click', (e) => {
+          document.getElementById(b.dataset.close).classList.remove('open');
+        });
+      });
+
+      // Script Editor Actions
+      document.getElementById('btn-apply-script').addEventListener('click', () => {
+        const text = document.getElementById('editor-textarea').value.trim();
+        if (text) {
+          PrompterState.rawMarkdown = text;
+          PrompterState.sections = parsePrompterScript(PrompterState.rawMarkdown);
+          renderPrompterDOM();
+          document.getElementById('modal-edit').classList.remove('open');
+          showToast('Updated teleprompter script', 'info');
+        }
+      });
+
+      document.getElementById('btn-restore-default').addEventListener('click', () => {
+        const defaultMd = document.getElementById('embedded-script').textContent.trim();
+        document.getElementById('editor-textarea').value = defaultMd;
+      });
+
+      const filePicker = document.getElementById('file-picker');
+      document.getElementById('btn-load-file').addEventListener('click', () => filePicker.click());
+      filePicker.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            document.getElementById('editor-textarea').value = evt.target.result;
+            showToast(`Loaded ${file.name}`, 'info');
+          };
+          reader.readAsText(file);
+        }
+      });
+
+      document.getElementById('btn-export-file').addEventListener('click', () => {
+        const blob = new Blob([document.getElementById('editor-textarea').value], { type: 'text/markdown' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'script.md';
+        a.click();
+        showToast('Exported script.md', 'info');
+      });
+
+      // Keyboard Controls
+      window.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+        if (e.code === 'Space') {
+          e.preventDefault();
+          if (PrompterState.isCuePaused) {
+            resumeFromCueBreak();
+            showToast('Resumed scrolling', 'info');
+          } else {
+            togglePrompter();
+          }
+        } else if (e.key === 't' || e.key === 'T') {
+          e.preventDefault();
+          toggleTimer();
+        } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          resetPrompterAndTimer();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setWpm(PrompterState.wpm + 5);
+          showToast(`Speed: ${PrompterState.wpm} WPM`, 'info');
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setWpm(PrompterState.wpm - 5);
+          showToast(`Speed: ${PrompterState.wpm} WPM`, 'info');
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const nextSec = Math.min(PrompterState.sections.length - 1, PrompterState.currentSectionIdx + 1);
+          jumpToSection(nextSec);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prevSec = Math.max(0, PrompterState.currentSectionIdx - 1);
+          jumpToSection(prevSec);
+        } else if (e.key === '+' || e.key === '=') {
+          e.preventDefault();
+          setPrompterFontSize(Math.min(54, PrompterState.fontSize + 2));
+        } else if (e.key === '-' || e.key === '_') {
+          e.preventDefault();
+          setPrompterFontSize(Math.max(18, PrompterState.fontSize - 2));
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+          else document.exitFullscreen();
+        } else if (e.key === '?') {
+          e.preventDefault();
+          document.getElementById('modal-shortcuts').classList.toggle('open');
+        } else if (e.key === 'Escape') {
+          document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+        }
+      });
+    }
+
+    /* Initialize Application */
+    async function init() {
+      try {
+        const res = await fetch('script.md?nocache=' + Date.now());
+        if (res.ok) {
+          const fresh = await res.text();
+          if (fresh && fresh.trim().length > 20) {
+            PrompterState.rawMarkdown = fresh.trim();
+          }
+        }
+      } catch (err) { }
+
+      PrompterState.sections = parsePrompterScript(PrompterState.rawMarkdown);
+      renderPrompterDOM();
+      setupEvents();
+      applyTheme(PrompterState.theme);
+
+      // Mobile-friendly initial typography
+      if (window.innerWidth <= 600) {
+        setPrompterFontSize(26);
+      }
+
+      const cueBreakSelect = document.getElementById('select-cue-break');
+      if (cueBreakSelect) cueBreakSelect.value = PrompterState.cuePauseMode;
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      showToast('Teleprompter ready! Tap screen or press Space.', 'info');
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+
+</html>

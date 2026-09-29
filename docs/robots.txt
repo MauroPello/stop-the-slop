@@ -1,4 +1,6 @@
 User-agent: *
+Disallow: /demo/
+Disallow: /demo
 Allow: /
 
 Sitemap: https://mauropello.github.io/stop-the-slop/sitemap.xml
